@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "Ig52LBVYVN/01TkswRijBI35MT3H0Iq/BS6ifI3l94ox3R934PHqwJNAMHeNsolnqwosZzlLNZB12RE2DXLFhQ==",
+  "dgSpecHash": "/Kpg1ScqAP4qNRGfOf9tHbP78BRP6BPnsC0YCLwvBtmmdlQY6BWtL8Iq590WQwAdI9SCZeUZUDPSI50r++8JVA==",
   "success": true,
   "projectFilePath": "/Users/mahdimazaheri/Programming/Mohaymen/TransactionVisualizer/TransactionVisualizer/TransactionVisualizer.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "/Users/mahdimazaheri/.nuget/packages/csvhelper/30.0.1/csvhelper.30.0.1.nupkg.sha512"
+  ],
   "logs": []
 }

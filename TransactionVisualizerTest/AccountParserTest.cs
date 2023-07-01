@@ -12,7 +12,7 @@ public class AccountParserTest
     {
         _out = @out;
     }
-
+    
     [Fact]
     public void ParseAccountTest()
     {

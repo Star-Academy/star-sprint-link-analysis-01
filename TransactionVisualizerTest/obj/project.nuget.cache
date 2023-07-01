@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "W/n5Xb0zKJo/BaLYi7ndRcMFh4jwdIZWOFWxAW5UEjaDqFSGdxiqbP2s+9EXOJm7HMSJEb/9XU/VmmBmKyRuAg==",
+  "dgSpecHash": "X0kIRZb8Rly5mnEVKynBic4IHSi7bhYRng1zoO4sGObOjhK7ik7hIVQ68F4JqMGDfacvUPBurWa6mvgZtIcsSQ==",
   "success": true,
   "projectFilePath": "/Users/mahdimazaheri/Programming/Mohaymen/TransactionVisualizer/TransactionVisualizerTest/TransactionVisualizerTest.csproj",
   "expectedPackageFiles": [
     "/Users/mahdimazaheri/.nuget/packages/coverlet.collector/3.2.0/coverlet.collector.3.2.0.nupkg.sha512",
+    "/Users/mahdimazaheri/.nuget/packages/csvhelper/30.0.1/csvhelper.30.0.1.nupkg.sha512",
     "/Users/mahdimazaheri/.nuget/packages/microsoft.codecoverage/17.5.0/microsoft.codecoverage.17.5.0.nupkg.sha512",
     "/Users/mahdimazaheri/.nuget/packages/microsoft.net.test.sdk/17.5.0/microsoft.net.test.sdk.17.5.0.nupkg.sha512",
     "/Users/mahdimazaheri/.nuget/packages/microsoft.netcore.platforms/1.1.0/microsoft.netcore.platforms.1.1.0.nupkg.sha512",
