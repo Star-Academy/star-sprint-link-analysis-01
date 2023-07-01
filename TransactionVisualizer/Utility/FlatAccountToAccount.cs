@@ -1,7 +1,7 @@
 using TransactionVisualizer.Models;
 using TransactionVisualizer.Models.ParserModel;
 
-namespace TransactionVisualizerTest;
+namespace TransactionVisualizer.Utility;
 
 public class FlatAccountToAccount
 {
@@ -18,7 +18,7 @@ public class FlatAccountToAccount
             new Owner(flatAccount.OwnerID,
                 flatAccount.OwnerName,
                 flatAccount.OwnerFamilyName)
-            );
+        );
     }
 
     private static AccountType ParsAccountType(string accountType)
