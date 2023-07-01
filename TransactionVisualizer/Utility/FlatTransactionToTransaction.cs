@@ -7,14 +7,16 @@ public class FlatTransactionToTransaction
 {
     public static Transaction Convert(FlatTransaction flatTransaction)
     {
-        return new Transaction(
-            flatTransaction.TransactionID,
-            flatTransaction.SourceAcount,
-            flatTransaction.DestiantionAccount,
-            ParsTransactionType(flatTransaction.Type),
-            flatTransaction.Amount,
-            DateTime.Parse(flatTransaction.Date)
-        );
+        return new Transaction
+        {
+            ID = flatTransaction.TransactionID,
+            SourceAcount = flatTransaction.SourceAcount,
+            DestiantionAccount = flatTransaction.DestiantionAccount,
+            TransactionType = ParsTransactionType(flatTransaction.Type),
+            Amount = flatTransaction.Amount,
+            Date = DateTime.Parse(flatTransaction.Date)
+        };
+
     }
 
     private static TransactionType ParsTransactionType(string transactionType)

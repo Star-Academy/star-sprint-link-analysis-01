@@ -7,18 +7,25 @@ public class FlatAccountToAccount
 {
     public static Account Convert(FlatAccount flatAccount)
     {
-        return new Account(
-            flatAccount.AccountID, 
-            flatAccount.CardID,
-            flatAccount.Sheba,
-            ParsAccountType(flatAccount.AccountType),
-            new Branch(flatAccount.BranchName,
-                flatAccount.BranchAdress, 
-                flatAccount.BranchTelephone),
-            new Owner(flatAccount.OwnerID,
-                flatAccount.OwnerName,
-                flatAccount.OwnerFamilyName)
-        );
+        return new Account
+        {
+            AccountID = flatAccount.AccountID,
+            CardID = flatAccount.CardID,
+            Sheba = flatAccount.Sheba,
+            AccountType = ParsAccountType(flatAccount.AccountType),
+            Branch = new Branch
+            {
+                Name = flatAccount.BranchName,
+                Address = flatAccount.BranchAdress,
+                Telephone = flatAccount.BranchTelephone
+            },
+            Owner = new Owner
+            {
+                ID = flatAccount.OwnerID,
+                Name = flatAccount.OwnerName,
+                FamilyName = flatAccount.OwnerFamilyName
+            }
+        };
     }
 
     private static AccountType ParsAccountType(string accountType)
@@ -34,6 +41,5 @@ public class FlatAccountToAccount
         }
 
         return AccountType.Pasandaz;
-
     }
 }

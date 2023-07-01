@@ -56,13 +56,13 @@ public class TransactionParserTest
 
         Transaction transactionActual = FlatTransactionToTransaction.Convert(flatTransactions);
         Transaction transactionExcepted = new Transaction
-        (153348811341,
-            6534454617,
-            6039548046,
-            TransactionType.Paya,
-            Decimal.Parse("500,000,000"),
-            DateTime.Parse("1399/04/23")
-        );
+            {ID = 153348811341,
+            SourceAcount = 6534454617,
+            DestiantionAccount = 6039548046,
+            TransactionType = TransactionType.Paya,
+            Amount = Decimal.Parse("500,000,000"),
+            Date = DateTime.Parse("1399/04/23")
+        };
 
         // _out.WriteLine(accounts);
         Assert.Equivalent(transactionExcepted, transactionActual);
