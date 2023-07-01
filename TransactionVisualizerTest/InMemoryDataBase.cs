@@ -1,6 +1,10 @@
-﻿namespace TransactionVisualizer.Database;
+﻿using Microsoft.EntityFrameworkCore;
+using TransactionVisualizer.Models;
+using TransactionVisualizer.Models.Transaction;
 
-public class InMemoryDataBase : DBContext
+namespace TransactionVisualizer.Database;
+
+public class InMemoryDataBase : DbContext
 {
     public DbSet<Account> Accounts { get; set; }
     public DbSet<Branch> Branches { get; set; }
