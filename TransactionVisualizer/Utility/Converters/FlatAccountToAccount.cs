@@ -1,11 +1,11 @@
 using TransactionVisualizer.Models;
 using TransactionVisualizer.Models.ParserModel;
 
-namespace TransactionVisualizer.Utility;
+namespace TransactionVisualizer.Utility.Converters;
 
-public class FlatAccountToAccount
+public class FlatAccountToAccount : IFlatToFullConverter<Account , FlatAccount>
 {
-    public static Account Convert(FlatAccount flatAccount)
+    public  Account Convert(FlatAccount flatAccount)
     {
         return new Account
         {
@@ -28,7 +28,14 @@ public class FlatAccountToAccount
         };
     }
 
-    private static AccountType ParsAccountType(string accountType)
+    public List<Account> ConvertAll(List<FlatAccount> flatAccounts)
+    {
+        List<Account> accounts = new List<Account>();
+        flatAccounts.ForEach(account => accounts.Add(Convert(account)));
+        return accounts;
+    }
+
+    private  AccountType ParsAccountType(string accountType)
     {
         switch (accountType)
         {
@@ -42,4 +49,7 @@ public class FlatAccountToAccount
 
         return AccountType.Pasandaz;
     }
+
+
+    
 }
