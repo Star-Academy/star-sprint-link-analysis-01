@@ -1,11 +1,12 @@
+using System.Collections;
 using Microsoft.EntityFrameworkCore;
-using TransactionVisualizerTest;
+using TransactionVisualizer.Models;
 
 namespace TransactionVisualizer.Database;
 
 public class DataBaseOperation : IDataBaseOperation
 {
-    private DbContext _dbContext;
+    private readonly DbContext _dbContext;
 
     public DataBaseOperation(DbContext dbContext)
     {
@@ -19,7 +20,22 @@ public class DataBaseOperation : IDataBaseOperation
             throw new ArgumentNullException();
         }
 
-        throw new NotImplementedException();
+        foreach (var record in records)
+        {
+            _dbContext.Add(record);
+        }
+
+        try
+        {
+            _dbContext.SaveChanges();
+        }
+        catch (Exception e)
+        {
+            return EntityState.Unchanged;
+        }
+
+
+        return EntityState.Added;
     }
 
     public EntityState InsertRecord<T>(T record)
@@ -27,21 +43,32 @@ public class DataBaseOperation : IDataBaseOperation
         if (record is null) throw new ArgumentNullException();
 
         EntityState state = _dbContext.Add(record).State;
-        try 
+        try
         {
             _dbContext.SaveChanges();
         }
-        catch (System.ArgumentException)
+        catch (Exception e)
         {
-
             //TODO : add extention to EntitySate
             return EntityState.Unchanged;
         }
+
         return state;
     }
 
-    public bool Contain<T>(T record)
+    public List<T> SelectBulk<T>() where T : class
     {
-        throw new NotImplementedException();
+        return _dbContext.Set<T>().ToList();
+    }
+
+    public T? SelectRecord<T>(long id) where T : class
+    {
+        return _dbContext.Find<T>(id);
+    }
+
+
+    public bool Contain<T>(long id) where T : class
+    {
+        return SelectRecord<T>(id) != null;
     }
 }
