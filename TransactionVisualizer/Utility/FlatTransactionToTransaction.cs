@@ -1,3 +1,4 @@
+using System.Globalization;
 using TransactionVisualizer.Models.Transaction;
 using Transaction = System.Transactions.Transaction;
 
@@ -7,6 +8,9 @@ public class FlatTransactionToTransaction
 {
     public static Transaction Convert(FlatTransaction flatTransaction)
     {
+        string format = "yyyy/MM/dd";
+        CultureInfo culture = new CultureInfo("fa-IR");
+
         return new Transaction
         {
             ID = flatTransaction.TransactionID,
@@ -14,7 +18,7 @@ public class FlatTransactionToTransaction
             DestiantionAccount = flatTransaction.DestiantionAccount,
             TransactionType = ParsTransactionType(flatTransaction.Type),
             Amount = flatTransaction.Amount,
-            Date = DateTime.Parse(flatTransaction.Date)
+            Date = DateTime.ParseExact(flatTransaction.Date, format, culture)
         };
 
     }
