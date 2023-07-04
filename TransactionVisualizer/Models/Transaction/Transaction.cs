@@ -11,6 +11,4 @@ public class Transaction
     public TransactionType TransactionType { set; get; }
     public decimal Amount { set; get; }
     public DateTime Date { set; get; }
-
-   
 }

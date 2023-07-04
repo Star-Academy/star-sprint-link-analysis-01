@@ -11,6 +11,4 @@ public class Account
     public AccountType AccountType { get; set; }
     public Branch Branch { get; set; }
     public Owner Owner { get; set; }
-
-
 }

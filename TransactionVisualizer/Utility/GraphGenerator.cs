@@ -23,8 +23,7 @@ public class GraphGenerator : IGraphGenerator<Account, Transaction>
     //test
 
 
-    public void GenerateTransactionGraph(List<Transaction> transactions,
-        Account? account)
+    public void GenerateTransactionGraph(List<Transaction> transactions, Account? account)
     {
         if (account == null | transactions.Count < 1) throw new ArgumentNullException();
 
@@ -34,12 +33,18 @@ public class GraphGenerator : IGraphGenerator<Account, Transaction>
             {
                 Account? source = _accounts.Find(acc => acc.AccountID == transaction.SourceAcount);
                 Account? destination = _accounts.Find(acc => acc.AccountID == transaction.DestiantionAccount);
+            
+            
+                if (source.AccountID != account.AccountID) _graph.AddVertex(source);
+                else _graph.AddVertex(destination);
+            
+            
                 if (source == null || destination == null) throw new AccountNotFoundException();
+            
                 _graph.AddEdge(transaction, source, destination);
             }
         );
     }
-
     public void Expand(Account? account, List<Transaction> transactions)
     {
         GenerateTransactionGraph(transactions, account);
