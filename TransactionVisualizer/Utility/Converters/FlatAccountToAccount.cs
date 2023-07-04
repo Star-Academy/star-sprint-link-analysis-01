@@ -1,3 +1,4 @@
+using TransactionVisualizer.Exception;
 using TransactionVisualizer.Models;
 using TransactionVisualizer.Models.ParserModel;
 
@@ -30,9 +31,7 @@ public class FlatAccountToAccount : IFlatToFullConverter<Account , FlatAccount>
 
     public List<Account> ConvertAll(List<FlatAccount> flatAccounts)
     {
-        List<Account> accounts = new List<Account>();
-        flatAccounts.ForEach(account => accounts.Add(Convert(account)));
-        return accounts;
+        return  flatAccounts.Select(Convert).ToList();;
     }
 
     private  AccountType ParsAccountType(string accountType)
@@ -47,7 +46,7 @@ public class FlatAccountToAccount : IFlatToFullConverter<Account , FlatAccount>
                 return AccountType.Sepordeh;
         }
 
-        return AccountType.Pasandaz;
+        throw new EnumParsException(accountType , nameof(AccountType));
     }
 
 

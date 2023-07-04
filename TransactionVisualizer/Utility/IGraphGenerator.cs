@@ -6,9 +6,9 @@ namespace TransactionVisualizer.Utility;
 
 public interface IGraphGenerator<T,U>
 {
-    void GenerateTransactionGraph(List<Transaction> transactions,
-        Account? account);
+    CustomGraph<Account, Transaction> GenerateTransactionGraph(List<Transaction> transactions,
+        Account account);
 
-    void Expand(Account? account, List<Transaction> transactions);
-    CustomGraph<T , U> GetGraph();
+    CustomGraph<Account, Transaction> Expand(Account account, List<Transaction> transactions);
+    
 }

@@ -1,36 +1,34 @@
 using System.Globalization;
+using TransactionVisualizer.Exception;
 using TransactionVisualizer.Models.Transaction;
 
 namespace TransactionVisualizer.Utility.Converters;
 
 public class FlatTransactionToTransaction : IFlatToFullConverter<Models.Transaction.Transaction, FlatTransaction>
 {
-    public Models.Transaction.Transaction Convert(FlatTransaction flatTransaction)
-    {
-        string format = "yyyy/MM/dd";
-        CultureInfo culture = new CultureInfo("fa-IR");
+    private const string Format = "yyyy/MM/dd";
+    private readonly CultureInfo _culture = new CultureInfo("fa-IR");
 
-        return new Models.Transaction.Transaction
+    public Transaction Convert(FlatTransaction flatTransaction)
+    {
+        return new Transaction
         {
             ID = flatTransaction.TransactionID,
             SourceAcount = flatTransaction.SourceAcount,
             DestiantionAccount = flatTransaction.DestiantionAccount,
             TransactionType = ParsTransactionType(flatTransaction.Type),
             Amount = flatTransaction.Amount,
-            Date = DateTime.ParseExact(flatTransaction.Date, format, culture)
+            Date = DateTime.ParseExact(flatTransaction.Date, Format, _culture)
         };
     }
-    
-    
 
-    public List<Models.Transaction.Transaction> ConvertAll(List<FlatTransaction> flatList)
+
+    public List<Transaction> ConvertAll(List<FlatTransaction> flatList)
     {
-        List<Models.Transaction.Transaction> transactions = new List<Models.Transaction.Transaction>();
-        flatList.ForEach(flat => transactions.Add(Convert(flat)));
-        return transactions;
+        return flatList.Select(Convert).ToList();
     }
 
-    
+
     private static TransactionType ParsTransactionType(string transactionType)
     {
         switch (transactionType)
@@ -43,6 +41,6 @@ public class FlatTransactionToTransaction : IFlatToFullConverter<Models.Transact
                 return TransactionType.KartBeKart;
         }
 
-        return TransactionType.KartBeKart;
+        throw new EnumParsException(transactionType , nameof(TransactionType));
     }
 }

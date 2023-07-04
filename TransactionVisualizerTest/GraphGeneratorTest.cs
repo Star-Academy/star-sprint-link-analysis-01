@@ -67,10 +67,10 @@ public class GraphGeneratorTests
 
         // Act
         generator.Expand(accounts[0], transactions);
-        generator.Expand(accounts[1], transactions2);
+        var graph = generator.Expand(accounts[1], transactions2);
         
         // Assert
-        var graph = generator.GetGraph();
+        
         Assert.Contains(accounts[0], graph.Vertex);
         Assert.Contains(accounts[1], graph.Vertex);
         Assert.Equal(accounts[0], graph.Edge[0].Source);

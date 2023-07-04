@@ -2,6 +2,7 @@ using TransactionVisualizer.Models;
 using TransactionVisualizer.Models.ParserModel;
 using TransactionVisualizer.Models.Transaction;
 using TransactionVisualizer.Utility;
+using TransactionVisualizer.Utility.Converters;
 using Xunit.Abstractions;
 
 namespace TransactionVisualizerTest;
@@ -18,7 +19,8 @@ public class TransactionParserTest
     [Fact]
     public void ParseTransactionTest()
     {
-        string path = "E:\\RiderProjects\\Clone\\CodeStarPr\\TransactionVisualizerTest\\Transaction.csv";
+        string path = "/Transaction.csv";
+        path = GetFullPath.ConvertRelativeToAbsolute(path);
         IParser<FlatTransaction> iParser = new Parser<FlatTransaction>();
         FlatTransaction flatTransaction = new FlatTransaction
         {
@@ -30,7 +32,7 @@ public class TransactionParserTest
             Type = "پایا",
         };
 
-
+        
         FlatTransaction flatTransactions = iParser.Pars(path)[0];
 
         // _out.WriteLine(accounts);
@@ -40,7 +42,8 @@ public class TransactionParserTest
     [Fact]
     public void FlatTransactionToTransactionTest()
     {
-        string path = "E:\\RiderProjects\\Clone\\CodeStarPr\\TransactionVisualizerTest\\Transaction.csv";
+        string path = "/Transaction.csv";
+        path = GetFullPath.ConvertRelativeToAbsolute(path);
         IParser<FlatTransaction> iParser = new Parser<FlatTransaction>();
         FlatTransaction flatTransaction = new FlatTransaction
         {
@@ -53,8 +56,8 @@ public class TransactionParserTest
         };
 
         FlatTransaction flatTransactions = iParser.Pars(path)[0];
-
-        Transaction transactionActual = FlatTransactionToTransaction.Convert(flatTransactions);
+        IFlatToFullConverter<Transaction , FlatTransaction> flatToFullConverter = new FlatTransactionToTransaction();
+        Transaction transactionActual = flatToFullConverter.Convert(flatTransactions);
         Transaction transactionExcepted = new Transaction
             {ID = 153348811341,
             SourceAcount = 6534454617,

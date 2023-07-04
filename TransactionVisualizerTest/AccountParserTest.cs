@@ -6,18 +6,14 @@ namespace TransactionVisualizerTest;
 
 public class AccountParserTest
 {
-    private ITestOutputHelper _out;
-
-    public AccountParserTest(ITestOutputHelper @out)
-    {
-        _out = @out;
-    }
-    
     [Fact]
     public void ParseAccountTest()
     {
+        //Arrange
+        
         string path =
-            "/Users/mahdimazaheri/Programming/Mohaymen/TransactionVisualizer/TransactionVisualizerTest/Accounts.csv";
+            "/Accounts.csv";
+        path = GetFullPath.ConvertRelativeToAbsolute(path) ;
         IParser<FlatAccount> iParser = new Parser<FlatAccount>();
         FlatAccount flatAccount = new FlatAccount
         {
@@ -34,9 +30,10 @@ public class AccountParserTest
         };
 
 
+        //Act
         FlatAccount flatAccounts = iParser.Pars(path)[0];
-        
-        // _out.WriteLine(accounts);
+
+        // Assert
         Assert.Equivalent(flatAccounts, flatAccount);
     }
 }

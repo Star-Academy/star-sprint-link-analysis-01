@@ -2,7 +2,6 @@ using System.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 using TransactionVisualizer.Database;
-// using TransactionVisualizer.Database;
 using TransactionVisualizer.Models;
 using TransactionVisualizer.Models.Transaction;
 using Xunit.Abstractions;
@@ -31,14 +30,6 @@ public class DataBaseOperationTest
     [Fact]
     public void InsertRecord_InsertRealRecord_Added()
     {
-        // Account flatAccount = new Account
-        // {
-        //     AccountID = 6534454617,
-        //     CardID = "6104335000000190",
-        //     Sheba = "IR120778801496000000198",
-        //     AccountType = AccountType.Jari,
-        //     Branch = 
-        // };
 
         Branch branch = new Branch();
         branch.Id = 2;

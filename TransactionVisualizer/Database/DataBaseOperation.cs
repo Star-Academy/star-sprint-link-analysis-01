@@ -29,7 +29,7 @@ public class DataBaseOperation : IDataBaseOperation
         {
             _dbContext.SaveChanges();
         }
-        catch (Exception e)
+        catch (System.Exception e)
         {
             return EntityState.Unchanged;
         }
@@ -47,7 +47,7 @@ public class DataBaseOperation : IDataBaseOperation
         {
             _dbContext.SaveChanges();
         }
-        catch (Exception e)
+        catch (System.Exception e)
         {
             //TODO : add extention to EntitySate
             return EntityState.Unchanged;
