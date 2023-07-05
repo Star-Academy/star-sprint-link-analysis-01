@@ -9,7 +9,6 @@ namespace TransactionVisualizerTest;
 
 public class GraphGeneratorTests
 {
-
     [Fact]
     public void GenerateTransactionGraph_ThrowsArgumentNullException_WhenAccountIsNull()
     {

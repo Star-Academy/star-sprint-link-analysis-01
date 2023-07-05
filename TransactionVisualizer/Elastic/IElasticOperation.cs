@@ -1,6 +1,6 @@
 using Nest;
 
-namespace TransactionVisualizerTest;
+namespace TransactionVisualizer.Elastic;
 
 public interface IElasticOperation
 {

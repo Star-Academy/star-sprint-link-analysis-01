@@ -1,5 +1,6 @@
 using Elasticsearch.Net;
 using Nest;
+using TransactionVisualizer.Elastic;
 using TransactionVisualizer.Models.Transaction;
 using Xunit.Abstractions;
 
