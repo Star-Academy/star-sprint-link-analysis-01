@@ -67,9 +67,8 @@ public class MaxFlowTest
     public void FindPaths_LoopForGraphWitheOneVertex_ReturnsOnePath()
     {
         Graph<Account, Transaction> graph = new Graph<Account, Transaction>();
-        Account account_0 = _accounts[0];
-        graph.AddVertex(account_0);
-        Transaction transaction_0 = new Transaction
+        graph.AddVertex(_accounts[0]);
+        Transaction transaction0 = new Transaction
         {
             ID = 0,
             SourceAcount = 0,
@@ -78,9 +77,9 @@ public class MaxFlowTest
             Amount = 1000,
             Date = DateTime.Now,
         };
-        graph.AddEdge(account_0, account_0, transaction_0, 1000);
+        graph.AddEdge(_accounts[0], _accounts[0], transaction0, 1000);
 
-        List<List<Edge<Account, Transaction>>> paths = graph.FindPaths(account_0, account_0, 1000);
+        List<List<Edge<Account, Transaction>>> paths = graph.FindPaths(_accounts[0], _accounts[0], 1000);
 
         Assert.Single(paths);
     }
@@ -89,12 +88,9 @@ public class MaxFlowTest
     public void FindPaths_TwoPathsFromOneVertexToAnotherWithTheSameWeight_ReturnsTwoPath()
     {
         Graph<Account, Transaction> graph = new Graph<Account, Transaction>();
-        Account account_0 = _accounts[0];
-        Account account_1 = _accounts[1];
-
-        graph.AddVertex(account_0);
-        graph.AddVertex(account_1);
-        Transaction transaction_0 = new Transaction
+        graph.AddVertex(_accounts[0]);
+        graph.AddVertex(_accounts[1]);
+        Transaction transaction0 = new Transaction
         {
             ID = 0,
             SourceAcount = 0,
@@ -103,7 +99,7 @@ public class MaxFlowTest
             Amount = 1000,
             Date = DateTime.Now,
         };
-        Transaction transaction_1 = new Transaction
+        Transaction transaction1 = new Transaction
         {
             ID = 1,
             SourceAcount = 0,
@@ -112,10 +108,10 @@ public class MaxFlowTest
             Amount = 1000,
             Date = DateTime.Now,
         };
-        graph.AddEdge(account_0, account_1, transaction_0, 1000);
-        graph.AddEdge(account_0, account_1, transaction_1, 1000);
+        graph.AddEdge(_accounts[0], _accounts[1], transaction0, 1000);
+        graph.AddEdge(_accounts[0], _accounts[1], transaction1, 1000);
 
-        List<List<Edge<Account, Transaction>>> paths = graph.FindPaths(account_0, account_1, 1000);
+        List<List<Edge<Account, Transaction>>> paths = graph.FindPaths(_accounts[0], _accounts[1], 1000);
 
         Assert.Equal(2, paths.Count);
     }
@@ -124,11 +120,9 @@ public class MaxFlowTest
     public void FindPaths_TwoPathsFromOneVertexToAnotherWithTheSameWeightAndInTheOppositeDirection_ReturnsOnePath()
     {
         Graph<Account, Transaction> graph = new Graph<Account, Transaction>();
-        Account account_0 = _accounts[0];
-        Account account_1 = _accounts[1];
-        graph.AddVertex(account_0);
-        graph.AddVertex(account_1);
-        Transaction transaction_0 = new Transaction
+        graph.AddVertex(_accounts[0]);
+        graph.AddVertex(_accounts[1]);
+        Transaction transaction0 = new Transaction
         {
             ID = 0,
             SourceAcount = 0,
@@ -137,7 +131,7 @@ public class MaxFlowTest
             Amount = 1000,
             Date = DateTime.Now,
         };
-        Transaction transaction_1 = new Transaction
+        Transaction transaction1 = new Transaction
         {
             ID = 1,
             SourceAcount = 1,
@@ -146,10 +140,10 @@ public class MaxFlowTest
             Amount = 1000,
             Date = DateTime.Now,
         };
-        graph.AddEdge(account_0, account_1, transaction_0, 1000);
-        graph.AddEdge(account_1, account_0, transaction_1, 1000);
+        graph.AddEdge(_accounts[0], _accounts[1], transaction0, 1000);
+        graph.AddEdge(_accounts[1], _accounts[0], transaction1, 1000);
 
-        List<List<Edge<Account, Transaction>>> paths = graph.FindPaths(account_0, account_1, 1000);
+        List<List<Edge<Account, Transaction>>> paths = graph.FindPaths(_accounts[0], _accounts[1], 1000);
 
         Assert.Single(paths);
     }
@@ -158,11 +152,9 @@ public class MaxFlowTest
     public void FindPaths_TwoPathsFromOneVertexToAnotherWithTheDifferentWeight_ReturnsOnePath()
     {
         Graph<Account, Transaction> graph = new Graph<Account, Transaction>();
-        Account account_0 = _accounts[0];
-        Account account_1 = _accounts[1];
-        graph.AddVertex(account_0);
-        graph.AddVertex(account_1);
-        Transaction transaction_0 = new Transaction
+        graph.AddVertex(_accounts[0]);
+        graph.AddVertex(_accounts[1]);
+        Transaction transaction0 = new Transaction
         {
             ID = 0,
             SourceAcount = 0,
@@ -171,7 +163,7 @@ public class MaxFlowTest
             Amount = 10000,
             Date = DateTime.Now,
         };
-        Transaction transaction_1 = new Transaction
+        Transaction transaction1 = new Transaction
         {
             ID = 1,
             SourceAcount = 0,
@@ -180,10 +172,10 @@ public class MaxFlowTest
             Amount = 1000,
             Date = DateTime.Now,
         };
-        graph.AddEdge(account_0, account_1, transaction_0, 10000);
-        graph.AddEdge(account_0, account_1, transaction_1, 1000);
+        graph.AddEdge(_accounts[0], _accounts[1], transaction0, 10000);
+        graph.AddEdge(_accounts[0], _accounts[1], transaction1, 1000);
 
-        List<List<Edge<Account, Transaction>>> paths = graph.FindPaths(account_0, account_1, 1000);
+        List<List<Edge<Account, Transaction>>> paths = graph.FindPaths(_accounts[0], _accounts[1], 1000);
 
         Assert.Single(paths);
     }
@@ -192,11 +184,11 @@ public class MaxFlowTest
     public void FindPaths_ThreePathsFromOneVertexToAnotherWithTheOneDifferentWeight_ReturnsTwoPath()
     {
         Graph<Account, Transaction> graph = new Graph<Account, Transaction>();
-        Account account_0 = _accounts[0];
-        Account account_1 = _accounts[1];
-        graph.AddVertex(account_0);
-        graph.AddVertex(account_1);
-        Transaction transaction_0 = new Transaction
+
+
+        graph.AddVertex(_accounts[0]);
+        graph.AddVertex(_accounts[1]);
+        Transaction transaction0 = new Transaction
         {
             ID = 0,
             SourceAcount = 0,
@@ -205,7 +197,7 @@ public class MaxFlowTest
             Amount = 10000,
             Date = DateTime.Now,
         };
-        Transaction transaction_1 = new Transaction
+        Transaction transaction1 = new Transaction
         {
             ID = 1,
             SourceAcount = 0,
@@ -214,7 +206,7 @@ public class MaxFlowTest
             Amount = 1000,
             Date = DateTime.Now,
         };
-        Transaction transaction_2 = new Transaction
+        Transaction transaction2 = new Transaction
         {
             ID = 2,
             SourceAcount = 0,
@@ -223,11 +215,11 @@ public class MaxFlowTest
             Amount = 1000,
             Date = DateTime.Now,
         };
-        graph.AddEdge(account_0, account_1, transaction_0, 10000);
-        graph.AddEdge(account_0, account_1, transaction_1, 1000);
-        graph.AddEdge(account_0, account_1, transaction_2, 1000);
+        graph.AddEdge(_accounts[0], _accounts[1], transaction0, 10000);
+        graph.AddEdge(_accounts[0], _accounts[1], transaction1, 1000);
+        graph.AddEdge(_accounts[0], _accounts[1], transaction2, 1000);
 
-        List<List<Edge<Account, Transaction>>> paths = graph.FindPaths(account_0, account_1, 1000);
+        List<List<Edge<Account, Transaction>>> paths = graph.FindPaths(_accounts[0], _accounts[1], 1000);
 
         Assert.Equal(2, paths.Count);
     }
@@ -236,31 +228,10 @@ public class MaxFlowTest
     public void FindPaths_3Vertexes1_ReturnsOnePath()
     {
         Graph<Account, Transaction> graph = new Graph<Account, Transaction>();
-        Account account_0 = _accounts[0];
-        Account account_1 = _accounts[1];
-        Account account_2 = _accounts[2];
-        graph.AddVertex(account_0);
-        graph.AddVertex(account_1);
-        graph.AddVertex(account_2);
-        Transaction transaction_0 = new Transaction
-        {
-            ID = 0,
-            SourceAcount = 0,
-            DestiantionAccount = 1,
-            TransactionType = TransactionType.Paya,
-            Amount = 1000,
-            Date = DateTime.Now,
-        };
-        Transaction transaction_1 = new Transaction
-        {
-            ID = 1,
-            SourceAcount = 1,
-            DestiantionAccount = 2,
-            TransactionType = TransactionType.Paya,
-            Amount = 1000,
-            Date = DateTime.Now,
-        };
-        Transaction transaction_2 = new Transaction
+        graph.AddVertex(_accounts[0]);
+        graph.AddVertex(_accounts[1]);
+        graph.AddVertex(_accounts[2]);
+        Transaction transaction2 = new Transaction
         {
             ID = 2,
             SourceAcount = 0,
@@ -269,7 +240,7 @@ public class MaxFlowTest
             Amount = 1000,
             Date = DateTime.Now,
         };
-        Transaction transaction_3 = new Transaction
+        Transaction transaction3 = new Transaction
         {
             ID = 3,
             SourceAcount = 2,
@@ -278,29 +249,11 @@ public class MaxFlowTest
             Amount = 1000,
             Date = DateTime.Now,
         };
-        Transaction transaction_4 = new Transaction
-        {
-            ID = 4,
-            SourceAcount = 0,
-            DestiantionAccount = 1,
-            TransactionType = TransactionType.Paya,
-            Amount = 10000,
-            Date = DateTime.Now,
-        };
-        Transaction transaction_5 = new Transaction
-        {
-            ID = 5,
-            SourceAcount = 1,
-            DestiantionAccount = 2,
-            TransactionType = TransactionType.Paya,
-            Amount = 10000,
-            Date = DateTime.Now,
-        };
-        graph.AddEdge(account_0, account_1, transaction_2, 1000);
-        graph.AddEdge(account_2, account_1, transaction_3, 1000);
+        graph.AddEdge(_accounts[0], _accounts[1], transaction2, 1000);
+        graph.AddEdge(_accounts[2], _accounts[1], transaction3, 1000);
 
 
-        List<List<Edge<Account, Transaction>>> paths = graph.FindPaths(account_0, account_2, 2000);
+        List<List<Edge<Account, Transaction>>> paths = graph.FindPaths(_accounts[0], _accounts[2], 2000);
 
         Assert.Empty(paths);
     }
@@ -309,13 +262,10 @@ public class MaxFlowTest
     public void FindPaths_3Vertexes2_ReturnsOnePath()
     {
         Graph<Account, Transaction> graph = new Graph<Account, Transaction>();
-        Account account_0 = _accounts[0];
-        Account account_1 = _accounts[1];
-        Account account_2 = _accounts[2];
-        graph.AddVertex(account_0);
-        graph.AddVertex(account_1);
-        graph.AddVertex(account_2);
-        Transaction transaction_0 = new Transaction
+        graph.AddVertex(_accounts[0]);
+        graph.AddVertex(_accounts[1]);
+        graph.AddVertex(_accounts[2]);
+        Transaction transaction0 = new Transaction
         {
             ID = 0,
             SourceAcount = 0,
@@ -324,7 +274,7 @@ public class MaxFlowTest
             Amount = 1000,
             Date = DateTime.Now,
         };
-        Transaction transaction_1 = new Transaction
+        Transaction transaction1 = new Transaction
         {
             ID = 1,
             SourceAcount = 1,
@@ -333,10 +283,10 @@ public class MaxFlowTest
             Amount = 1000,
             Date = DateTime.Now,
         };
-        graph.AddEdge(account_0, account_1, transaction_0, 1000);
-        graph.AddEdge(account_1, account_2, transaction_1, 1000);
+        graph.AddEdge(_accounts[0], _accounts[1], transaction0, 1000);
+        graph.AddEdge(_accounts[1], _accounts[2], transaction1, 1000);
 
-        List<List<Edge<Account, Transaction>>> paths = graph.FindPaths(account_0, account_2, 2000);
+        List<List<Edge<Account, Transaction>>> paths = graph.FindPaths(_accounts[0], _accounts[2], 2000);
 
         Assert.Single(paths);
     }
@@ -345,13 +295,10 @@ public class MaxFlowTest
     public void FindPaths_3Vertexes3_ReturnsOnePath()
     {
         Graph<Account, Transaction> graph = new Graph<Account, Transaction>();
-        Account account_0 = _accounts[0];
-        Account account_1 = _accounts[1];
-        Account account_2 = _accounts[2];
-        graph.AddVertex(account_0);
-        graph.AddVertex(account_1);
-        graph.AddVertex(account_2);
-        Transaction transaction_0 = new Transaction
+        graph.AddVertex(_accounts[0]);
+        graph.AddVertex(_accounts[1]);
+        graph.AddVertex(_accounts[2]);
+        Transaction transaction0 = new Transaction
         {
             ID = 0,
             SourceAcount = 0,
@@ -360,7 +307,7 @@ public class MaxFlowTest
             Amount = 1000,
             Date = DateTime.Now,
         };
-        Transaction transaction_1 = new Transaction
+        Transaction transaction1 = new Transaction
         {
             ID = 1,
             SourceAcount = 1,
@@ -369,7 +316,7 @@ public class MaxFlowTest
             Amount = 1000,
             Date = DateTime.Now,
         };
-        Transaction transaction_2 = new Transaction
+        Transaction transaction2 = new Transaction
         {
             ID = 2,
             SourceAcount = 0,
@@ -378,7 +325,7 @@ public class MaxFlowTest
             Amount = 1000,
             Date = DateTime.Now,
         };
-        Transaction transaction_3 = new Transaction
+        Transaction transaction3 = new Transaction
         {
             ID = 3,
             SourceAcount = 2,
@@ -387,28 +334,12 @@ public class MaxFlowTest
             Amount = 1000,
             Date = DateTime.Now,
         };
-        graph.AddEdge(account_0, account_1, transaction_0, 1000);
-        graph.AddEdge(account_1, account_2, transaction_1, 1000);
-        graph.AddEdge(account_0, account_1, transaction_2, 1000);
-        graph.AddEdge(account_2, account_1, transaction_3, 1000);
+        graph.AddEdge(_accounts[0], _accounts[1], transaction0, 1000);
+        graph.AddEdge(_accounts[1], _accounts[2], transaction1, 1000);
+        graph.AddEdge(_accounts[0], _accounts[1], transaction2, 1000);
+        graph.AddEdge(_accounts[2], _accounts[1], transaction3, 1000);
 
-        List<long> acc = new List<long>();
-        acc.Add(0);
-        acc.Add(1);
-        acc.Add(2);
-        
-        List<Transaction> trs = new List<Transaction>();
-        trs.Add(transaction_0);
-        trs.Add(transaction_1);
-        trs.Add(transaction_2);
-        trs.Add(transaction_3);
-        
-        Graph<long, Transaction> transactionsNetworkGraphCreator = new TransactionsNetworkGraphCreator(
-            acc,
-            trs
-            ).CreateTransactionsNetworkGraph();
-
-            List<List<Edge<long, Transaction>>> paths = transactionsNetworkGraphCreator.FindPaths(0, 2, 2000);
+        List<List<Edge<Account, Transaction>>> paths = graph.FindPaths(_accounts[0], _accounts[2], 2000);
 
         Assert.Equal(2, paths.Count);
     }
@@ -432,31 +363,32 @@ public class TransactionsNetworkGraphCreator
         {
             edges.Add(new Edge<long, Transaction>(edge.SourceAcount, edge.DestiantionAccount, edge, edge.Amount));
         }
+
         return new GraphCreator<long, Transaction>(_accounts, edges).CreateGraph();
     }
 }
 
-public class GraphCreator<T, U>
+public class GraphCreator<TVertex, TEdge> where TVertex : notnull
 {
-    private List<T> Vertexes { get; set; }
-    private List<Edge<T, U>> Edges { get; set; }
+    private List<TVertex> Vertexes { get; set; }
+    private List<Edge<TVertex, TEdge>> Edges { get; set; }
 
-    public GraphCreator(List<T> vertexes, List<Edge<T, U>> edges)
+    public GraphCreator(List<TVertex> vertexes, List<Edge<TVertex, TEdge>> edges)
     {
         Vertexes = vertexes;
         Edges = edges;
     }
 
-    public Graph<T, U> CreateGraph()
+    public Graph<TVertex, TEdge> CreateGraph()
     {
-        Graph<T, U> graph = new Graph<T, U>();
+        Graph<TVertex, TEdge> graph = new Graph<TVertex, TEdge>();
 
-        foreach (T vertex in Vertexes)
+        foreach (TVertex vertex in Vertexes)
         {
             graph.AddVertex(vertex);
         }
 
-        foreach (Edge<T, U> edge in Edges)
+        foreach (Edge<TVertex, TEdge> edge in Edges)
         {
             graph.AddEdge(edge.Source, edge.Destination, edge.Information, edge.Weight);
         }
@@ -465,14 +397,14 @@ public class GraphCreator<T, U>
     }
 }
 
-public class Edge<T, U>
+public class Edge<TVertex, TEdge>
 {
-    public T Source { get; }
-    public T Destination { get; }
-    public U Information { get; }
+    public TVertex Source { get; }
+    public TVertex Destination { get; }
+    public TEdge Information { get; }
     public decimal Weight { get; set; }
 
-    public Edge(T source, T destination, U information, decimal weight)
+    public Edge(TVertex source, TVertex destination, TEdge information, decimal weight)
     {
         Source = source;
         Destination = destination;
@@ -481,29 +413,29 @@ public class Edge<T, U>
     }
 }
 
-public class Graph<T, U>
+public class Graph<TVertex, TEdge> where TVertex : notnull
 {
-    private readonly Dictionary<T, List<Edge<T, U>>> _adjacencyList;
+    private readonly Dictionary<TVertex, List<Edge<TVertex, TEdge>>> _adjacencyList;
 
     public Graph()
     {
-        _adjacencyList = new Dictionary<T, List<Edge<T, U>>>();
+        _adjacencyList = new Dictionary<TVertex, List<Edge<TVertex, TEdge>>>();
     }
 
-    public void AddVertex(T vertex)
+    public void AddVertex(TVertex vertex)
     {
-        _adjacencyList[vertex] = new List<Edge<T, U>>();
+        _adjacencyList[vertex] = new List<Edge<TVertex, TEdge>>();
     }
 
-    public void AddEdge(T source, T destination, U information, decimal weight)
+    public void AddEdge(TVertex source, TVertex destination, TEdge information, decimal weight)
     {
-        _adjacencyList[source].Add(new Edge<T, U>(source, destination, information, weight));
+        _adjacencyList[source].Add(new Edge<TVertex, TEdge>(source, destination, information, weight));
     }
 
-    public List<List<Edge<T, U>>> FindPaths(T startVertex, T endVertex, int weightOfPaths)
+    public List<List<Edge<TVertex, TEdge>>> FindPaths(TVertex startVertex, TVertex endVertex, int weightOfPaths)
     {
-        List<List<Edge<T, U>>> paths = new List<List<Edge<T, U>>>();
-        List<Edge<T, U>> currentPath = new List<Edge<T, U>>();
+        List<List<Edge<TVertex, TEdge>>> paths = new List<List<Edge<TVertex, TEdge>>>();
+        List<Edge<TVertex, TEdge>> currentPath = new List<Edge<TVertex, TEdge>>();
 
 
         DepthFirstSearch(startVertex, endVertex, weightOfPaths, 0, currentPath, paths);
@@ -512,23 +444,23 @@ public class Graph<T, U>
     }
 
     private void DepthFirstSearch(
-        T currentVertex,
-        T endVertex,
+        TVertex currentVertex,
+        TVertex endVertex,
         decimal weightOfPaths,
         decimal currentWeightOfPaths,
-        List<Edge<T, U>> currentPath,
-        List<List<Edge<T, U>>> paths
+        List<Edge<TVertex, TEdge>> currentPath,
+        List<List<Edge<TVertex, TEdge>>> paths
     )
     {
         if (currentVertex.Equals(endVertex) && currentWeightOfPaths == weightOfPaths)
         {
-            paths.Add(new List<Edge<T, U>>(currentPath));
+            paths.Add(new List<Edge<TVertex, TEdge>>(currentPath));
 
             currentPath.Clear();
         }
         else
         {
-            foreach (Edge<T, U> edge in _adjacencyList[currentVertex])
+            foreach (Edge<TVertex, TEdge> edge in _adjacencyList[currentVertex])
             {
                 currentPath.Add(edge);
 
@@ -543,143 +475,3 @@ public class Graph<T, U>
         }
     }
 }
-
-// public class TransactionsNetworkGraphCreator
-// {
-//     private List<long> _accounts;
-//     private List<Transaction> _transactions;
-//
-//     public TransactionsNetworkGraphCreator(List<long> accounts, List<Transaction> transactions)
-//     {
-//         _accounts = accounts;
-//         _transactions = transactions;
-//     }
-//
-//     public Graph<long, Transaction> CreateTransactionsNetworkGraph()
-//     {
-//         List<Edge<long, Transaction>> edges = new List<Edge<long, Transaction>>();
-//         foreach (Transaction edge in _transactions)
-//         {
-//             edges.Add(new Edge<long, Transaction>(new Vertex<long>(edge.SourceAcount), new Vertex<long>(edge.DestiantionAccount), edge, edge.Amount));
-//         }
-//         return new GraphCreator<long, Transaction>(_accounts, edges).CreateGraph();
-//     }
-// }
-//
-// public class GraphCreator<T, U>
-// {
-//     private List<T> Vertexes { get; set; }
-//     private List<Edge<T, U>> Edges { get; set; }
-//
-//     public GraphCreator(List<T> vertexes, List<Edge<T, U>> edges)
-//     {
-//         Vertexes = vertexes;
-//         Edges = edges;
-//     }
-//
-//     public Graph<T, U> CreateGraph()
-//     {
-//         Graph<T, U> graph = new Graph<T, U>();
-//
-//         foreach (T vertex in Vertexes)
-//         {
-//             graph.AddVertex(new Vertex<T>(vertex));
-//         }
-//
-//         foreach (Edge<T, U> edge in Edges)
-//         {
-//             graph.AddEdge(edge.Source, edge.Destination, edge.Information, edge.Weight);
-//         }
-//
-//         return graph;
-//     }
-// }
-//
-// public class Vertex<T>
-// {
-//     public T Data { get; set; }
-//
-//     public Vertex(T data)
-//     {
-//         Data = data;
-//     }
-// }
-//
-// public class Edge<T, U>
-// {
-//     public Vertex<T> Source { get; }
-//     public Vertex<T> Destination { get; }
-//     public U Information { get; }
-//     public decimal Weight { get; set; }
-//
-//     public Edge(Vertex<T> source, Vertex<T> destination, U information, decimal weight)
-//     {
-//         Source = source;
-//         Destination = destination;
-//         Information = information;
-//         Weight = weight;
-//     }
-// }
-//
-// public class Graph<T, U>
-// {
-//     private readonly Dictionary<Vertex<T>, List<Edge<T, U>>> _adjacencyList;
-//
-//     public Graph()
-//     {
-//         _adjacencyList = new Dictionary<Vertex<T>, List<Edge<T, U>>>();
-//     }
-//
-//     public void AddVertex(Vertex<T> vertex)
-//     {
-//         _adjacencyList[vertex] = new List<Edge<T, U>>();
-//     }
-//
-//     public void AddEdge(Vertex<T> source, Vertex<T> destination, U information, decimal weight)
-//     {
-//         _adjacencyList[source].Add(new Edge<T, U>(source, destination, information, weight));
-//     }
-//
-//     public List<List<Edge<T, U>>> FindPaths(Vertex<T> startVertex, Vertex<T> endVertex, int weightOfPaths)
-//     {
-//         List<List<Edge<T, U>>> paths = new List<List<Edge<T, U>>>();
-//         List<Edge<T, U>> currentPath = new List<Edge<T, U>>();
-//
-//
-//         DepthFirstSearch(startVertex, endVertex, weightOfPaths, 0, currentPath, paths);
-//
-//         return paths;
-//     }
-//
-//     private void DepthFirstSearch(
-//         Vertex<T> currentVertex,
-//         Vertex<T> endVertex,
-//         decimal weightOfPaths,
-//         decimal currentWeightOfPaths,
-//         List<Edge<T, U>> currentPath,
-//         List<List<Edge<T, U>>> paths
-//     )
-//     {
-//         if (currentVertex == endVertex && currentWeightOfPaths == weightOfPaths)
-//         {
-//             paths.Add(new List<Edge<T, U>>(currentPath));
-//
-//             currentPath.Clear();
-//         }
-//         else
-//         {
-//             foreach (Edge<T, U> edge in _adjacencyList[currentVertex])
-//             {
-//                 currentPath.Add(edge);
-//
-//                 DepthFirstSearch(edge.Destination,
-//                     endVertex,
-//                     weightOfPaths,
-//                     currentWeightOfPaths + edge.Weight,
-//                     currentPath,
-//                     paths
-//                 );
-//             }
-//         }
-//     }
-// }
