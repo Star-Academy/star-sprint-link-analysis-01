@@ -1,3 +1,5 @@
+using FluentAssertions;
+using FluentAssertions.Execution;
 using TransactionVisualizer;
 using TransactionVisualizer.Models;
 using TransactionVisualizer.Models.Transaction;
@@ -17,9 +19,9 @@ public class GraphGeneratorTests
         {
             new Transaction { ID = 1, SourceAcount = 1, DestiantionAccount = 2, Amount = 100 }
         };
-
+        var act = generator.GenerateTransactionGraph(transactions, null);
         // Act & Assert
-        Assert.Throws<ArgumentNullException>(() => generator.GenerateTransactionGraph(transactions, null));
+        Assert.Throws<ArgumentNullException>(() => act);
     }
 
     [Fact]

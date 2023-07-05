@@ -2,7 +2,7 @@ namespace TransactionVisualizer.Models.Transaction;
 
 public enum TransactionType
 {
-    Satna,
-    Paya,
-    KartBeKart,
+    Satna=0,
+    Paya=1,
+    KartBeKart=2,
 }

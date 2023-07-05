@@ -1,22 +1,23 @@
 namespace TransactionVisualizer.Models.Graph;
 
-public class CustomGraph<U , T> 
+public class CustomGraph<TVertex, TEdge> where TVertex : class where TEdge : class
 {
-    public List<U> Vertex { get; set; }
-    public List<Edge<T, U>> Edge { get; set; }
+    public List<TVertex> Vertex { get; }
+    public List<Edge<TVertex, TEdge>> Edge { get; }
 
     public CustomGraph()
     {
-        Vertex = new List<U>();
-        Edge = new List<Edge<T, U>>();
+        Vertex = new List<TVertex>();
+        Edge = new List<Edge<TVertex, TEdge>>();
     }
-    public void AddVertex(U vertex)
+
+    public void AddVertex(TVertex vertex)
     {
         Vertex.Add(vertex);
     }
-   
-    public void AddEdge(T content , U source, U destination)
+
+    public void AddEdge(Edge<TVertex, TEdge> edge)
     {
-        Edge.Add(new Edge<T ,U>(content , source , destination));
+        Edge.Add(edge);
     }
 }

@@ -1,6 +1,7 @@
 using System.Globalization;
 using TransactionVisualizer.Exception;
 using TransactionVisualizer.Models.Transaction;
+using static TransactionVisualizer.Utility.Constants.TransactionRelatedConstants;
 
 namespace TransactionVisualizer.Utility.Converters;
 
@@ -31,13 +32,14 @@ public class FlatTransactionToTransaction : IFlatToFullConverter<Models.Transact
 
     private static TransactionType ParsTransactionType(string transactionType)
     {
+        
         switch (transactionType)
         {
-            case "ساتنا":
+            case Satna:
                 return TransactionType.Satna;
-            case "پایا":
+            case Paya:
                 return TransactionType.Paya;
-            case "کارت به کارت":
+            case CartBeCart:
                 return TransactionType.KartBeKart;
         }
 

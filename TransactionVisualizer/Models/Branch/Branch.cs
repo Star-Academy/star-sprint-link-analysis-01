@@ -4,7 +4,6 @@ namespace TransactionVisualizer.Models;
 
 public class Branch
 {
-    
     [Key]
     public long Id { get; set; }
     public string Telephone { get; set; }

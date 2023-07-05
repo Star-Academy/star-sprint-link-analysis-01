@@ -23,6 +23,8 @@ public class DataBaseOperationTest
     [Fact]
     public void InsertBulk_NullBulkPass_ThrowNullException()
     {
+        
+        
         Assert.Throws<ArgumentNullException>(() =>
             _dataBaseOperation.InsertBulk<ClassNotStoredInDatabaseTest>(new List<ClassNotStoredInDatabaseTest>()));
     }
@@ -31,7 +33,7 @@ public class DataBaseOperationTest
     public void InsertRecord_InsertRealRecord_Added()
     {
 
-        Branch branch = new Branch();
+        var branch = new Branch();
         branch.Id = 2;
         branch.Address = "تهران-خیابان خیام-بالاتر از چهارراه گلوبندک";
         branch.Name = "گلوبندک";
@@ -45,7 +47,7 @@ public class DataBaseOperationTest
     [Fact]
     public void InsertRecord_DuplicatedRecord_UnChangedState()
     {
-        Branch branch = new Branch();
+        var branch = new Branch();
         branch.Id = 1;
         branch.Address = "تهران-خیابان خیام-بالاتر از چهارراه گلوبندک";
         branch.Name = "گلوبندک";
@@ -86,7 +88,7 @@ public class DataBaseOperationTest
     [Fact]
     public void SelectRecord_NonExistId_ThrowNullException()
     {
-        Account? account = _dataBaseOperation.SelectRecord<Account>(1);
+        var account = _dataBaseOperation.SelectRecord<Account>(1);
         
         Assert.Null(account);
     }
@@ -95,7 +97,7 @@ public class DataBaseOperationTest
     public void SelectRecord_ReturnRecord_True()
     {
         
-        Branch? account = _dataBaseOperation.SelectRecord<Branch>(1);
+        var account = _dataBaseOperation.SelectRecord<Branch>(1);
 
         Assert.Equal(1, account.Id);
 
@@ -134,7 +136,7 @@ public class DataBaseOperationTest
         _dataBaseOperation.InsertRecord(branch);
         
         
-        EntityState actual = _dataBaseOperation.InsertBulk(new List<Branch> { branch });
+        var actual = _dataBaseOperation.InsertBulk(new List<Branch> { branch });
         Assert.Equal(EntityState.Unchanged,actual);
     }
     [Fact]
@@ -149,7 +151,7 @@ public class DataBaseOperationTest
         
         
         
-        EntityState actual = _dataBaseOperation.InsertBulk(new List<Branch> { branch });
+        var actual = _dataBaseOperation.InsertBulk(new List<Branch> { branch });
         Assert.Equal(EntityState.Added,actual);
     }
 }

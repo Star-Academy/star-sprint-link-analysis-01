@@ -2,7 +2,7 @@ namespace TransactionVisualizer.Models;
 
 public enum AccountType
 {
-    Jari,
-    Sepordeh,
-    Pasandaz
+    Jari=0,
+    Sepordeh=1,
+    Pasandaz=2
 }

@@ -2,7 +2,7 @@ using TransactionVisualizer.Models;
 using TransactionVisualizer.Models.Graph;
 using TransactionVisualizer.Models.Transaction;
 
-namespace TransactionVisualizer.Utility;
+namespace TransactionVisualizer.Utility.ParserUtils;
 
 public interface IGraphGenerator<T,U>
 {

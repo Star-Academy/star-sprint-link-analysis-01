@@ -1,7 +1,7 @@
 using TransactionVisualizer.Exception;
 using TransactionVisualizer.Models;
 using TransactionVisualizer.Models.ParserModel;
-
+using static TransactionVisualizer.Utility.Constants.AccountRelatedConstants;
 namespace TransactionVisualizer.Utility.Converters;
 
 public class FlatAccountToAccount : IFlatToFullConverter<Account , FlatAccount>
@@ -14,18 +14,28 @@ public class FlatAccountToAccount : IFlatToFullConverter<Account , FlatAccount>
             CardID = flatAccount.CardID,
             Sheba = flatAccount.Sheba,
             AccountType = ParsAccountType(flatAccount.AccountType),
-            Branch = new Branch
-            {
-                Name = flatAccount.BranchName,
-                Address = flatAccount.BranchAdress,
-                Telephone = flatAccount.BranchTelephone
-            },
-            Owner = new Owner
-            {
-                ID = flatAccount.OwnerID,
-                Name = flatAccount.OwnerName,
-                FamilyName = flatAccount.OwnerFamilyName
-            }
+            Branch = ConvertBranch(flatAccount),
+            Owner = ConvertOwner(flatAccount)
+        };
+    }
+
+    private static Owner ConvertOwner(FlatAccount flatAccount)
+    {
+        return new Owner
+        {
+            ID = flatAccount.OwnerID,
+            Name = flatAccount.OwnerName,
+            FamilyName = flatAccount.OwnerFamilyName
+        };
+    }
+
+    private static Branch ConvertBranch(FlatAccount flatAccount)
+    {
+        return new Branch
+        {
+            Name = flatAccount.BranchName,
+            Address = flatAccount.BranchAdress,
+            Telephone = flatAccount.BranchTelephone
         };
     }
 
@@ -36,13 +46,14 @@ public class FlatAccountToAccount : IFlatToFullConverter<Account , FlatAccount>
 
     private  AccountType ParsAccountType(string accountType)
     {
+        
         switch (accountType)
         {
-            case "پس انداز":
+            case PasAndaz:
                 return AccountType.Pasandaz;
-            case "جاری":
+            case Jari:
                 return AccountType.Jari;
-            case "سپرده":
+            case Sepordeh:
                 return AccountType.Sepordeh;
         }
 

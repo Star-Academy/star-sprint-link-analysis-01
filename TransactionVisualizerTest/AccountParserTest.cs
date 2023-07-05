@@ -1,5 +1,6 @@
 using TransactionVisualizer.Models;
 using TransactionVisualizer.Models.ParserModel;
+using TransactionVisualizer.Utility.ParserUtils;
 using Xunit.Abstractions;
 
 namespace TransactionVisualizerTest;

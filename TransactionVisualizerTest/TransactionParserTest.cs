@@ -3,6 +3,7 @@ using TransactionVisualizer.Models.ParserModel;
 using TransactionVisualizer.Models.Transaction;
 using TransactionVisualizer.Utility;
 using TransactionVisualizer.Utility.Converters;
+using TransactionVisualizer.Utility.ParserUtils;
 using Xunit.Abstractions;
 
 namespace TransactionVisualizerTest;
@@ -10,10 +11,9 @@ namespace TransactionVisualizerTest;
 public class TransactionParserTest
 {
     private ITestOutputHelper _out;
-
     public TransactionParserTest(ITestOutputHelper @out)
     {
-        _out = @out;
+        _out = @out != null ? @out : throw new ArgumentNullException();
     }
 
     [Fact]

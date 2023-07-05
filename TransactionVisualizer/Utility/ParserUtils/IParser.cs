@@ -1,4 +1,4 @@
-namespace TransactionVisualizerTest;
+namespace TransactionVisualizer.Utility.ParserUtils;
 
 public interface IParser<T>
 {

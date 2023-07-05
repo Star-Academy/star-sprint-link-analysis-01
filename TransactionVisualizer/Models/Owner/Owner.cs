@@ -5,7 +5,6 @@ namespace TransactionVisualizer.Models;
 
 public class Owner
 {
-    
     [Key]
     public long ID { get; set; }
     public string Name { get; set; }
