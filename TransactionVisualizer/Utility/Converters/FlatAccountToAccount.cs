@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using TransactionVisualizer.Exception;
 using TransactionVisualizer.Models;
 using TransactionVisualizer.Models.ParserModel;

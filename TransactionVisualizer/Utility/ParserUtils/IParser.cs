@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace TransactionVisualizer.Utility.ParserUtils;
 
 public interface IParser<T>

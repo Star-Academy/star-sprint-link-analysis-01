@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace TransactionVisualizer.Models.Graph;
 
 public class CustomGraph<TVertex, TEdge> where TVertex : class where TEdge : class

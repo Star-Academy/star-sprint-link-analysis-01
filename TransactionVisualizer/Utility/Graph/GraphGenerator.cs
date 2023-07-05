@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using TransactionVisualizer.Exception;
 using TransactionVisualizer.Models;
 using TransactionVisualizer.Models.Graph;

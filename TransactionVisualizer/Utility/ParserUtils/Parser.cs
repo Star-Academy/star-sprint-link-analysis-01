@@ -1,4 +1,7 @@
+using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
+using System.Linq;
 using CsvHelper;
 
 namespace TransactionVisualizer.Utility.ParserUtils;
