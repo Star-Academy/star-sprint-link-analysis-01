@@ -1,15 +1,15 @@
-namespace TransactionVisualizer.Models.ParserModel;
+namespace TransactionVisualizer.Models.Account;
 
 public class FlatAccount
 {
-    public long AccountID { get; set; }
-    public string CardID { get; set; }
-    public string Sheba { get; set; }
-    public string AccountType { get; set; }
-    public string BranchTelephone { get; set; }
-    public string BranchAdress { get; set; }
-    public string BranchName { get; set; }
-    public string OwnerName { get; set; }
-    public string OwnerFamilyName { get; set; }
-    public long OwnerID { get; set; }
+    public long AccountId { get; init; }
+    public string CardId { get; init; }
+    public string Sheba { get; init; }
+    public string AccountType { get; init; }
+    public string BranchTelephone { get; init; }
+    public string BranchAdress { get; init; }
+    public string BranchName { get; init; }
+    public string OwnerName { get; init; }
+    public string OwnerFamilyName { get; init; }
+    public long OwnerId { get; init; }
 }

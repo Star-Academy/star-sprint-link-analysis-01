@@ -1,17 +1,13 @@
-using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace TransactionVisualizer.Models.Transaction;
 
 public class Transaction
 {
-    [Key]
-    public long ID { get; set; }
-    public long SourceAcount { set; get; }
-    public long  DestiantionAccount { set; get; }
-    public TransactionType TransactionType { set; get; }
-    public decimal Amount { set; get; }
-    public DateTime Date { set; get; }
-
-   
+    [Key] public long Id { get; set; }
+    public long SourceAccountId { get; init; }
+    public long DestinationAccountId { get; init; }
+    public TransactionType TransactionType { get; set; }
+    public decimal Amount { get; set; }
+    public DateTime Date { get; init; }
 }

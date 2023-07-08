@@ -17,7 +17,6 @@ public class ElasticDataRepository : IDataRepository
         _client = new ElasticClient(new ConnectionSettings(new Uri(url)).DefaultIndex(name));
     }
 
-
     public DataManipulationResponse InsertAll<TResponse>(List<TResponse> records) where TResponse : class
     {
         Validator.ListValidation(records);
@@ -41,7 +40,6 @@ public class ElasticDataRepository : IDataRepository
         return DataManipulationResponseBuilder.Build(!response.IsValid);
     }
 
-
     //TODO : Generify search selector 
     public DataGainResponse<TResponse> Search<TResponse>(Func<SearchDescriptor<TResponse>, ISearchRequest> selector)
         where TResponse : class
@@ -58,6 +56,4 @@ public class ElasticDataRepository : IDataRepository
     {
         throw new NotImplementedException();
     }
-    
-    
 }

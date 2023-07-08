@@ -1,9 +1,8 @@
-using System.Collections.Generic;
-
 namespace TransactionVisualizer.DataRepository;
 
 public class DataGainResponse<TResponse>
 {
-    public bool Error { get; set; }
-    public List<TResponse>? Items { get; set; }
+    public bool Error { get; init; }
+
+    public List<TResponse>? Items { get; init; }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using TransactionVisualizer.Exception;
 using TransactionVisualizer.Models;
+using TransactionVisualizer.Models.Account;
 using TransactionVisualizer.Models.Graph;
 using TransactionVisualizer.Models.Transaction;
 using TransactionVisualizer.Utility.Builder;
@@ -41,8 +42,8 @@ public class GraphGenerator : IGraphGenerator<Account, Transaction>
 
         transactions.ForEach(transaction =>
             {
-                var source = Accounts.Find(acc => acc.AccountID == transaction.SourceAcount);
-                var destination = Accounts.Find(acc => acc.AccountID == transaction.DestiantionAccount);
+                var source = Accounts.Find(acc => acc.AccountId == transaction.SourceAccountId);
+                var destination = Accounts.Find(acc => acc.AccountId == transaction.DestinationAccountId);
 
                 Validation(source, destination);
 

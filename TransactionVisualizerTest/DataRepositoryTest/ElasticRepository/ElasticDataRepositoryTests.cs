@@ -7,6 +7,8 @@ namespace TransactionVisualizerTest.DataRepositoryTest.ElasticRepository;
 
 public class ElasticDataRepositoryTests
 {
+    //TODO : Setup and mock Elastic data repo
+
     private const string Url = "http://localhost:9200";
     private const string IndexName = "test-index";
 
@@ -17,7 +19,6 @@ public class ElasticDataRepositoryTests
         _repository = new ElasticDataRepository(Url, IndexName);
     }
 
-    //TODO : Setup and mock Elastic data repo
     [Fact]
     public void InsertAll_ShouldInsertMultipleRecords()
     {
@@ -26,27 +27,27 @@ public class ElasticDataRepositoryTests
         {
             new Transaction
             {
-                ID = 10,
-                SourceAcount = 1001,
-                DestiantionAccount = 2001,
+                Id = 10,
+                SourceAccountId = 1001,
+                DestinationAccountId = 2001,
                 TransactionType = TransactionType.Paya,
                 Amount = 100.0m,
                 Date = DateTime.Now
             },
             new Transaction
             {
-                ID = 20,
-                SourceAcount = 1002,
-                DestiantionAccount = 2002,
+                Id = 20,
+                SourceAccountId = 1002,
+                DestinationAccountId = 2002,
                 TransactionType = TransactionType.Satna,
                 Amount = 50.0m,
                 Date = DateTime.Now.AddDays(-1)
             },
             new Transaction
             {
-                ID = 30,
-                SourceAcount = 1003,
-                DestiantionAccount = 2003,
+                Id = 30,
+                SourceAccountId = 1003,
+                DestinationAccountId = 2003,
                 TransactionType = TransactionType.KartBeKart,
                 Amount = 200.0m,
                 Date = DateTime.Now.AddDays(-2)
@@ -66,9 +67,9 @@ public class ElasticDataRepositoryTests
         // Arrange
         var record = new Transaction
         {
-            ID = 4,
-            SourceAcount = 1001,
-            DestiantionAccount = 2001,
+            Id = 4,
+            SourceAccountId = 1001,
+            DestinationAccountId = 2001,
             TransactionType = TransactionType.Paya,
             Amount = 100.0m,
             Date = DateTime.Now
@@ -108,7 +109,7 @@ public class ElasticDataRepositoryTests
         string url = null!;
 
         // Act
-        Action act = () =>
+        var act = () =>
         {
             var elasticDataRepository = new ElasticDataRepository(url, IndexName);
         };
