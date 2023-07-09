@@ -9,10 +9,17 @@ public class GraphProcessor<TVertex, TEdge> : IGraphProcessor<TVertex, TEdge> wh
     public List<List<Edge<TVertex, TEdge>>> GetAllPaths(TVertex source, TVertex destination)
     {
         List<List<Edge<TVertex, TEdge>>> allPaths = new List<List<Edge<TVertex, TEdge>>>();
-
         Queue<List<Edge<TVertex, TEdge>>> queue = new Queue<List<Edge<TVertex, TEdge>>>();
         queue.Enqueue(new List<Edge<TVertex, TEdge>>());
 
+        
+        BFS(source, destination, queue, allPaths);
+
+        return allPaths;
+    }
+
+    private void BFS(TVertex source, TVertex destination, Queue<List<Edge<TVertex, TEdge>>> queue, List<List<Edge<TVertex, TEdge>>> allPaths)
+    {
         while (queue.Count > 0)
         {
             List<Edge<TVertex, TEdge>> currentPath = queue.Dequeue();
@@ -24,7 +31,7 @@ public class GraphProcessor<TVertex, TEdge> : IGraphProcessor<TVertex, TEdge> wh
                 allPaths.Add(new List<Edge<TVertex, TEdge>>(currentPath));
             }
 
-            if (_graph.adjacencyMatrix.TryGetValue(currentVertex, out var edges))
+            if (_graph.AdjacencyMatrix.TryGetValue(currentVertex, out var edges))
             {
                 foreach (var edge in edges)
                 {
@@ -38,8 +45,6 @@ public class GraphProcessor<TVertex, TEdge> : IGraphProcessor<TVertex, TEdge> wh
                 }
             }
         }
-
-        return allPaths;
     }
 
     public void LenghtExpand(int maxLenght, Stack<TVertex> vertices, List<Edge<TVertex, TEdge>> edges)
@@ -51,12 +56,14 @@ public class GraphProcessor<TVertex, TEdge> : IGraphProcessor<TVertex, TEdge> wh
 
         int nextLenght = maxLenght - 1;
         TVertex currentVertex = vertices.Pop();
+        
         edges = edges.Where(item => item.Source.Equals(currentVertex)).ToList();
         edges.ForEach(item =>
         {
             _graph.AddEdge(item);
             vertices.Push(item.Destination);
         });
+        
         LenghtExpand(nextLenght, vertices, edges);
     }
 
@@ -64,6 +71,7 @@ public class GraphProcessor<TVertex, TEdge> : IGraphProcessor<TVertex, TEdge> wh
     {
         var allPath = GetAllPaths(source, destination);
         decimal maxFlow = 0;
+        
         foreach (var path in allPath)
         {
             decimal min = decimal.MaxValue;
@@ -71,7 +79,6 @@ public class GraphProcessor<TVertex, TEdge> : IGraphProcessor<TVertex, TEdge> wh
             {
                 min = Math.Min(edge.weight, min);
             }
-
             maxFlow += min;
         }
 
