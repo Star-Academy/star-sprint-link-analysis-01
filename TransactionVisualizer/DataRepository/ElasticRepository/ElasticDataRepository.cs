@@ -16,7 +16,7 @@ public class ElasticDataRepository : IDataRepository
         Name = name;
         _client = new ElasticClient(new ConnectionSettings(new Uri(url)).DefaultIndex(name));
     }
-
+ 
 
     public DataManipulationResponse InsertAll<TResponse>(List<TResponse> records) where TResponse : class
     {

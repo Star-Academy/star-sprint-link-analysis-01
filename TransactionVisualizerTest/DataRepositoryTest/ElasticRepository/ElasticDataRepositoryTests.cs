@@ -27,7 +27,7 @@ public class ElasticDataRepositoryTests
             new Transaction
             {
                 ID = 10,
-                SourceAcount = 1001,
+                SourceAccount = 1001,
                 DestiantionAccount = 2001,
                 TransactionType = TransactionType.Paya,
                 Amount = 100.0m,
@@ -36,7 +36,7 @@ public class ElasticDataRepositoryTests
             new Transaction
             {
                 ID = 20,
-                SourceAcount = 1002,
+                SourceAccount = 1002,
                 DestiantionAccount = 2002,
                 TransactionType = TransactionType.Satna,
                 Amount = 50.0m,
@@ -45,7 +45,7 @@ public class ElasticDataRepositoryTests
             new Transaction
             {
                 ID = 30,
-                SourceAcount = 1003,
+                SourceAccount = 1003,
                 DestiantionAccount = 2003,
                 TransactionType = TransactionType.KartBeKart,
                 Amount = 200.0m,
@@ -67,7 +67,7 @@ public class ElasticDataRepositoryTests
         var record = new Transaction
         {
             ID = 4,
-            SourceAcount = 1001,
+            SourceAccount = 1001,
             DestiantionAccount = 2001,
             TransactionType = TransactionType.Paya,
             Amount = 100.0m,

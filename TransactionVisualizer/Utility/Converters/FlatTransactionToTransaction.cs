@@ -18,7 +18,7 @@ public class FlatTransactionToTransaction : IFlatToFullConverter<Models.Transact
         return new Transaction
         {
             ID = flatTransaction.TransactionID,
-            SourceAcount = flatTransaction.SourceAcount,
+            SourceAccount = flatTransaction.SourceAcount,
             DestiantionAccount = flatTransaction.DestiantionAccount,
             TransactionType = ParsTransactionType(flatTransaction.Type),
             Amount = flatTransaction.Amount,

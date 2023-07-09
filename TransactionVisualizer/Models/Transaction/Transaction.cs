@@ -7,7 +7,7 @@ public class Transaction
 {
     [Key]
     public long ID { get; set; }
-    public long SourceAcount { set; get; }
+    public long SourceAccount { set; get; }
     public long  DestiantionAccount { set; get; }
     public TransactionType TransactionType { set; get; }
     public decimal Amount { set; get; }
