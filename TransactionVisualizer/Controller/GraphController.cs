@@ -39,11 +39,17 @@ public class GraphController : Microsoft.AspNetCore.Mvc.Controller
         {
             _graphProcessor.GetGraph().AddEdge(item);
         });
+        
+        foreach (var keyValuePair in _graphProcessor.GetGraph().adjacencyMatrix)
+        {
+            Console.WriteLine(keyValuePair.Key.AccountID+"  =>  " + keyValuePair.Value.Count);
+        }
 
         var sourceAccount = edges[3].Source;
         var sinkAccount = edges[6].Destination;
-
+        
         Console.WriteLine($"finding all path for {sourceAccount.AccountID} => {sinkAccount.AccountID}");
+        
         var path = _graphProcessor.GetAllPaths(sourceAccount, sinkAccount);
 
         path.ForEach(p =>

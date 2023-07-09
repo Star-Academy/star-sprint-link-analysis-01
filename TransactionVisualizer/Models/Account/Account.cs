@@ -12,5 +12,14 @@ public class Account
     public Branch Branch { get; set; }
     public Owner Owner { get; set; }
 
+    public override bool Equals(object? obj)
+    {
+        var account = obj as Account;
+        return account != null && account.AccountID == AccountID;
+    }
 
+    public override int GetHashCode()
+    {
+        return AccountID.GetHashCode();
+    }
 }
