@@ -10,5 +10,14 @@ public class Branch
     public string Name { get; set; }
     public string Address { get; set; }
 
+    public override int GetHashCode()
+    {
+        return Id.GetHashCode();
+    }
 
+    public override bool Equals(object? obj)
+    {
+        return obj is Branch branch && branch.Id == Id;
+    }
+    
 }
