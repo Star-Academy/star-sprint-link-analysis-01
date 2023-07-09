@@ -12,11 +12,11 @@ public class ElasticDataRepositoryTests
     private const string Url = "http://localhost:9200";
     private const string IndexName = "test-index";
 
-    private readonly ElasticDataRepository _repository;
+    private readonly ElasticDataRepository<Transaction> _repository;
 
     public ElasticDataRepositoryTests()
     {
-        _repository = new ElasticDataRepository(Url, IndexName);
+        _repository = new ElasticDataRepository<Transaction>(Url, IndexName);
     }
 
     [Fact]
@@ -111,7 +111,7 @@ public class ElasticDataRepositoryTests
         // Act
         var act = () =>
         {
-            var elasticDataRepository = new ElasticDataRepository(url, IndexName);
+            var elasticDataRepository = new ElasticDataRepository<Transaction>(url, IndexName);
         };
 
         // Assert
@@ -127,7 +127,7 @@ public class ElasticDataRepositoryTests
         // Act
         var act = () =>
         {
-            var elasticDataRepository = new ElasticDataRepository(Url, name);
+            var elasticDataRepository = new ElasticDataRepository<Transaction>(Url, name);
         };
 
         // Assert
