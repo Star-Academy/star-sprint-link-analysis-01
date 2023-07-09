@@ -1,13 +1,15 @@
 using Nest;
 using TransactionVisualizer.Utility.Validator;
+using System.Diagnostics.Contracts;
 
 namespace TransactionVisualizer.DataRepository.ElasticRepository;
 
-public class ElasticDataRepository : IDataRepository
+public class ElasticDataRepository<TResponse> : IDataRepository<TResponse> where TResponse : class
 {
     public string Name { get; }
     private readonly ElasticClient _client;
 
+    // Jalase درست کردن کلاس برای ورودی کانستراکتور و اجرای فلونت ولیدیشن روی ان 
     public ElasticDataRepository(string url, string name)
     {
         Validator.NullValidation(url);
@@ -17,7 +19,7 @@ public class ElasticDataRepository : IDataRepository
         _client = new ElasticClient(new ConnectionSettings(new Uri(url)).DefaultIndex(name));
     }
 
-    public DataManipulationResponse InsertAll<TResponse>(List<TResponse> records) where TResponse : class
+    public DataManipulationResponse InsertAll(List<TResponse> records)
     {
         Validator.ListValidation(records);
 
@@ -29,7 +31,7 @@ public class ElasticDataRepository : IDataRepository
         return DataManipulationResponseBuilder.Build(response.Errors);
     }
 
-    public DataManipulationResponse Insert<TResponse>(TResponse record) where TResponse : class
+    public DataManipulationResponse Insert(TResponse record)
     {
         Validator.NullValidation(record);
 
@@ -41,8 +43,7 @@ public class ElasticDataRepository : IDataRepository
     }
 
     //TODO : Generify search selector 
-    public DataGainResponse<TResponse> Search<TResponse>(Func<SearchDescriptor<TResponse>, ISearchRequest> selector)
-        where TResponse : class
+    public DataGainResponse<TResponse> Search(Func<SearchDescriptor<TResponse>, ISearchRequest> selector)
     {
         Validator.NullValidation(selector);
 
@@ -52,7 +53,7 @@ public class ElasticDataRepository : IDataRepository
     }
 
     //TODO : Implement this method 
-    public bool Contain<TResponse, TSelector>(TSelector selector)
+    public bool Contain<TSelector>(TSelector selector)
     {
         throw new NotImplementedException();
     }

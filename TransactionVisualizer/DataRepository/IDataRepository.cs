@@ -2,16 +2,19 @@ using Nest;
 
 namespace TransactionVisualizer.DataRepository;
 
-public interface IDataRepository
+// TODO : Add TSelector to IDataRepository
+// Jalase نوع داده جنریک برای کلاس تعریف شود
+public interface IDataRepository<TResponse> where TResponse : class
 {
-    DataManipulationResponse InsertAll<TResponse>(List<TResponse> records) where TResponse : class;
+    DataManipulationResponse InsertAll(List<TResponse> records);
 
-    DataManipulationResponse Insert<TResponse>(TResponse record) where TResponse : class;
+    DataManipulationResponse Insert(TResponse record);
 
-    DataGainResponse<TResponse> Search<TResponse>(Func<SearchDescriptor<TResponse>, ISearchRequest> selector)
-        where TResponse : class;
+    DataGainResponse<TResponse> Search(Func<SearchDescriptor<TResponse>, ISearchRequest> selector);
 
-    //TODO : Generify search selector
-    // DataRepositoryResponse<TResponse> Search<TResponse, TSelector>(TSelector selector) where TResponse : class;
-    bool Contain<TResponse, TSelector>(TSelector selector);
+    // TODO : Generify search selector
+    // DataRepositoryResponse<TResponse> Search<TSelector>(TSelector selector);
+
+    // TODO : Implement this method
+    bool Contain<TSelector>(TSelector selector);
 }
