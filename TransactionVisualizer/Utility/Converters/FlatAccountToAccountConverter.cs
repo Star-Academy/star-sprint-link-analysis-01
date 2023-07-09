@@ -9,8 +9,8 @@ public class FlatAccountToAccountConverter : IFlatToFullConverter<Account, FlatA
     {
         return new Account
         {
-            AccountId = flat.AccountId,
-            CardId = flat.CardId,
+            AccountID = flat.AccountId,
+            CardID = flat.CardId,
             Sheba = flat.Sheba,
             AccountType = flat.AccountType.ParsAccountType(),
             Branch = ConvertBranch(flat),
@@ -27,7 +27,7 @@ public class FlatAccountToAccountConverter : IFlatToFullConverter<Account, FlatA
     {
         return new Owner
         {
-            Id = flat.OwnerId,
+            ID = flat.OwnerId,
             Name = flat.OwnerName,
             FamilyName = flat.OwnerFamilyName
         };

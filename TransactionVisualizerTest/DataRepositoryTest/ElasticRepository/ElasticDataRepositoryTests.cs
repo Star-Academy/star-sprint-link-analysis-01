@@ -27,27 +27,27 @@ public class ElasticDataRepositoryTests
         {
             new Transaction
             {
-                Id = 10,
-                SourceAccountId = 1001,
-                DestinationAccountId = 2001,
+                ID = 10,
+                SourceAccount = 1001,
+                DestiantionAccount = 2001,
                 TransactionType = TransactionType.Paya,
                 Amount = 100.0m,
                 Date = DateTime.Now
             },
             new Transaction
             {
-                Id = 20,
-                SourceAccountId = 1002,
-                DestinationAccountId = 2002,
+                ID = 20,
+                SourceAccount = 1002,
+                DestiantionAccount = 2002,
                 TransactionType = TransactionType.Satna,
                 Amount = 50.0m,
                 Date = DateTime.Now.AddDays(-1)
             },
             new Transaction
             {
-                Id = 30,
-                SourceAccountId = 1003,
-                DestinationAccountId = 2003,
+                ID = 30,
+                SourceAccount = 1003,
+                DestiantionAccount = 2003,
                 TransactionType = TransactionType.KartBeKart,
                 Amount = 200.0m,
                 Date = DateTime.Now.AddDays(-2)
@@ -67,9 +67,9 @@ public class ElasticDataRepositoryTests
         // Arrange
         var record = new Transaction
         {
-            Id = 4,
-            SourceAccountId = 1001,
-            DestinationAccountId = 2001,
+            ID = 4,
+            SourceAccount = 1001,
+            DestiantionAccount = 2001,
             TransactionType = TransactionType.Paya,
             Amount = 100.0m,
             Date = DateTime.Now

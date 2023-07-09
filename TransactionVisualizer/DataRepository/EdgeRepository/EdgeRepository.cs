@@ -1,6 +1,7 @@
 using Nest;
 using TransactionVisualizer.DataRepository.ElasticRepository;
 using TransactionVisualizer.Models;
+using TransactionVisualizer.Models.Account;
 using TransactionVisualizer.Models.Graph;
 using TransactionVisualizer.Models.Transaction;
 
@@ -8,7 +9,8 @@ namespace TransactionVisualizer.DataRepository;
 
 public class EdgeRepository : IEdgeRepository
 {
-    private IDataRepository _dataRepository = new ElasticDataRepository("http://localhost:9200/", "edges");
+    private IDataRepository<Edge<Account, Transaction>> _dataRepository =
+        new ElasticDataRepository<Edge<Account, Transaction>>("http://localhost:9200/", "edges");
 
     public void AddAll(List<Edge<Account, Transaction>> edges)
     {

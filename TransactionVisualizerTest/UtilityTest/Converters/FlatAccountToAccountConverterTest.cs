@@ -30,12 +30,12 @@ public class FlatAccountToAccountConverterTest
 
         // Assert
         result.Should().NotBeNull();
-        result.AccountId.Should().Be(flatAccount.AccountId);
-        result.CardId.Should().Be(flatAccount.CardId);
+        result.AccountID.Should().Be(flatAccount.AccountId);
+        result.CardID.Should().Be(flatAccount.CardId);
         result.Sheba.Should().Be(flatAccount.Sheba);
         result.AccountType.Should().Be(AccountType.Pasandaz);
         result.Owner.Should().NotBeNull();
-        result.Owner.Id.Should().Be(flatAccount.OwnerId);
+        result.Owner.ID.Should().Be(flatAccount.OwnerId);
         result.Owner.Name.Should().Be(flatAccount.OwnerName);
         result.Owner.FamilyName.Should().Be(flatAccount.OwnerFamilyName);
         result.Branch.Should().NotBeNull();
@@ -75,12 +75,12 @@ public class FlatAccountToAccountConverterTest
 
         foreach (var (flatAccount, account) in flatAccounts.Zip(result, (f, a) => (f, a)))
         {
-            account.AccountId.Should().Be(flatAccount.AccountId);
-            account.CardId.Should().Be(flatAccount.CardId);
+            account.AccountID.Should().Be(flatAccount.AccountId);
+            account.CardID.Should().Be(flatAccount.CardId);
             account.Sheba.Should().Be(flatAccount.Sheba);
             account.AccountType.Should().Be(flatAccount.AccountType.ParsAccountType());
             account.Owner.Should().NotBeNull();
-            account.Owner.Id.Should().Be(flatAccount.OwnerId);
+            account.Owner.ID.Should().Be(flatAccount.OwnerId);
             account.Owner.Name.Should().Be(flatAccount.OwnerName);
             account.Owner.FamilyName.Should().Be(flatAccount.OwnerFamilyName);
             account.Branch.Should().NotBeNull();

@@ -1,15 +1,10 @@
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
-using Nest;
-using TransactionVisualizer.DataRepository;
-using TransactionVisualizer.Models;
-using TransactionVisualizer.Models.Graph;
-using TransactionVisualizer.Models.ParserModel;
+using TransactionVisualizer.Models.Account;
 using TransactionVisualizer.Models.Transaction;
 using TransactionVisualizer.Services;
-using TransactionVisualizer.Utility.Converters;
 using TransactionVisualizer.Utility.Graph;
-using TransactionVisualizer.Utility.ParserUtils;
+
 
 namespace TransactionVisualizer.Controller;
 
@@ -24,6 +19,7 @@ public class GraphController : Microsoft.AspNetCore.Mvc.Controller
         _graphProcessor = graphProcessor;
         _graphService = graphService;
     }
+
     [HttpGet]
     [Route("")]
     public IActionResult Graph()
@@ -35,8 +31,8 @@ public class GraphController : Microsoft.AspNetCore.Mvc.Controller
         options.Converters.Add(new AdjacencyMatrixConverter<Account, Transaction>());
 
         var jsonString = JsonSerializer.Serialize(_graphService.InitialGraph(6534454617), options);
-        
-        return Ok(jsonString);  
+
+        return Ok(jsonString);
     }
 
     //
