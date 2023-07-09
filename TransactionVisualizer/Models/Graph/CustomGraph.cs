@@ -1,25 +1,35 @@
 using System.Collections.Generic;
+using System.Linq;
 
-namespace TransactionVisualizer.Models.Graph;
-
-public class CustomGraph<TVertex, TEdge> where TVertex : class where TEdge : class
+namespace TransactionVisualizer.Models.Graph
 {
-    public List<TVertex> Vertex { get; }
-    public List<Edge<TVertex, TEdge>> Edge { get; }
-
-    public CustomGraph()
+    public class CustomGraph<TVertex, TEdge> where TVertex : class where TEdge : class
     {
-        Vertex = new List<TVertex>();
-        Edge = new List<Edge<TVertex, TEdge>>();
-    }
+        public Dictionary<TVertex, List<Edge<TVertex, TEdge>>> adjacencyMatrix { get; }
 
-    public void AddVertex(TVertex vertex)
-    {
-        Vertex.Add(vertex);
-    }
+        public CustomGraph()
+        {
+            adjacencyMatrix = new Dictionary<TVertex, List<Edge<TVertex, TEdge>>>();
+        }
 
-    public void AddEdge(Edge<TVertex, TEdge> edge)
-    {
-        Edge.Add(edge);
+        public void AddEdge(Edge<TVertex, TEdge> edge)
+        {
+            if (adjacencyMatrix.TryGetValue(edge.Source, out var value))
+            {
+                value.Add(edge);
+            }
+            else
+            {
+                adjacencyMatrix.Add(edge.Source, new List<Edge<TVertex, TEdge>>());
+                adjacencyMatrix[edge.Source].Add(edge);
+            }
+
+            if (!adjacencyMatrix.ContainsKey(edge.Destination))
+            {
+                adjacencyMatrix.Add(edge.Destination, new List<Edge<TVertex, TEdge>>());
+            }
+        }
+        
+        
     }
 }

@@ -7,6 +7,11 @@ public class EdgeBuilder<TVertex, TEdge> : IEdgeBuilder<TVertex, TEdge> where TV
     public Edge<TVertex, TEdge> Build(EdgeConfig<TVertex, TEdge> edgeConfig)
     {
         return new Edge<TVertex, TEdge>()
-            { Content = edgeConfig.Content, Destination = edgeConfig.Destination, Source = edgeConfig.Source };
+        {
+            EdgeContent = edgeConfig.Content,
+            Source = edgeConfig.Source,
+            Destination = edgeConfig.Destination,
+            weight = edgeConfig.Weight
+        };
     }
 }
