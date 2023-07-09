@@ -51,6 +51,7 @@ public class GraphProcessor<TVertex, TEdge> : IGraphProcessor<TVertex, TEdge> wh
 
         int nextLenght = maxLenght - 1;
         TVertex currentVertex = vertices.Pop();
+        edges = edges.Where(item => item.Source.Equals(currentVertex)).ToList();
         edges.ForEach(item =>
         {
             _graph.AddEdge(item);
