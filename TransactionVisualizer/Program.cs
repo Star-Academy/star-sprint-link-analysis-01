@@ -1,6 +1,6 @@
 using TransactionVisualizer.DataRepository;
-using TransactionVisualizer.Models.Account;
-using TransactionVisualizer.Models.Transaction;
+using TransactionVisualizer.Models.BusinessLogicModels.Account;
+using TransactionVisualizer.Models.BusinessLogicModels.Transaction;
 using TransactionVisualizer.Services;
 using TransactionVisualizer.Utility.Builder;
 using TransactionVisualizer.Utility.Graph;

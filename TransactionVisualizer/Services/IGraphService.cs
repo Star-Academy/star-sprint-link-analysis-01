@@ -1,7 +1,7 @@
 using TransactionVisualizer.Models;
-using TransactionVisualizer.Models.Account;
+using TransactionVisualizer.Models.BusinessLogicModels.Account;
+using TransactionVisualizer.Models.BusinessLogicModels.Transaction;
 using TransactionVisualizer.Models.Graph;
-using TransactionVisualizer.Models.Transaction;
 
 namespace TransactionVisualizer.Services;
 

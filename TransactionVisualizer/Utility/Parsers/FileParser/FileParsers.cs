@@ -1,5 +1,5 @@
 using TransactionVisualizer.Exception;
-using TransactionVisualizer.Models.Transaction;
+using TransactionVisualizer.Models.BusinessLogicModels.Transaction;
 
 namespace TransactionVisualizer.Utility.Parsers.FileParser;
 

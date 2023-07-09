@@ -1,4 +1,4 @@
-using TransactionVisualizer.Models.Transaction;
+using TransactionVisualizer.Models.BusinessLogicModels.Transaction;
 using TransactionVisualizer.Utility.Parsers.DateTimeParser;
 
 namespace TransactionVisualizer.Utility.Converters;

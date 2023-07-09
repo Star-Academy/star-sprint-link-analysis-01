@@ -1,6 +1,6 @@
 using FluentAssertions;
 using TransactionVisualizer.Exception;
-using TransactionVisualizer.Models.Transaction;
+using TransactionVisualizer.Models.BusinessLogicModels.Transaction;
 using TransactionVisualizer.Utility.Constants;
 
 namespace TransactionVisualizerTest.ModelsTest.Transaction;

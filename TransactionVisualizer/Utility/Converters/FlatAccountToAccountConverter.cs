@@ -1,5 +1,6 @@
 using TransactionVisualizer.Models;
-using TransactionVisualizer.Models.Account;
+using TransactionVisualizer.Models.BusinessLogicModels;
+using TransactionVisualizer.Models.BusinessLogicModels.Account;
 
 namespace TransactionVisualizer.Utility.Converters;
 

@@ -1,7 +1,7 @@
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
-using TransactionVisualizer.Models.Account;
-using TransactionVisualizer.Models.Transaction;
+using TransactionVisualizer.Models.BusinessLogicModels.Account;
+using TransactionVisualizer.Models.BusinessLogicModels.Transaction;
 using TransactionVisualizer.Services;
 using TransactionVisualizer.Utility.Graph;
 

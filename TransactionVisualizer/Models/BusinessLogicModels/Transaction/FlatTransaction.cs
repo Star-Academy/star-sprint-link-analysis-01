@@ -1,4 +1,4 @@
-namespace TransactionVisualizer.Models.Transaction;
+namespace TransactionVisualizer.Models.BusinessLogicModels.Transaction;
 
 public class FlatTransaction
 {

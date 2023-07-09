@@ -1,7 +1,7 @@
 using TransactionVisualizer.Exception;
 using static TransactionVisualizer.Utility.Constants.TransactionRelatedConstants;
 
-namespace TransactionVisualizer.Models.Transaction;
+namespace TransactionVisualizer.Models.BusinessLogicModels.Transaction;
 
 public enum TransactionType
 {
