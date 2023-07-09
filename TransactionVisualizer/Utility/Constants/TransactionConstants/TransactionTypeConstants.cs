@@ -1,6 +1,6 @@
-namespace TransactionVisualizer.Utility.Constants;
+namespace TransactionVisualizer.Utility.Constants.TransactionConstants;
 
-public static class TransactionRelatedConstants
+public class TransactionTypeConstants
 {
     public const string Satna = "ساتنا";
     public const string Paya = "پایا";
