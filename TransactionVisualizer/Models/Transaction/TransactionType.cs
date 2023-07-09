@@ -10,6 +10,7 @@ public enum TransactionType
     KartBeKart = 2
 }
 
+// Jalase این اکستنشن روی کلاس استرینگ تعریف نشود و سعی بر برداشتن سویچ کیس شود
 public static class TransactionTypeExtensions
 {
     public static TransactionType ParsTransactionType(this string transactionType)

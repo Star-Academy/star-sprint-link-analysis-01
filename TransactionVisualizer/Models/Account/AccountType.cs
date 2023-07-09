@@ -10,6 +10,7 @@ public enum AccountType
     Pasandaz = 2
 }
 
+// Jalase این اکستنشن روی کلاس استرینگ تعریف نشود و سعی بر برداشتن سویچ کیس شود
 public static class AccountTypeExtensions
 {
     public static AccountType ParsAccountType(this string accountType)
