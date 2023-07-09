@@ -1,13 +1,25 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace TransactionVisualizer.Models.Account;
+namespace TransactionVisualizer.Models;
 
 public class Account
 {
-    [Key] public long AccountId { get; init; }
-    public string CardId { get; set; }
+    [Key]
+    public long AccountID { get; set; }
+    public string CardID { get; set; }
     public string Sheba { get; set; }
     public AccountType AccountType { get; set; }
     public Branch Branch { get; set; }
     public Owner Owner { get; set; }
+
+    public override bool Equals(object? obj)
+    {
+        var account = obj as Account;
+        return account != null && account.AccountID == AccountID;
+    }
+
+    public override int GetHashCode()
+    {
+        return AccountID.GetHashCode();
+    }
 }
