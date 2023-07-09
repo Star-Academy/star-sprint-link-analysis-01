@@ -1,7 +1,6 @@
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 
-namespace TransactionVisualizer.Models;
+namespace TransactionVisualizer.Models.Account;
 
 
 public class Account 
