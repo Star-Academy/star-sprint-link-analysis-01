@@ -6,7 +6,7 @@ using TransactionVisualizer.Models.Transaction;
 
 namespace TransactionVisualizer.DataRepository;
 
-public class EdgeRepository
+public class EdgeRepository : IEdgeRepository
 {
     private IDataRepository _dataRepository = new ElasticDataRepository("http://localhost:9200/", "edges");
 
