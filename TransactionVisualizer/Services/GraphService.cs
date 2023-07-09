@@ -41,4 +41,23 @@ public class GraphService : IGraphService
     {
         return _graphProcessor.GetMaxFlow(source, destination);
     }
+
+    public CustomGraph<Account, Transaction> InitialGraph(long accountId)
+    {
+        var edges = _edgeRepository.Search(descriptor =>
+            descriptor.Query(q =>
+                q.Match(queryDescriptor =>
+                    queryDescriptor.Field(f =>
+                        f.Source.AccountID).Query(accountId.ToString())
+                )
+            )
+        );
+
+        var graph = new CustomGraph<Account, Transaction>();
+        edges.ForEach(item => graph.AddEdge(item));
+
+        _graphProcessor.SetGraph(graph);
+
+        return _graphProcessor.GetGraph();
+    }
 }
