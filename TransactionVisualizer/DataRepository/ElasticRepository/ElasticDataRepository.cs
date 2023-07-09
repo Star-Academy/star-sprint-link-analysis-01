@@ -57,4 +57,6 @@ public class ElasticDataRepository<TResponse> : IDataRepository<TResponse> where
     {
         throw new NotImplementedException();
     }
+    
+    
 }
