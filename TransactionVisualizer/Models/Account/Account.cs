@@ -1,8 +1,10 @@
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace TransactionVisualizer.Models;
 
-public class Account
+
+public class Account 
 {
     [Key]
     public long AccountID { get; set; }

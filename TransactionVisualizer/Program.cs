@@ -21,6 +21,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IEdgeBuilder<Account, Transaction>, EdgeBuilder<Account, Transaction>>();
 builder.Services.AddSingleton<IGraphProcessor<Account, Transaction>, GraphProcessor<Account, Transaction>>();
 builder.Services.AddSingleton<IGraphService, GraphService>();
+builder.Services.AddSingleton<IEdgeRepository , EdgeRepository>();
 
 
 builder.Services.AddTransient(p =>

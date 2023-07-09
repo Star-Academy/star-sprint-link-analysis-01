@@ -5,28 +5,28 @@ namespace TransactionVisualizer.Models.Graph
 {
     public class CustomGraph<TVertex, TEdge> where TVertex : class where TEdge : class
     {
-        public Dictionary<TVertex, List<Edge<TVertex, TEdge>>> adjacencyMatrix { get; }
+        public Dictionary<TVertex, List<Edge<TVertex, TEdge>>> AdjacencyMatrix { get; }
 
         public CustomGraph()
         {
-            adjacencyMatrix = new Dictionary<TVertex, List<Edge<TVertex, TEdge>>>();
+            AdjacencyMatrix = new Dictionary<TVertex, List<Edge<TVertex, TEdge>>>();
         }
 
         public void AddEdge(Edge<TVertex, TEdge> edge)
         {
-            if (adjacencyMatrix.TryGetValue(edge.Source, out var value))
+            if (AdjacencyMatrix.TryGetValue(edge.Source, out var value))
             {
                 value.Add(edge);
             }
             else
             {
-                adjacencyMatrix.Add(edge.Source, new List<Edge<TVertex, TEdge>>());
-                adjacencyMatrix[edge.Source].Add(edge);
+                AdjacencyMatrix.Add(edge.Source, new List<Edge<TVertex, TEdge>>());
+                AdjacencyMatrix[edge.Source].Add(edge);
             }
-
-            if (!adjacencyMatrix.ContainsKey(edge.Destination))
+            
+            if (!AdjacencyMatrix.ContainsKey(edge.Destination))
             {
-                adjacencyMatrix.Add(edge.Destination, new List<Edge<TVertex, TEdge>>());
+                AdjacencyMatrix.Add(edge.Destination, new List<Edge<TVertex, TEdge>>());
             }
         }
         
