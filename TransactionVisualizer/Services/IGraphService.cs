@@ -10,4 +10,5 @@ public interface IGraphService
     public CustomGraph<Account, Transaction> GetState();
     public CustomGraph<Account, Transaction> Expand(Account account, int MaxLenght);
     public decimal MaxFlow(Account source , Account destination);
+    public CustomGraph<Account, Transaction> InitialGraph(long accountId);
 }
