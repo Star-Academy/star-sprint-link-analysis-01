@@ -34,10 +34,10 @@ public class GraphController : Microsoft.AspNetCore.Mvc.Controller
         List<Edge<Account, Transaction>> edges = edgeRepository.Search(p => p.MatchAll());
 
         
-        _graphProcessor._graph = graph;
+        _graphProcessor.SetGraph(graph);
         edges.ForEach(item =>
         {
-            _graphProcessor._graph.AddEdge(item);
+            _graphProcessor.GetGraph().AddEdge(item);
         });
 
         var sourceAccount = edges[3].Source;

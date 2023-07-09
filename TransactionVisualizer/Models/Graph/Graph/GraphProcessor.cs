@@ -2,14 +2,9 @@ using TransactionVisualizer.Models.Graph;
 
 namespace TransactionVisualizer.Utility.Graph;
 
-public class GraphProcessor<TVertex, TEdge> where TVertex : class where TEdge : class
+public class GraphProcessor<TVertex, TEdge> : IGraphProcessor<TVertex, TEdge> where TVertex : class where TEdge : class
 {
-    CustomGraph<TVertex, TEdge> _graph;
-
-    public GraphProcessor(CustomGraph<TVertex, TEdge> graph)
-    {
-        _graph = graph;
-    }
+    public CustomGraph<TVertex, TEdge> _graph { set; get; }
 
     public List<List<Edge<TVertex, TEdge>>> GetAllPaths(TVertex source, TVertex destination)
     {
@@ -47,12 +42,13 @@ public class GraphProcessor<TVertex, TEdge> where TVertex : class where TEdge : 
         return allPaths;
     }
 
-    public void LenghtExpand(int maxLenght , Stack<TVertex> vertices , List<Edge<TVertex , TEdge>> edges)
+    public void LenghtExpand(int maxLenght, Stack<TVertex> vertices, List<Edge<TVertex, TEdge>> edges)
     {
         if (maxLenght == 0 || vertices.Count == 0)
         {
             return;
         }
+
         int nextLenght = maxLenght - 1;
         TVertex currentVertex = vertices.Pop();
         edges.ForEach(item =>
@@ -60,16 +56,16 @@ public class GraphProcessor<TVertex, TEdge> where TVertex : class where TEdge : 
             _graph.AddEdge(item);
             vertices.Push(item.Destination);
         });
-        LenghtExpand(nextLenght , vertices , edges);
+        LenghtExpand(nextLenght, vertices, edges);
     }
 
-    public int GetMaxFlow(TVertex source, TVertex destination)
+    public decimal GetMaxFlow(TVertex source, TVertex destination)
     {
         var allPath = GetAllPaths(source, destination);
-        int maxFlow = 0;
+        decimal maxFlow = 0;
         foreach (var path in allPath)
         {
-            int min = int.MaxValue;
+            decimal min = decimal.MaxValue;
             foreach (var edge in path)
             {
                 min = Math.Min(edge.weight, min);
@@ -79,5 +75,15 @@ public class GraphProcessor<TVertex, TEdge> where TVertex : class where TEdge : 
         }
 
         return maxFlow;
+    }
+
+    public void SetGraph(CustomGraph<TVertex, TEdge> graph)
+    {
+        _graph = graph;
+    }
+
+    public CustomGraph<TVertex, TEdge> GetGraph()
+    {
+        return _graph;
     }
 }
