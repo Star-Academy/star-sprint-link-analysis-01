@@ -4,9 +4,9 @@ using TransactionVisualizer.Models.BusinessModels.Account;
 
 namespace TransactionVisualizer.Models.Account;
 
-
-public class Account : BaseModel 
+public class Account : BaseModel
 {
+    [Key] public long Id { get; set; }
     public string CardID { get; set; }
     public string Sheba { get; set; }
     public AccountType AccountType { get; set; }
@@ -17,6 +17,11 @@ public class Account : BaseModel
     {
         var account = obj as Account;
         return account != null && account.Id == Id;
+    }
+
+    public override string ToString()
+    {
+        return Id.ToString();
     }
 
     public override int GetHashCode()

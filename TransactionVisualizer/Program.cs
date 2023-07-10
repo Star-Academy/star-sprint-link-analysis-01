@@ -1,13 +1,18 @@
 using TransactionVisualizer.DataRepository;
 using TransactionVisualizer.DataRepository.EdgeRepository;
+using TransactionVisualizer.DataRepository.ModelsRepository;
+using TransactionVisualizer.DataRepository.ModelsRepository.AccountRepository;
 using TransactionVisualizer.Models.Account;
 using TransactionVisualizer.Models.BusinessModels.Transaction;
+using TransactionVisualizer.Models.Graph;
 using TransactionVisualizer.Models.Graph.Graph;
+using TransactionVisualizer.Models.ResponseModels;
 using TransactionVisualizer.Models.ResponseModels.Builder;
 using TransactionVisualizer.Models.Transaction;
 
 using TransactionVisualizer.Services;
 using TransactionVisualizer.Utility.Builder;
+using TransactionVisualizer.Utility.Converters.RequestToFullModels;
 using TransactionVisualizer.Utility.Graph;
 
 
@@ -22,8 +27,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IEdgeBuilder<Account, Transaction>, EdgeBuilder<Account, Transaction>>();
 builder.Services.AddSingleton<IGraphProcessor<Account, Transaction>, GraphProcessor<Account, Transaction>>();
 builder.Services.AddSingleton<IGraphService, GraphService>();
-builder.Services.AddSingleton<IEdgeRepository, EdgeRepository>();
+builder.Services.AddSingleton<IModelRepository<Account>, AccountRepository>();
+builder.Services.AddSingleton<IModelRepository<Edge<Account,Transaction>>, EdgeRepository>();
 builder.Services.AddSingleton<IGraphResponseModelBuilder, GraphResponseModelBuilder>();
+builder.Services.AddSingleton<IRequestToFullModel<GraphResponseModel<Account, Transaction>, CustomGraph<Account , Transaction>>, GraphFullModelToGraph>();
 
 // builder.Services.AddSingleton<IGraphGenerator<Account, Transaction>, GraphGenerator>();
 

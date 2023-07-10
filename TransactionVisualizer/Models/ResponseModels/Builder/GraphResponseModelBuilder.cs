@@ -27,7 +27,9 @@ public class GraphResponseModelBuilder : IGraphResponseModelBuilder
         return new GraphResponseModel<Account, BusinessModels.Transaction.Transaction>
         {
             Vertices = vertices,
-            Edges = edges
+            Edges = edges,
+            VertexCount = vertices.Count,
+            EdgeCount = edges.Count
         };
     }
 }

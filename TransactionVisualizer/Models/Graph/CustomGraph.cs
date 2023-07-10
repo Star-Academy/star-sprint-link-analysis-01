@@ -24,7 +24,7 @@ namespace TransactionVisualizer.Models.Graph
                 AdjacencyMatrix[edge.Source].Add(edge);
             }
 
-            if (!AdjacencyMatrix.ContainsKey(edge.Destination))
+            if (edge.Destination !=  null && !AdjacencyMatrix.ContainsKey(edge.Destination))
             {
                 AdjacencyMatrix.Add(edge.Destination, new List<Edge<TVertex, TEdge>>());
             }

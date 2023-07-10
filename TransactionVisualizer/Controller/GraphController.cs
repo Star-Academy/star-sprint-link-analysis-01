@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using TransactionVisualizer.DataRepository.EdgeRepository;
+using TransactionVisualizer.DataRepository.ModelsRepository.AccountRepository;
 using TransactionVisualizer.Models.Account;
 using TransactionVisualizer.Models.BusinessModels.Transaction;
 using TransactionVisualizer.Models.Graph;
@@ -10,6 +11,7 @@ using TransactionVisualizer.Models.ResponseModels.Builder;
 using TransactionVisualizer.Models.Transaction;
 using TransactionVisualizer.Services;
 using TransactionVisualizer.Utility.Converters;
+using TransactionVisualizer.Utility.Converters.RequestToFullModels;
 using TransactionVisualizer.Utility.Graph;
 using TransactionVisualizer.Utility.Parsers.FileParser;
 
@@ -19,8 +21,9 @@ namespace TransactionVisualizer.Controller;
 public class GraphController : Microsoft.AspNetCore.Mvc.Controller
 {
     private IGraphProcessor<Account, Transaction> _graphProcessor;
-    private IGraphService _graphService;
-    private IGraphResponseModelBuilder _graphResponseModelBuilder;
+    private readonly IGraphService _graphService;
+    private readonly IGraphResponseModelBuilder _graphResponseModelBuilder;
+
 
     public GraphController(
         IGraphProcessor<Account, Transaction> graphProcessor,
@@ -36,7 +39,7 @@ public class GraphController : Microsoft.AspNetCore.Mvc.Controller
     [Route("")]
     public IActionResult Graph()
     {
-        var graph = _graphService.InitialGraph(6534454617);
+        var graph = _graphService.InitialGraph(3000000037);
         return Ok(_graphResponseModelBuilder.BuildTransactionGraphResponseModel(graph.AdjacencyMatrix));
     }
 
@@ -46,8 +49,9 @@ public class GraphController : Microsoft.AspNetCore.Mvc.Controller
     public IActionResult Expand([FromBody] ExpandRequestModel<Account, Transaction> requestModel)
     {
         _graphService.SetState(requestModel.CurrentState);
-        var graph = _graphService.Expand(requestModel.Vertex, requestModel.MaxLength);
-        return Ok(_graphResponseModelBuilder.BuildTransactionGraphResponseModel(graph.AdjacencyMatrix));
+        _graphService.Expand(requestModel.Vertex, requestModel.MaxLength);
+        return Ok(_graphResponseModelBuilder.BuildTransactionGraphResponseModel(_graphProcessor.GetGraph()
+            .AdjacencyMatrix));
     }
 
     [HttpPost]
@@ -55,8 +59,8 @@ public class GraphController : Microsoft.AspNetCore.Mvc.Controller
     public IActionResult GetMaxFlow([FromBody] MaxFlowRequestModel<Account, Transaction> requestModel)
     {
         _graphService.SetState(requestModel.CurrentState);
-        var maxFlow = _graphService.MaxFlow(requestModel.Source, requestModel.Destenation);
-        return Ok(maxFlow);
+        var maxFlow = _graphService.MaxFlow(requestModel);
+        return Ok(new MaxFlowResponseModel() { MaxFlow = maxFlow });
     }
 
 
@@ -65,15 +69,18 @@ public class GraphController : Microsoft.AspNetCore.Mvc.Controller
     public ActionResult<string> ToElastic()
     {
         string accountPath =
-            "/Users/mahdimazaheri/Downloads/TestDB (1)/Accounts.csv";
+            "/Users/mahdimazaheri/Downloads/testData1/AccountaDB.csv";
         string transactionPath =
-            "/Users/mahdimazaheri/Downloads/TestDB (1)/Transaction.csv";
+            "/Users/mahdimazaheri/Downloads/testData1/TransactionsDB (1).csv";
 
         var accountParser = new CsvFileParser<FlatAccount>();
         var transactionParser = new CsvFileParser<FlatTransaction>();
 
         var flatAccounts = accountParser.Pars(accountPath);
+        Console.WriteLine("Flat account : " + flatAccounts.Count);
         var flatTransactions = transactionParser.Pars(transactionPath);
+        Console.WriteLine("Flat account : " + flatTransactions.Count);
+
 
         List<Edge<Account, Transaction>> edges = new List<Edge<Account, Transaction>>();
 
@@ -86,19 +93,28 @@ public class GraphController : Microsoft.AspNetCore.Mvc.Controller
         var transaction = transactionFlatToFull.ConvertAll(flatTransactions);
         transaction.ForEach(item =>
         {
-            var edge = new Edge<Account, Transaction>
+            var source = account.Find(a => a.Id == item.SourceAccount);
+            var destination = account.Find(a => a.Id == item.DestiantionAccount);
+            if (source != null && destination != null )
             {
-                Source = account.Find(a => a.Id == item.SourceAccount),
-                Destination = account.Find(a => a.Id == item.DestiantionAccount),
-                EdgeContent = item,
-                weight = item.Amount
-            };
-            edges.Add(edge);
+                var edge = new Edge<Account, Transaction>
+                {
+                    Source = source,
+                    Destination = destination,
+                    EdgeContent = item,
+                    weight = item.Amount
+                };
+                edges.Add(edge);
+                
+            }
         });
 
         EdgeRepository edgeRepository = new EdgeRepository();
-
+        AccountRepository accountRepository = new AccountRepository();
+        accountRepository.AddAll(account);
         edgeRepository.AddAll(edges);
+
+
         return "finish";
     }
 }

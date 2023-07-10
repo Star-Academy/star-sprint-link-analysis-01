@@ -11,11 +11,11 @@ public class FlatTransactionToTransactionConverter : IFlatToFullConverter<Transa
         return new Transaction
         {
             ID = flat.TransactionID,
-            SourceAccount = flat.SourceAcount,
-            DestiantionAccount = flat.DestiantionAccount,
+            SourceAccount = flat.SourceAccount,
+            DestiantionAccount = flat.DestinationAccount,
             TransactionType = flat.Type.ParsTransactionType(),
             Amount = flat.Amount,
-            Date = DateTimeParser.ParseExact(flat.Date)
+            Date = flat.Date
         };
     }
 

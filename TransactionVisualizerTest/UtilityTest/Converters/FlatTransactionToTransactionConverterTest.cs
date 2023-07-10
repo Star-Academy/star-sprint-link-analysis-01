@@ -15,8 +15,8 @@ public class FlatTransactionToTransactionConverterTest
         var converter = new FlatTransactionToTransactionConverter();
         var flatTransaction = new FlatTransaction
         {
-            SourceAcount = 6534454617,
-            DestiantionAccount = 6039548046,
+            SourceAccount = 6534454617,
+            DestinationAccount = 6039548046,
             Amount = Decimal.Parse("500,000,000"),
             Date = "1399/04/23",
             TransactionID = 153348811341,
@@ -29,11 +29,11 @@ public class FlatTransactionToTransactionConverterTest
         // Assert
         result.Should().NotBeNull();
         result.ID.Should().Be(flatTransaction.TransactionID);
-        result.SourceAccount.Should().Be(flatTransaction.SourceAcount);
-        result.DestiantionAccount.Should().Be(flatTransaction.DestiantionAccount);
+        result.SourceAccount.Should().Be(flatTransaction.SourceAccount);
+        result.DestiantionAccount.Should().Be(flatTransaction.DestinationAccount);
         result.TransactionType.Should().Be(TransactionType.Paya);
         result.Amount.Should().Be(flatTransaction.Amount);
-        result.Date.Should().Be(DateTimeParser.ParseExact(flatTransaction.Date));
+        result.Date.Should().Be(flatTransaction.Date);
     }
 
     [Fact]
@@ -45,8 +45,8 @@ public class FlatTransactionToTransactionConverterTest
         {
             new FlatTransaction
             {
-                SourceAcount = 6534454617,
-                DestiantionAccount = 6039548046,
+                SourceAccount = 6534454617,
+                DestinationAccount = 6039548046,
                 Amount = Decimal.Parse("500,000,000"),
                 Date = "1399/04/23",
                 TransactionID = 153348811341,
@@ -64,11 +64,11 @@ public class FlatTransactionToTransactionConverterTest
         foreach (var (flatTransaction, transaction) in flatTransactions.Zip(result, (f, t) => (f, t)))
         {
             transaction.ID.Should().Be(flatTransaction.TransactionID);
-            transaction.SourceAccount.Should().Be(flatTransaction.SourceAcount);
-            transaction.DestiantionAccount.Should().Be(flatTransaction.DestiantionAccount);
+            transaction.SourceAccount.Should().Be(flatTransaction.SourceAccount);
+            transaction.DestiantionAccount.Should().Be(flatTransaction.DestinationAccount);
             transaction.TransactionType.Should().Be(flatTransaction.Type.ParsTransactionType());
             transaction.Amount.Should().Be(flatTransaction.Amount);
-            transaction.Date.Should().Be(DateTimeParser.ParseExact(flatTransaction.Date));
+            transaction.Date.Should().Be(flatTransaction.Date);
         }
     }
 }
