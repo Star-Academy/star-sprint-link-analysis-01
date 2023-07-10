@@ -2,6 +2,7 @@ using TransactionVisualizer.DataRepository;
 using TransactionVisualizer.DataRepository.EdgeRepository;
 using TransactionVisualizer.DataRepository.ModelsRepository;
 using TransactionVisualizer.DataRepository.ModelsRepository.AccountRepository;
+using TransactionVisualizer.DataRepository.ModelsRepository.TransactionRepository;
 using TransactionVisualizer.Models.Account;
 using TransactionVisualizer.Models.BusinessModels.Transaction;
 using TransactionVisualizer.Models.Graph;
@@ -12,6 +13,7 @@ using TransactionVisualizer.Models.Transaction;
 
 using TransactionVisualizer.Services;
 using TransactionVisualizer.Utility.Builder;
+using TransactionVisualizer.Utility.Converters;
 using TransactionVisualizer.Utility.Converters.RequestToFullModels;
 using TransactionVisualizer.Utility.Graph;
 
@@ -25,12 +27,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IEdgeBuilder<Account, Transaction>, EdgeBuilder<Account, Transaction>>();
-builder.Services.AddSingleton<IGraphProcessor<Account, Transaction>, GraphProcessor<Account, Transaction>>();
-builder.Services.AddSingleton<IGraphService, GraphService>();
 builder.Services.AddSingleton<IModelRepository<Account>, AccountRepository>();
 builder.Services.AddSingleton<IModelRepository<Edge<Account,Transaction>>, EdgeRepository>();
 builder.Services.AddSingleton<IGraphResponseModelBuilder, GraphResponseModelBuilder>();
 builder.Services.AddSingleton<IRequestToFullModel<GraphResponseModel<Account, Transaction>, CustomGraph<Account , Transaction>>, GraphFullModelToGraph>();
+builder.Services.AddSingleton<IModelRepository<Transaction> ,TransactionRepository>();
+builder.Services.AddSingleton<IModelToGraphEdge<Transaction, Account, Transaction> , TransactionToEdge>();
+builder.Services.AddSingleton<IGraphProcessor<Account, Transaction>, GraphProcessor<Account, Transaction>>();
+builder.Services.AddSingleton<IGraphService, GraphService>();
+
 
 // builder.Services.AddSingleton<IGraphGenerator<Account, Transaction>, GraphGenerator>();
 

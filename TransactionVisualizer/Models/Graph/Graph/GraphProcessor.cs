@@ -1,14 +1,27 @@
 using TransactionVisualizer.DataRepository.ModelsRepository;
+using TransactionVisualizer.Models.Account;
 using TransactionVisualizer.Models.BusinessModels;
+using TransactionVisualizer.Models.BusinessModels.Transaction;
 using TransactionVisualizer.Models.Graph;
 using TransactionVisualizer.Models.Graph.Graph;
+using TransactionVisualizer.Utility.Builder;
+using TransactionVisualizer.Utility.Converters;
 
 namespace TransactionVisualizer.Utility.Graph;
 
 public class GraphProcessor<TVertex, TEdge> : IGraphProcessor<TVertex, TEdge>
     where TVertex : BaseModel where TEdge : class
 {
+    private IModelToGraphEdge<Transaction, TVertex, TEdge> _modelToGraphEdge;
+
     public CustomGraph<TVertex, TEdge> _graph { set; get; }
+
+    public GraphProcessor(IModelToGraphEdge<Transaction, TVertex, TEdge> modelToGraphEdge)
+    {
+        _graph = new CustomGraph<TVertex, TEdge>();
+        _modelToGraphEdge = modelToGraphEdge;
+    }
+
 
     public List<List<Edge<TVertex, TEdge>>> GetAllPaths(TVertex source, TVertex destination)
     {
@@ -22,10 +35,6 @@ public class GraphProcessor<TVertex, TEdge> : IGraphProcessor<TVertex, TEdge>
         return allPaths;
     }
 
-    public void LenghtExpand(int maxLenght, Stack<TVertex> vertices, List<Edge<TVertex, TEdge>> edges)
-    {
-        throw new NotImplementedException();
-    }
 
     private void BFS(TVertex source, TVertex destination, Queue<List<Edge<TVertex, TEdge>>> queue,
         List<List<Edge<TVertex, TEdge>>> allPaths)
@@ -57,7 +66,7 @@ public class GraphProcessor<TVertex, TEdge> : IGraphProcessor<TVertex, TEdge>
         }
     }
 
-    public void LenghtExpand(int maxLenght, Stack<TVertex> vertices, IModelRepository<Edge<TVertex , TEdge>> edgesRepository)
+    public void LenghtExpand(int maxLenght, Stack<TVertex> vertices, IModelRepository<Transaction> edgesRepository)
     {
         if (maxLenght == 0 || vertices.Count == 0)
         {
@@ -71,15 +80,16 @@ public class GraphProcessor<TVertex, TEdge> : IGraphProcessor<TVertex, TEdge>
             => descriptor.Query(containerDescriptor
                 => containerDescriptor.Match(
                     queryDescriptor =>
-                        queryDescriptor.Field("source.id").Query(currentVertex.ToString())
+                        queryDescriptor.Field("sourceAccount").Query(currentVertex.ToString())
                 )
             )
         );
+
         edges.ForEach(item =>
         {
-            Console.WriteLine("Adding edge Edge : " + item.Source + " -> " + item.Destination + " : " + item.weight);
-            _graph.AddEdge(item);
-            vertices.Push(item.Destination);
+            Console.WriteLine(item.SourceAccount + " -> " + item.DestiantionAccount);
+            vertices.Push(_modelToGraphEdge.Convert(item).Destination);
+            _graph.AddEdge(_modelToGraphEdge.Convert(item));
         });
 
         LenghtExpand(nextLenght, vertices, edgesRepository);

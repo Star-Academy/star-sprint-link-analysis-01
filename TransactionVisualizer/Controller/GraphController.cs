@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TransactionVisualizer.DataRepository.EdgeRepository;
 using TransactionVisualizer.DataRepository.ModelsRepository.AccountRepository;
+using TransactionVisualizer.DataRepository.ModelsRepository.TransactionRepository;
 using TransactionVisualizer.Models.Account;
 using TransactionVisualizer.Models.BusinessModels.Transaction;
 using TransactionVisualizer.Models.Graph;
@@ -81,8 +82,7 @@ public class GraphController : Microsoft.AspNetCore.Mvc.Controller
         var flatTransactions = transactionParser.Pars(transactionPath);
         Console.WriteLine("Flat account : " + flatTransactions.Count);
 
-
-        List<Edge<Account, Transaction>> edges = new List<Edge<Account, Transaction>>();
+        
 
 
         IFlatToFullConverter<Account, FlatAccount> accountFlatToFull = new FlatAccountToAccountConverter();
@@ -91,28 +91,12 @@ public class GraphController : Microsoft.AspNetCore.Mvc.Controller
         IFlatToFullConverter<Transaction, FlatTransaction> transactionFlatToFull =
             new FlatTransactionToTransactionConverter();
         var transaction = transactionFlatToFull.ConvertAll(flatTransactions);
-        transaction.ForEach(item =>
-        {
-            var source = account.Find(a => a.Id == item.SourceAccount);
-            var destination = account.Find(a => a.Id == item.DestiantionAccount);
-            if (source != null && destination != null )
-            {
-                var edge = new Edge<Account, Transaction>
-                {
-                    Source = source,
-                    Destination = destination,
-                    EdgeContent = item,
-                    weight = item.Amount
-                };
-                edges.Add(edge);
-                
-            }
-        });
 
-        EdgeRepository edgeRepository = new EdgeRepository();
+        TransactionRepository transactionRepository = new TransactionRepository();
+        transactionRepository.AddAll(transaction);
+
         AccountRepository accountRepository = new AccountRepository();
         accountRepository.AddAll(account);
-        edgeRepository.AddAll(edges);
 
 
         return "finish";

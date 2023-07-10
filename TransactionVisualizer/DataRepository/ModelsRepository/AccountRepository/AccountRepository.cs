@@ -9,7 +9,7 @@ namespace TransactionVisualizer.DataRepository.ModelsRepository.AccountRepositor
 public class AccountRepository : IModelRepository<Account>
 {
     private IDataRepository<Account> _dataRepository =
-        new ElasticDataRepository<Account>("http://localhost:9200/", "accounts7");
+        new ElasticDataRepository<Account>("http://localhost:9200/", "accounts8");
 
 
     public void AddAll(List<Account> models)
