@@ -1,5 +1,6 @@
 using FluentAssertions;
 using TransactionVisualizer.Models.Account;
+using TransactionVisualizer.Models.BusinessModels.Account;
 using TransactionVisualizer.Utility.Converters;
 
 namespace TransactionVisualizerTest.UtilityTest.Converters;
@@ -13,8 +14,8 @@ public class FlatAccountToAccountConverterTest
         var converter = new FlatAccountToAccountConverter();
         var flatAccount = new FlatAccount
         {
-            AccountId = 6534454617,
-            CardId = "6104335000000190",
+            AccountID = 6534454617,
+            CardID = "6104335000000190",
             Sheba = "IR120778801496000000198",
             AccountType = "پس انداز",
             BranchTelephone = "55638667",
@@ -22,7 +23,7 @@ public class FlatAccountToAccountConverterTest
             BranchName = "گلوبندک",
             OwnerName = "افسر",
             OwnerFamilyName = "طباطبایی",
-            OwnerId = 1227114110
+            OwnerID = 1227114110
         };
 
         // Act
@@ -30,12 +31,12 @@ public class FlatAccountToAccountConverterTest
 
         // Assert
         result.Should().NotBeNull();
-        result.AccountID.Should().Be(flatAccount.AccountId);
-        result.CardID.Should().Be(flatAccount.CardId);
+        result.Id.Should().Be(flatAccount.AccountID);
+        result.CardID.Should().Be(flatAccount.CardID);
         result.Sheba.Should().Be(flatAccount.Sheba);
         result.AccountType.Should().Be(AccountType.Pasandaz);
         result.Owner.Should().NotBeNull();
-        result.Owner.ID.Should().Be(flatAccount.OwnerId);
+        result.Owner.ID.Should().Be(flatAccount.OwnerID);
         result.Owner.Name.Should().Be(flatAccount.OwnerName);
         result.Owner.FamilyName.Should().Be(flatAccount.OwnerFamilyName);
         result.Branch.Should().NotBeNull();
@@ -53,8 +54,8 @@ public class FlatAccountToAccountConverterTest
         {
             new FlatAccount
             {
-                AccountId = 6534454617,
-                CardId = "6104335000000190",
+                AccountID = 6534454617,
+                CardID = "6104335000000190",
                 Sheba = "IR120778801496000000198",
                 AccountType = "پس انداز",
                 BranchTelephone = "55638667",
@@ -62,7 +63,7 @@ public class FlatAccountToAccountConverterTest
                 BranchName = "گلوبندک",
                 OwnerName = "افسر",
                 OwnerFamilyName = "طباطبایی",
-                OwnerId = 1227114110
+                OwnerID = 1227114110
             }
         };
 
@@ -75,12 +76,12 @@ public class FlatAccountToAccountConverterTest
 
         foreach (var (flatAccount, account) in flatAccounts.Zip(result, (f, a) => (f, a)))
         {
-            account.AccountID.Should().Be(flatAccount.AccountId);
-            account.CardID.Should().Be(flatAccount.CardId);
+            account.Id.Should().Be(flatAccount.AccountID);
+            account.CardID.Should().Be(flatAccount.CardID);
             account.Sheba.Should().Be(flatAccount.Sheba);
             account.AccountType.Should().Be(flatAccount.AccountType.ParsAccountType());
             account.Owner.Should().NotBeNull();
-            account.Owner.ID.Should().Be(flatAccount.OwnerId);
+            account.Owner.ID.Should().Be(flatAccount.OwnerID);
             account.Owner.Name.Should().Be(flatAccount.OwnerName);
             account.Owner.FamilyName.Should().Be(flatAccount.OwnerFamilyName);
             account.Branch.Should().NotBeNull();

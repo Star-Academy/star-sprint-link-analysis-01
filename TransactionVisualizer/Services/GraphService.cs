@@ -49,7 +49,7 @@ public class GraphService : IGraphService
             descriptor.Query(q =>
                 q.Match(queryDescriptor =>
                     queryDescriptor.Field(f =>
-                        f.Source.AccountID).Query(accountId.ToString())
+                        f.Source.Id).Query(accountId.ToString())
                 )
             )
         );

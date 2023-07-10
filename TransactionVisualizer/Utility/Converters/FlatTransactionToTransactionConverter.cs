@@ -9,9 +9,9 @@ public class FlatTransactionToTransactionConverter : IFlatToFullConverter<Transa
     {
         return new Transaction
         {
-            ID = flat.TransactionId,
-            SourceAccount = flat.SourceAccountId,
-            DestiantionAccount = flat.DestinationAccountId,
+            ID = flat.TransactionID,
+            SourceAccount = flat.SourceAcount,
+            DestiantionAccount = flat.DestiantionAccount,
             TransactionType = flat.Type.ParsTransactionType(),
             Amount = flat.Amount,
             Date = DateTimeParser.ParseExact(flat.Date)

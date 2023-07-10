@@ -2,10 +2,10 @@ namespace TransactionVisualizer.Models.Transaction;
 
 public class FlatTransaction
 {
-    public long SourceAccountId { get; init; }
-    public long DestinationAccountId { get; init; }
+    public long SourceAcount { get; init; }
+    public long DestiantionAccount { get; init; }
     public decimal Amount { get; init; }
     public string Date { get; init; }
-    public long TransactionId { get; init; }
+    public long TransactionID { get; init; }
     public string Type { get; init; }
 }

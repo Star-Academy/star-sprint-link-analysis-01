@@ -14,11 +14,11 @@ public class FlatTransactionToTransactionConverterTest
         var converter = new FlatTransactionToTransactionConverter();
         var flatTransaction = new FlatTransaction
         {
-            SourceAccountId = 6534454617,
-            DestinationAccountId = 6039548046,
+            SourceAcount = 6534454617,
+            DestiantionAccount = 6039548046,
             Amount = Decimal.Parse("500,000,000"),
             Date = "1399/04/23",
-            TransactionId = 153348811341,
+            TransactionID = 153348811341,
             Type = "پایا",
         };
 
@@ -27,9 +27,9 @@ public class FlatTransactionToTransactionConverterTest
 
         // Assert
         result.Should().NotBeNull();
-        result.ID.Should().Be(flatTransaction.TransactionId);
-        result.SourceAccount.Should().Be(flatTransaction.SourceAccountId);
-        result.DestiantionAccount.Should().Be(flatTransaction.DestinationAccountId);
+        result.ID.Should().Be(flatTransaction.TransactionID);
+        result.SourceAccount.Should().Be(flatTransaction.SourceAcount);
+        result.DestiantionAccount.Should().Be(flatTransaction.DestiantionAccount);
         result.TransactionType.Should().Be(TransactionType.Paya);
         result.Amount.Should().Be(flatTransaction.Amount);
         result.Date.Should().Be(DateTimeParser.ParseExact(flatTransaction.Date));
@@ -44,11 +44,11 @@ public class FlatTransactionToTransactionConverterTest
         {
             new FlatTransaction
             {
-                SourceAccountId = 6534454617,
-                DestinationAccountId = 6039548046,
+                SourceAcount = 6534454617,
+                DestiantionAccount = 6039548046,
                 Amount = Decimal.Parse("500,000,000"),
                 Date = "1399/04/23",
-                TransactionId = 153348811341,
+                TransactionID = 153348811341,
                 Type = "پایا",
             }
         };
@@ -62,9 +62,9 @@ public class FlatTransactionToTransactionConverterTest
 
         foreach (var (flatTransaction, transaction) in flatTransactions.Zip(result, (f, t) => (f, t)))
         {
-            transaction.ID.Should().Be(flatTransaction.TransactionId);
-            transaction.SourceAccount.Should().Be(flatTransaction.SourceAccountId);
-            transaction.DestiantionAccount.Should().Be(flatTransaction.DestinationAccountId);
+            transaction.ID.Should().Be(flatTransaction.TransactionID);
+            transaction.SourceAccount.Should().Be(flatTransaction.SourceAcount);
+            transaction.DestiantionAccount.Should().Be(flatTransaction.DestiantionAccount);
             transaction.TransactionType.Should().Be(flatTransaction.Type.ParsTransactionType());
             transaction.Amount.Should().Be(flatTransaction.Amount);
             transaction.Date.Should().Be(DateTimeParser.ParseExact(flatTransaction.Date));
