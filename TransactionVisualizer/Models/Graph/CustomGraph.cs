@@ -13,7 +13,10 @@ namespace TransactionVisualizer.Models.Graph
         {
             if (AdjacencyMatrix.TryGetValue(edge.Source, out var value))
             {
-                value.Add(edge);
+                if (!value.Contains(edge))
+                {
+                    value.Add(edge);
+                }
             }
             else
             {
