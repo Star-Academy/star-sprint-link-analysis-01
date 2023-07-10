@@ -1,7 +1,6 @@
 using System.ComponentModel.DataAnnotations;
-using Microsoft.EntityFrameworkCore;
 
-namespace TransactionVisualizer.Models;
+namespace TransactionVisualizer.Models.BusinessModels;
 
 public class Owner
 {

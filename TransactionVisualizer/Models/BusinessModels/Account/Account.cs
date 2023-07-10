@@ -1,12 +1,12 @@
 using System.ComponentModel.DataAnnotations;
+using TransactionVisualizer.Models.BusinessModels;
+using TransactionVisualizer.Models.BusinessModels.Account;
 
 namespace TransactionVisualizer.Models.Account;
 
 
-public class Account 
+public class Account : BaseModel 
 {
-    [Key]
-    public long AccountID { get; set; }
     public string CardID { get; set; }
     public string Sheba { get; set; }
     public AccountType AccountType { get; set; }
@@ -16,11 +16,11 @@ public class Account
     public override bool Equals(object? obj)
     {
         var account = obj as Account;
-        return account != null && account.AccountID == AccountID;
+        return account != null && account.Id == Id;
     }
 
     public override int GetHashCode()
     {
-        return AccountID.GetHashCode();
+        return Id.GetHashCode();
     }
 }

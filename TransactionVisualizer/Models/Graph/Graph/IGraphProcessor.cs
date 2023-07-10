@@ -1,6 +1,4 @@
-using TransactionVisualizer.Models.Graph;
-
-namespace TransactionVisualizer.Utility.Graph;
+namespace TransactionVisualizer.Models.Graph.Graph;
 
 public interface IGraphProcessor<TVertex, TEdge> where TVertex : class where TEdge : class
 {

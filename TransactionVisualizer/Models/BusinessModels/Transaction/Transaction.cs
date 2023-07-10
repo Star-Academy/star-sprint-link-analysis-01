@@ -1,7 +1,7 @@
-using System;
 using System.ComponentModel.DataAnnotations;
+using TransactionVisualizer.Models.Transaction;
 
-namespace TransactionVisualizer.Models.Transaction;
+namespace TransactionVisualizer.Models.BusinessModels.Transaction;
 
 public class Transaction
 {

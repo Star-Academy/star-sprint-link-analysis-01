@@ -1,7 +1,7 @@
 using TransactionVisualizer.Exception;
 using static TransactionVisualizer.Utility.Constants.AccountRelatedConstants;
 
-namespace TransactionVisualizer.Models.Account;
+namespace TransactionVisualizer.Models.BusinessModels.Account;
 
 public enum AccountType
 {

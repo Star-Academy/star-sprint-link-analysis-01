@@ -1,6 +1,7 @@
 using FluentAssertions;
 using Nest;
 using TransactionVisualizer.DataRepository.ElasticRepository;
+using TransactionVisualizer.Models.BusinessModels.Transaction;
 using TransactionVisualizer.Models.Transaction;
 
 namespace TransactionVisualizerTest.DataRepositoryTest.ElasticRepository;

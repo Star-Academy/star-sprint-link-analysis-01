@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace TransactionVisualizer.Models;
+namespace TransactionVisualizer.Models.BusinessModels;
 
 public class Branch
 {

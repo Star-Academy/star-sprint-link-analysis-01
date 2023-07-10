@@ -1,10 +1,9 @@
 using Nest;
-using TransactionVisualizer.Models;
 using TransactionVisualizer.Models.Account;
+using TransactionVisualizer.Models.BusinessModels.Transaction;
 using TransactionVisualizer.Models.Graph;
-using TransactionVisualizer.Models.Transaction;
 
-namespace TransactionVisualizer.DataRepository;
+namespace TransactionVisualizer.DataRepository.EdgeRepository;
 
 public interface IEdgeRepository
 {

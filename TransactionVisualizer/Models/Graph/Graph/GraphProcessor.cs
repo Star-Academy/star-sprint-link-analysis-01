@@ -1,4 +1,5 @@
 using TransactionVisualizer.Models.Graph;
+using TransactionVisualizer.Models.Graph.Graph;
 
 namespace TransactionVisualizer.Utility.Graph;
 

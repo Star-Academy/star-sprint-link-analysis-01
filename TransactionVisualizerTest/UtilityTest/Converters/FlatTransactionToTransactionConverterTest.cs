@@ -1,4 +1,5 @@
 using FluentAssertions;
+using TransactionVisualizer.Models.BusinessModels.Transaction;
 using TransactionVisualizer.Models.Transaction;
 using TransactionVisualizer.Utility.Converters;
 using TransactionVisualizer.Utility.Parsers.DateTimeParser;

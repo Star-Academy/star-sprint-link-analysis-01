@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
-
 namespace TransactionVisualizer.Models.Graph
 {
     public class CustomGraph<TVertex, TEdge> where TVertex : class where TEdge : class
@@ -23,13 +20,11 @@ namespace TransactionVisualizer.Models.Graph
                 AdjacencyMatrix.Add(edge.Source, new List<Edge<TVertex, TEdge>>());
                 AdjacencyMatrix[edge.Source].Add(edge);
             }
-            
+
             if (!AdjacencyMatrix.ContainsKey(edge.Destination))
             {
                 AdjacencyMatrix.Add(edge.Destination, new List<Edge<TVertex, TEdge>>());
             }
         }
-        
-        
     }
 }
