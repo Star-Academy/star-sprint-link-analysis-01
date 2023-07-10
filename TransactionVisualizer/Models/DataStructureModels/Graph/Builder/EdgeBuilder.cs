@@ -1,6 +1,4 @@
-using TransactionVisualizer.Models.Graph;
-
-namespace TransactionVisualizer.Utility.Builder;
+namespace TransactionVisualizer.Models.DataStructureModels.Graph.Builder;
 
 public class EdgeBuilder<TVertex, TEdge> : IEdgeBuilder<TVertex, TEdge> where TVertex : class where TEdge : class
 {
@@ -8,10 +6,10 @@ public class EdgeBuilder<TVertex, TEdge> : IEdgeBuilder<TVertex, TEdge> where TV
     {
         return new Edge<TVertex, TEdge>()
         {
-            EdgeContent = edgeConfig.Content,
             Source = edgeConfig.Source,
             Destination = edgeConfig.Destination,
-            weight = edgeConfig.Weight
+            Content = edgeConfig.Content,
+            Weight = edgeConfig.Weight
         };
     }
 }

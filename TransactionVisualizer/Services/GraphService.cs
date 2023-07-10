@@ -3,8 +3,8 @@ using TransactionVisualizer.DataRepository;
 using TransactionVisualizer.Models;
 using TransactionVisualizer.Models.BusinessLogicModels.Account;
 using TransactionVisualizer.Models.BusinessLogicModels.Transaction;
-using TransactionVisualizer.Models.Graph;
-using TransactionVisualizer.Utility.Graph;
+using TransactionVisualizer.Models.DataStructureModels.Graph;
+using TransactionVisualizer.Models.DataStructureModels.Graph.Graph;
 
 namespace TransactionVisualizer.Services;
 
@@ -19,17 +19,17 @@ public class GraphService : IGraphService
         _edgeRepository = edgeRepository;
     }
 
-    public void SetState(CustomGraph<Account, Transaction> graph)
+    public void SetState(Graph<Account, Transaction> graph)
     {
         _graphProcessor.SetGraph(graph);
     }
 
-    public CustomGraph<Account, Transaction> GetState()
+    public Graph<Account, Transaction> GetState()
     {
         return _graphProcessor.GetGraph();
     }
 
-    public CustomGraph<Account, Transaction> Expand(Account account, int MaxLenght)
+    public Graph<Account, Transaction> Expand(Account account, int MaxLenght)
     {
         Stack<Account> stack = new Stack<Account>();
         stack.Push(account);
@@ -43,7 +43,7 @@ public class GraphService : IGraphService
         return _graphProcessor.GetMaxFlow(source, destination);
     }
 
-    public CustomGraph<Account, Transaction> InitialGraph(long accountId)
+    public Graph<Account, Transaction> InitialGraph(long accountId)
     {
         var edges = _edgeRepository.Search(descriptor =>
             descriptor.Query(q =>
@@ -54,7 +54,7 @@ public class GraphService : IGraphService
             )
         );
 
-        var graph = new CustomGraph<Account, Transaction>();
+        var graph = new Graph<Account, Transaction>();
         edges.ForEach(item => graph.AddEdge(item));
 
         _graphProcessor.SetGraph(graph);

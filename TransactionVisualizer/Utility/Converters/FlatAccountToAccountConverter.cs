@@ -28,7 +28,7 @@ public class FlatAccountToAccountConverter : IFlatToFullConverter<Account, FlatA
     {
         return new Owner
         {
-            ID = flat.OwnerId,
+            Id = flat.OwnerId,
             Name = flat.OwnerName,
             FamilyName = flat.OwnerFamilyName
         };

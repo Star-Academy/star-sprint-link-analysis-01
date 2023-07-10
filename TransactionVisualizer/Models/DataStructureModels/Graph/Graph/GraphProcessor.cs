@@ -1,45 +1,43 @@
-using TransactionVisualizer.Models.Graph;
-
-namespace TransactionVisualizer.Utility.Graph;
+namespace TransactionVisualizer.Models.DataStructureModels.Graph.Graph;
 
 public class GraphProcessor<TVertex, TEdge> : IGraphProcessor<TVertex, TEdge> where TVertex : class where TEdge : class
 {
-    public CustomGraph<TVertex, TEdge> _graph { set; get; }
+    private Graph<TVertex, TEdge> Graph { get; set; }
 
     public List<List<Edge<TVertex, TEdge>>> GetAllPaths(TVertex source, TVertex destination)
     {
-        List<List<Edge<TVertex, TEdge>>> allPaths = new List<List<Edge<TVertex, TEdge>>>();
-        Queue<List<Edge<TVertex, TEdge>>> queue = new Queue<List<Edge<TVertex, TEdge>>>();
+        var allPaths = new List<List<Edge<TVertex, TEdge>>>();
+        var queue = new Queue<List<Edge<TVertex, TEdge>>>();
         queue.Enqueue(new List<Edge<TVertex, TEdge>>());
 
-        
-        BFS(source, destination, queue, allPaths);
+
+        BreadthFirstSearch(source, destination, queue, allPaths);
 
         return allPaths;
     }
 
-    private void BFS(TVertex source, TVertex destination, Queue<List<Edge<TVertex, TEdge>>> queue, List<List<Edge<TVertex, TEdge>>> allPaths)
+    private void BreadthFirstSearch(TVertex source, TVertex destination, Queue<List<Edge<TVertex, TEdge>>> queue,
+        ICollection<List<Edge<TVertex, TEdge>>> allPaths)
     {
         while (queue.Count > 0)
         {
-            List<Edge<TVertex, TEdge>> currentPath = queue.Dequeue();
-            TVertex currentVertex = currentPath.Count > 0 ? currentPath.Last().Destination : source;
+            var currentPath = queue.Dequeue();
+            var currentVertex = currentPath.Count > 0 ? currentPath.Last().Destination : source;
 
             if (currentVertex.Equals(destination))
             {
-                // Found a path from source to destination
                 allPaths.Add(new List<Edge<TVertex, TEdge>>(currentPath));
             }
 
-            if (_graph.AdjacencyMatrix.TryGetValue(currentVertex, out var edges))
+            if (Graph.AdjacencyMatrix.TryGetValue(currentVertex, out var edges))
             {
                 foreach (var edge in edges)
                 {
-                    TVertex nextVertex = edge.Destination;
+                    var nextVertex = edge.Destination;
                     if (!currentPath.Select(e => e.Destination).Contains(nextVertex))
                     {
-                        List<Edge<TVertex, TEdge>> newPath = new List<Edge<TVertex, TEdge>>(currentPath);
-                        newPath.Add(edge);
+                        var newPath = new List<Edge<TVertex, TEdge>>(currentPath) { edge };
+
                         queue.Enqueue(newPath);
                     }
                 }
@@ -53,17 +51,20 @@ public class GraphProcessor<TVertex, TEdge> : IGraphProcessor<TVertex, TEdge> wh
         {
             return;
         }
-
-        int nextLenght = maxLenght - 1;
-        TVertex currentVertex = vertices.Pop();
-        
+    
+        var nextLenght = maxLenght - 1;
+        var currentVertex = vertices.Pop();
+    
         edges = edges.Where(item => item.Source.Equals(currentVertex)).ToList();
-        edges.ForEach(item =>
-        {
-            _graph.AddEdge(item);
-            vertices.Push(item.Destination);
-        });
-        
+        edges.ForEach
+        (
+            item =>
+            {
+                Graph.AddEdge(item);
+                vertices.Push(item.Destination);
+            }
+        );
+    
         LenghtExpand(nextLenght, vertices, edges);
     }
 
@@ -71,27 +72,25 @@ public class GraphProcessor<TVertex, TEdge> : IGraphProcessor<TVertex, TEdge> wh
     {
         var allPath = GetAllPaths(source, destination);
         decimal maxFlow = 0;
-        
+
+        var min = decimal.MaxValue;
         foreach (var path in allPath)
         {
-            decimal min = decimal.MaxValue;
-            foreach (var edge in path)
-            {
-                min = Math.Min(edge.weight, min);
-            }
+            min = path.Select(edge => edge.Weight).Prepend(min).Min();
+
             maxFlow += min;
         }
 
         return maxFlow;
     }
 
-    public void SetGraph(CustomGraph<TVertex, TEdge> graph)
+    public void SetGraph(Graph<TVertex, TEdge> graph)
     {
-        _graph = graph;
+        Graph = graph;
     }
 
-    public CustomGraph<TVertex, TEdge> GetGraph()
+    public Graph<TVertex, TEdge> GetGraph()
     {
-        return _graph;
+        return Graph;
     }
 }

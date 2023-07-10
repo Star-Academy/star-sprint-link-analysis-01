@@ -1,10 +1,9 @@
-namespace TransactionVisualizer.Models.Graph;
+namespace TransactionVisualizer.Models.DataStructureModels.Graph;
 
-public class EdgeConfig<TVertex, TEdge> where TVertex : class where TEdge : class
+public abstract class EdgeConfig<TVertex, TEdge> where TVertex : class where TEdge : class
 {
-    public TEdge Content { get; set; }
-    
     public TVertex Source { get; set; }
     public TVertex Destination { get; set; }
-    public int Weight { get; set; }
+    public TEdge Content { get; set; }
+    public decimal Weight { get; init; }
 }

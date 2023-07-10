@@ -2,8 +2,9 @@ using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using TransactionVisualizer.Models.BusinessLogicModels.Account;
 using TransactionVisualizer.Models.BusinessLogicModels.Transaction;
+using TransactionVisualizer.Models.DataStructureModels.Graph.Graph;
+using TransactionVisualizer.Serializers;
 using TransactionVisualizer.Services;
-using TransactionVisualizer.Utility.Graph;
 
 
 namespace TransactionVisualizer.Controller;

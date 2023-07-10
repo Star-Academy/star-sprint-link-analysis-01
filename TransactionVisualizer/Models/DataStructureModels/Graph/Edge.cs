@@ -1,10 +1,9 @@
-namespace TransactionVisualizer.Models.Graph;
+namespace TransactionVisualizer.Models.DataStructureModels.Graph;
 
-public class Edge<T, U> where T : class where U : class
+public class Edge<TVertex, TEdge> where TVertex : class where TEdge : class
 {
-    public U EdgeContent { get; set; }
-
-    public T Destination { get; set; }
-    public decimal weight { get; set; }
-    public T Source { get; set; }
+    public TVertex Source { get; set; }
+    public TVertex Destination { get; set; }
+    public TEdge Content { get; set; }
+    public decimal Weight { get; init; }
 }

@@ -35,7 +35,7 @@ public class FlatAccountToAccountConverterTest
         result.Sheba.Should().Be(flatAccount.Sheba);
         result.AccountType.Should().Be(AccountType.Pasandaz);
         result.Owner.Should().NotBeNull();
-        result.Owner.ID.Should().Be(flatAccount.OwnerId);
+        result.Owner.Id.Should().Be(flatAccount.OwnerId);
         result.Owner.Name.Should().Be(flatAccount.OwnerName);
         result.Owner.FamilyName.Should().Be(flatAccount.OwnerFamilyName);
         result.Branch.Should().NotBeNull();
@@ -80,7 +80,7 @@ public class FlatAccountToAccountConverterTest
             account.Sheba.Should().Be(flatAccount.Sheba);
             account.AccountType.Should().Be(flatAccount.AccountType.ParsAccountType());
             account.Owner.Should().NotBeNull();
-            account.Owner.ID.Should().Be(flatAccount.OwnerId);
+            account.Owner.Id.Should().Be(flatAccount.OwnerId);
             account.Owner.Name.Should().Be(flatAccount.OwnerName);
             account.Owner.FamilyName.Should().Be(flatAccount.OwnerFamilyName);
             account.Branch.Should().NotBeNull();

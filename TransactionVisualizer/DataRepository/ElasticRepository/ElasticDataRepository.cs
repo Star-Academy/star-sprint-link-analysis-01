@@ -1,6 +1,5 @@
 using Nest;
 using TransactionVisualizer.Utility.Validator;
-using System.Diagnostics.Contracts;
 
 namespace TransactionVisualizer.DataRepository.ElasticRepository;
 
@@ -57,6 +56,4 @@ public class ElasticDataRepository<TResponse> : IDataRepository<TResponse> where
     {
         throw new NotImplementedException();
     }
-    
-    
 }

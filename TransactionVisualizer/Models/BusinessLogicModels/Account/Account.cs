@@ -2,10 +2,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TransactionVisualizer.Models.BusinessLogicModels.Account;
 
-public class Account 
+public class Account
 {
-    [Key]
-    public long AccountID { get; set; }
+    [Key] public long AccountID { get; set; }
     public string CardID { get; set; }
     public string Sheba { get; set; }
     public AccountType AccountType { get; set; }
@@ -15,6 +14,7 @@ public class Account
     public override bool Equals(object? obj)
     {
         var account = obj as Account;
+
         return account != null && account.AccountID == AccountID;
     }
 

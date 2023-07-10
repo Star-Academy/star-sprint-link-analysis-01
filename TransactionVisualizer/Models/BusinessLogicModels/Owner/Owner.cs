@@ -4,17 +4,19 @@ namespace TransactionVisualizer.Models.BusinessLogicModels;
 
 public class Owner
 {
-    [Key] public long ID { get; set; }
+    [Key] public long Id { get; set; }
     public string Name { get; set; }
     public string FamilyName { get; set; }
 
-    public override int GetHashCode()
-    {
-        return ID.GetHashCode();
-    }
-
     public override bool Equals(object? obj)
     {
-        return obj is Owner owner && owner.ID == ID;
+        var owner = obj as Owner;
+
+        return owner != null && owner.Id == Id;
+    }
+    
+    public override int GetHashCode()
+    {
+        return Id.GetHashCode();
     }
 }

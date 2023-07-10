@@ -3,7 +3,7 @@ using TransactionVisualizer.DataRepository.ElasticRepository;
 using TransactionVisualizer.Models;
 using TransactionVisualizer.Models.BusinessLogicModels.Account;
 using TransactionVisualizer.Models.BusinessLogicModels.Transaction;
-using TransactionVisualizer.Models.Graph;
+using TransactionVisualizer.Models.DataStructureModels.Graph;
 
 namespace TransactionVisualizer.DataRepository;
 
