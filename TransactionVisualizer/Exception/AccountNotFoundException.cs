@@ -1,8 +1,6 @@
 namespace TransactionVisualizer.Exception;
 
-using System;
-
-public class AccountNotFoundException : Exception
+public class AccountNotFoundException : System.Exception
 {
     public AccountNotFoundException(string? message) : base(message)
     {

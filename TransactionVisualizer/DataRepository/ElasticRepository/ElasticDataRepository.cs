@@ -1,12 +1,10 @@
 using Nest;
 using TransactionVisualizer.Utility.Validator;
-using System.Diagnostics.Contracts;
 
 namespace TransactionVisualizer.DataRepository.ElasticRepository;
 
 public class ElasticDataRepository<TResponse> : IDataRepository<TResponse> where TResponse : class
 {
-    public string Name { get; }
     private readonly ElasticClient _client;
 
     // Jalase درست کردن کلاس برای ورودی کانستراکتور و اجرای فلونت ولیدیشن روی ان 
@@ -18,6 +16,8 @@ public class ElasticDataRepository<TResponse> : IDataRepository<TResponse> where
         Name = name;
         _client = new ElasticClient(new ConnectionSettings(new Uri(url)).DefaultIndex(name));
     }
+
+    public string Name { get; }
 
     public DataManipulationResponse InsertAll(List<TResponse> records)
     {
@@ -57,6 +57,4 @@ public class ElasticDataRepository<TResponse> : IDataRepository<TResponse> where
     {
         throw new NotImplementedException();
     }
-    
-    
 }

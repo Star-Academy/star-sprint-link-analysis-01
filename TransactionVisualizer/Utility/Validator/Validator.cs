@@ -6,10 +6,7 @@ public static class Validator
 {
     public static void NullValidation(object? data)
     {
-        if (data == null)
-        {
-            throw new ArgumentNullException(nameof(data));
-        }
+        if (data == null) throw new ArgumentNullException(nameof(data));
     }
 
     public static void ListValidation<T>(List<T>? list)
@@ -21,9 +18,6 @@ public static class Validator
     {
         NullValidation(list);
 
-        if (list.Count == 0)
-        {
-            throw new EmptyListException(name);
-        }
+        if (list.Count == 0) throw new EmptyListException(name);
     }
 }

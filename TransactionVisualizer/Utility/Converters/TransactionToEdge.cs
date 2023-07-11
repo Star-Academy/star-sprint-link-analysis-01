@@ -1,40 +1,35 @@
-using TransactionVisualizer.DataRepository.ModelsRepository;
+using TransactionVisualizer.DataRepository;
 using TransactionVisualizer.Models.Account;
-using TransactionVisualizer.Models.BusinessLogicModels.Account;
-using TransactionVisualizer.Models.BusinessModels.Transaction;
 using TransactionVisualizer.Models.DataStructureModels.Graph;
-using TransactionVisualizer.Models.Graph;
+using TransactionVisualizer.Models.Transaction;
 using TransactionVisualizer.Utility.Builders.GraphBuilders.EdgeBuilders;
+using TransactionVisualizer.Utility.Builders.SelectorBuilder;
 
 namespace TransactionVisualizer.Utility.Converters;
 
 public class TransactionToEdge : IModelToGraphEdge<Transaction, Account, Transaction>
 {
-    private IEdgeBuilder<Account, Transaction> _builder;
-    private IModelRepository<Account> _repository;
+    private readonly IEdgeBuilder<Account, Transaction> _builder;
+    private readonly IDataRepository<Account> _repository;
+    private readonly ISelectorBuilder _selectorBuilder;
 
-    public TransactionToEdge(IEdgeBuilder<Account, Transaction> builder, IModelRepository<Account> repository)
+    public TransactionToEdge(IEdgeBuilder<Account, Transaction> builder, IDataRepository<Account> repository,
+        ISelectorBuilder selectorBuilder)
     {
         _builder = builder;
         _repository = repository;
+        _selectorBuilder = selectorBuilder;
     }
 
     public Edge<Account, Transaction> Convert(Transaction transaction)
     {
-        var fromAccount = _repository
-            .Search(descriptor => descriptor.Query(containerDescriptor =>
-                containerDescriptor.Match(match =>
-                    match.Field(f => f.Id).Query(transaction.SourceAccount.ToString())))).First();
-        
-        
-        
-        var toAccount = _repository
-            .Search(descriptor => descriptor.Query(containerDescriptor =>
-                containerDescriptor.Match(match =>
-                    match.Field(f => f.Id).Query(transaction.DestinationAccount.ToString())))).First();
-        
-        
-        return _builder.Build(new EdgeConfig<Account, Transaction>()
+        var fromAccountSelector = _selectorBuilder.BuildAccountSelector(transaction.SourceAccount.ToString());
+        var fromAccount = _repository.Search(fromAccountSelector).Items.First();
+
+        var toAccountSelector = _selectorBuilder.BuildAccountSelector(transaction.DestinationAccount.ToString());
+        var toAccount = _repository.Search(toAccountSelector).Items.First();
+
+        return _builder.Build(new EdgeConfig<Account, Transaction>
             { Content = transaction, Destination = fromAccount, Source = toAccount, Weight = transaction.Amount });
     }
 }

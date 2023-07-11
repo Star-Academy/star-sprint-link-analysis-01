@@ -1,6 +1,5 @@
 using FluentAssertions;
 using TransactionVisualizer.Models.Account;
-using TransactionVisualizer.Models.BusinessLogicModels.Account;
 using TransactionVisualizer.Utility.Converters;
 
 namespace TransactionVisualizerTest.UtilityTest.Converters;

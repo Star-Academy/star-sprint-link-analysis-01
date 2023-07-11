@@ -1,7 +1,6 @@
 using System.ComponentModel.DataAnnotations;
-using TransactionVisualizer.Models.BusinessLogicModels.Transaction;
 
-namespace TransactionVisualizer.Models.BusinessModels.Transaction;
+namespace TransactionVisualizer.Models.Transaction;
 
 public class Transaction
 {
@@ -21,7 +20,7 @@ public class Transaction
 
         return transaction != null && transaction.Id == Id;
     }
-    
+
     public override int GetHashCode()
     {
         return Id.GetHashCode();

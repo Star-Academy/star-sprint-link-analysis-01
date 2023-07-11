@@ -33,7 +33,7 @@ public class GraphTest
         graph.AddEdge(edge6);
 
         GraphProcessor<String, String> graphProcessor = new GraphProcessor<string, string>();
-        graphProcessor._graph = graph;
+        graphProcessor.Graph = graph;
         var actualMaxFlow = graphProcessor.GetMaxFlow(source , destenation);
         var path = graphProcessor.GetAllPaths(source, destenation);
         Assert.Equal(maxFlow, actualMaxFlow);

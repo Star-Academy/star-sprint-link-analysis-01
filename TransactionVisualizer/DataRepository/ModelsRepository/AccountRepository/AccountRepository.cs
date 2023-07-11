@@ -1,25 +1,32 @@
 using Nest;
 using TransactionVisualizer.DataRepository.ElasticRepository;
 using TransactionVisualizer.Models.Account;
-using TransactionVisualizer.Models.BusinessLogicModels.Account;
-using TransactionVisualizer.Models.BusinessModels.Transaction;
-using TransactionVisualizer.Models.Graph;
 
 namespace TransactionVisualizer.DataRepository.ModelsRepository.AccountRepository;
 
-public class AccountRepository : IModelRepository<Account>
+public class AccountRepository : IDataRepository<Account>
 {
-    private IDataRepository<Account> _dataRepository =
+    private readonly IDataRepository<Account> _dataRepository =
         new ElasticDataRepository<Account>("http://localhost:9200/", "accounts8");
 
 
-    public void AddAll(List<Account> models)
+    public DataManipulationResponse InsertAll(List<Account> records)
     {
-        _dataRepository.InsertAll(models);
+        return _dataRepository.InsertAll(records);
     }
 
-    public List<Account> Search(Func<SearchDescriptor<Account>, ISearchRequest> selector)
+    public DataManipulationResponse Insert(Account record)
     {
-        return _dataRepository.Search(selector).Items;
+        return _dataRepository.Insert(record);
+    }
+
+    DataGainResponse<Account> IDataRepository<Account>.Search(Func<SearchDescriptor<Account>, ISearchRequest> selector)
+    {
+        return _dataRepository.Search(selector);
+    }
+
+    public bool Contain<TSelector>(TSelector selector)
+    {
+        return _dataRepository.Contain(selector);
     }
 }

@@ -1,5 +1,3 @@
-using TransactionVisualizer.Utility.Validator;
-
 namespace TransactionVisualizer.DataRepository.ElasticRepository;
 
 // Jalase di
@@ -10,7 +8,7 @@ public abstract class DataGainResponseBuilder<TResponse>
         return new DataGainResponse<TResponse>
         {
             Error = errors,
-            Items = items,
+            Items = items
         };
     }
 }

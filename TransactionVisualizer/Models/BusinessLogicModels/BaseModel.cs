@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace TransactionVisualizer.Models.BusinessModels;
+namespace TransactionVisualizer.Models;
 
 public abstract class BaseModel
 {

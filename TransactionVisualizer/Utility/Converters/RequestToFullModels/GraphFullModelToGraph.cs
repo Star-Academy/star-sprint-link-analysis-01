@@ -1,20 +1,22 @@
-using TransactionVisualizer.DataRepository.ModelsRepository;
+using TransactionVisualizer.DataRepository;
 using TransactionVisualizer.Models.Account;
-using TransactionVisualizer.Models.BusinessLogicModels.Account;
-using TransactionVisualizer.Models.BusinessModels.Transaction;
 using TransactionVisualizer.Models.DataStructureModels.Graph;
-using TransactionVisualizer.Models.Graph;
 using TransactionVisualizer.Models.ResponseModels;
+using TransactionVisualizer.Models.Transaction;
+using TransactionVisualizer.Utility.Builders.SelectorBuilder;
 
 namespace TransactionVisualizer.Utility.Converters.RequestToFullModels;
 
-public class GraphFullModelToGraph : IRequestToFullModel<GraphResponseModel<Account, Transaction>, Graph<Account , Transaction>>
+public class
+    GraphFullModelToGraph : IRequestToFullModel<GraphResponseModel<Account, Transaction>, Graph<Account, Transaction>>
 {
-    private IModelRepository<Account> _repository;
+    private readonly IDataRepository<Account> _repository;
+    private readonly ISelectorBuilder _selectorBuilder;
 
-    public GraphFullModelToGraph(IModelRepository<Account> repository)
+    public GraphFullModelToGraph(IDataRepository<Account> repository, ISelectorBuilder selectorBuilder)
     {
         _repository = repository;
+        _selectorBuilder = selectorBuilder;
     }
 
     public Graph<Account, Transaction> Convert(GraphResponseModel<Account, Transaction> request)
@@ -24,27 +26,16 @@ public class GraphFullModelToGraph : IRequestToFullModel<GraphResponseModel<Acco
 
         foreach (var edge in request.Edges)
         {
-            var source = _repository.Search(descriptor =>
-                descriptor.Query(q => q.Match(m =>
-                        m.Field(f =>
-                            f.Id).Query(edge.Source.ToString())
-                    )
-                )
-            );
-            var destination = _repository.Search(descriptor =>
-                descriptor.Query(q => q.Match(m =>
-                        m.Field(f =>
-                            f.Id).Query(edge.Destination.ToString())
-                    )
-                )
-            );
+            var source = _repository.Search(_selectorBuilder.BuildAccountSelector(edge.Source.ToString())).Items
+                .First();
+            var destination = _repository.Search(_selectorBuilder.BuildAccountSelector(edge.Destination.ToString()))
+                .Items.First();
 
-            graph.AddEdge(new Edge<Account, Transaction>()
+            graph.AddEdge(new Edge<Account, Transaction>
             {
-                Destination = destination[0], Source = source[0], Content = edge.Content,
+                Destination = destination, Source = source, Content = edge.Content,
                 Weight = edge.Content.Amount
             });
-            
         }
 
         return graph;

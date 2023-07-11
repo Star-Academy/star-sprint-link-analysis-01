@@ -1,7 +1,6 @@
-using TransactionVisualizer.Models.BusinessModels;
-using TransactionVisualizer.Models.Graph;
+using TransactionVisualizer.Models.ResponseModels;
 
-namespace TransactionVisualizer.Models.ResponseModels;
+namespace TransactionVisualizer.Models.RequestModels;
 
 public class MaxFlowRequestModel<TVertex, TEdge> where TEdge : class where TVertex : class
 {

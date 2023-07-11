@@ -1,29 +1,28 @@
-using TransactionVisualizer.DataRepository.ModelsRepository;
-using TransactionVisualizer.Models.BusinessModels;
-using TransactionVisualizer.Models.BusinessModels.Transaction;
+using TransactionVisualizer.DataRepository;
+using TransactionVisualizer.Models;
 using TransactionVisualizer.Models.DataStructureModels.Graph;
-using TransactionVisualizer.Models.Graph.Graph;
+using TransactionVisualizer.Models.Transaction;
 using TransactionVisualizer.Utility.Converters;
 
 namespace TransactionVisualizer.Utility.Graph;
 
-public class GraphProcessor<TVertex, TEdge> : IGraphProcessor<TVertex, TEdge> where TVertex : BaseModel where TEdge : class
+public class GraphProcessor<TVertex, TEdge> : IGraphProcessor<TVertex, TEdge> where TEdge : class where TVertex : class
 {
-    private IModelToGraphEdge<Transaction, TVertex, TEdge> _modelToGraphEdge;
-
-    public Graph<TVertex, TEdge> _graph { set; get; }
+    private readonly IModelToGraphEdge<Transaction, TVertex, TEdge> _modelToGraphEdge;
 
     public GraphProcessor(IModelToGraphEdge<Transaction, TVertex, TEdge> modelToGraphEdge)
     {
-        _graph = new Graph<TVertex, TEdge>();
+        Graph = new Graph<TVertex, TEdge>();
         _modelToGraphEdge = modelToGraphEdge;
     }
+
+    public Graph<TVertex, TEdge> Graph { set; get; }
 
 
     public List<List<Edge<TVertex, TEdge>>> GetAllPaths(TVertex source, TVertex destination)
     {
-        List<List<Edge<TVertex, TEdge>>> allPaths = new List<List<Edge<TVertex, TEdge>>>();
-        Queue<List<Edge<TVertex, TEdge>>> queue = new Queue<List<Edge<TVertex, TEdge>>>();
+        var allPaths = new List<List<Edge<TVertex, TEdge>>>();
+        var queue = new Queue<List<Edge<TVertex, TEdge>>>();
         queue.Enqueue(new List<Edge<TVertex, TEdge>>());
 
 
@@ -32,48 +31,14 @@ public class GraphProcessor<TVertex, TEdge> : IGraphProcessor<TVertex, TEdge> wh
         return allPaths;
     }
 
-
-    private void BFS(TVertex source, TVertex destination, Queue<List<Edge<TVertex, TEdge>>> queue,
-        List<List<Edge<TVertex, TEdge>>> allPaths)
+    public void LenghtExpand(int maxLenght, Stack<TVertex> vertices, IDataRepository<Transaction> edgesRepository)
     {
-        while (queue.Count > 0)
-        {
-            List<Edge<TVertex, TEdge>> currentPath = queue.Dequeue();
-            TVertex currentVertex = currentPath.Count > 0 ? currentPath.Last().Destination : source;
+        if (maxLenght == 0 || vertices.Count == 0) return;
 
-            if (currentVertex.Equals(destination))
-            {
-                // Found a path from source to destination
-                allPaths.Add(new List<Edge<TVertex, TEdge>>(currentPath));
-            }
-
-            if (_graph.AdjacencyMatrix.TryGetValue(currentVertex, out var edges))
-            {
-                foreach (var edge in edges)
-                {
-                    TVertex nextVertex = edge.Destination;
-                    if (!currentPath.Select(e => e.Destination).Contains(nextVertex))
-                    {
-                        List<Edge<TVertex, TEdge>> newPath = new List<Edge<TVertex, TEdge>>(currentPath);
-                        newPath.Add(edge);
-                        queue.Enqueue(newPath);
-                    }
-                }
-            }
-        }
-    }
-
-    public void LenghtExpand(int maxLenght, Stack<TVertex> vertices, IModelRepository<Transaction> edgesRepository)
-    {
-        if (maxLenght == 0 || vertices.Count == 0)
-        {
-            return;
-        }
-
-        int nextLenght = maxLenght - 1;
-        TVertex currentVertex = vertices.Pop();
+        var nextLenght = maxLenght - 1;
+        var currentVertex = vertices.Pop();
         Console.WriteLine(currentVertex.ToString());
-        
+
         var edges = edgesRepository.Search(descriptor
             => descriptor.Query(containerDescriptor
                 => containerDescriptor.Match(
@@ -83,11 +48,11 @@ public class GraphProcessor<TVertex, TEdge> : IGraphProcessor<TVertex, TEdge> wh
             )
         );
 
-        edges.ForEach(item =>
+        edges.Items.ForEach(item =>
         {
             Console.WriteLine(item.SourceAccount + " -> " + item.DestinationAccount);
             vertices.Push(_modelToGraphEdge.Convert(item).Destination);
-            _graph.AddEdge(_modelToGraphEdge.Convert(item));
+            Graph.AddEdge(_modelToGraphEdge.Convert(item));
         });
 
         LenghtExpand(nextLenght, vertices, edgesRepository);
@@ -109,11 +74,8 @@ public class GraphProcessor<TVertex, TEdge> : IGraphProcessor<TVertex, TEdge> wh
 
         foreach (var path in allPath)
         {
-            decimal min = decimal.MaxValue;
-            foreach (var edge in path)
-            {
-                min = Math.Min(edge.Weight, min);
-            }
+            var min = decimal.MaxValue;
+            foreach (var edge in path) min = Math.Min(edge.Weight, min);
 
             maxFlow += min;
         }
@@ -123,11 +85,38 @@ public class GraphProcessor<TVertex, TEdge> : IGraphProcessor<TVertex, TEdge> wh
 
     public void SetGraph(Graph<TVertex, TEdge> graph)
     {
-        _graph = graph;
+        Graph = graph;
     }
 
     public Graph<TVertex, TEdge> GetGraph()
     {
-        return _graph;
+        return Graph;
+    }
+
+
+    private void BFS(TVertex source, TVertex destination, Queue<List<Edge<TVertex, TEdge>>> queue,
+        List<List<Edge<TVertex, TEdge>>> allPaths)
+    {
+        while (queue.Count > 0)
+        {
+            var currentPath = queue.Dequeue();
+            var currentVertex = currentPath.Count > 0 ? currentPath.Last().Destination : source;
+
+            if (currentVertex.Equals(destination))
+                // Found a path from source to destination
+                allPaths.Add(new List<Edge<TVertex, TEdge>>(currentPath));
+
+            if (Graph.AdjacencyMatrix.TryGetValue(currentVertex, out var edges))
+                foreach (var edge in edges)
+                {
+                    var nextVertex = edge.Destination;
+                    if (!currentPath.Select(e => e.Destination).Contains(nextVertex))
+                    {
+                        var newPath = new List<Edge<TVertex, TEdge>>(currentPath);
+                        newPath.Add(edge);
+                        queue.Enqueue(newPath);
+                    }
+                }
+        }
     }
 }

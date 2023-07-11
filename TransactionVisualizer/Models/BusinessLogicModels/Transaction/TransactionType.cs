@@ -1,4 +1,4 @@
-namespace TransactionVisualizer.Models.BusinessLogicModels.Transaction;
+namespace TransactionVisualizer.Models.Transaction;
 
 public enum TransactionType
 {

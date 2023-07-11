@@ -1,4 +1,4 @@
-namespace TransactionVisualizer.Models.BusinessLogicModels.Account;
+namespace TransactionVisualizer.Models.Account;
 
 public enum AccountType
 {

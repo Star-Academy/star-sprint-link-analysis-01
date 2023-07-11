@@ -1,16 +1,15 @@
 using System.ComponentModel.DataAnnotations;
-using TransactionVisualizer.Models.BusinessModels;
 
-namespace TransactionVisualizer.Models.BusinessLogicModels.Account;
+namespace TransactionVisualizer.Models.Account;
 
-public class Account : BaseModel
+public class Account
 {
     [Key] public long Id { get; init; }
     public string CardId { get; init; }
     public string Sheba { get; init; }
     public AccountType AccountType { get; init; }
-    public Branch Branch { get; init; }
-    public Owner Owner { get; init; }
+    public Branch.Branch Branch { get; init; }
+    public Owner.Owner Owner { get; init; }
 
     public override bool Equals(object? obj)
     {

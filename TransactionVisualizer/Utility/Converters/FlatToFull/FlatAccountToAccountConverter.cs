@@ -1,7 +1,6 @@
-using TransactionVisualizer.Models;
 using TransactionVisualizer.Models.Account;
-using TransactionVisualizer.Models.BusinessLogicModels.Account;
-using TransactionVisualizer.Models.BusinessModels;
+using TransactionVisualizer.Models.Branch;
+using TransactionVisualizer.Models.Owner;
 using TransactionVisualizer.Utility.Parsers.EnumParsers;
 
 namespace TransactionVisualizer.Utility.Converters;

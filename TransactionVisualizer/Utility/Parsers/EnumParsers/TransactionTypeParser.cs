@@ -1,5 +1,5 @@
 using TransactionVisualizer.Exception;
-using TransactionVisualizer.Models.BusinessLogicModels.Transaction;
+using TransactionVisualizer.Models.Transaction;
 using TransactionVisualizer.Utility.Constants.TransactionConstants;
 
 namespace TransactionVisualizer.Utility.Parsers.EnumParsers;
