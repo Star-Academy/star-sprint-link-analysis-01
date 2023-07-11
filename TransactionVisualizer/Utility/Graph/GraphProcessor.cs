@@ -2,6 +2,7 @@ using TransactionVisualizer.DataRepository;
 using TransactionVisualizer.Models;
 using TransactionVisualizer.Models.DataStructureModels.Graph;
 using TransactionVisualizer.Models.Transaction;
+using TransactionVisualizer.Utility.Builders.SelectorBuilder;
 using TransactionVisualizer.Utility.Converters;
 
 namespace TransactionVisualizer.Utility.Graph;
@@ -9,14 +10,18 @@ namespace TransactionVisualizer.Utility.Graph;
 public class GraphProcessor<TVertex, TEdge> : IGraphProcessor<TVertex, TEdge> where TEdge : class where TVertex : class
 {
     private readonly IModelToGraphEdge<Transaction, TVertex, TEdge> _modelToGraphEdge;
+    private readonly ISelectorBuilder _selectorBuilder;
+    
+    public Graph<TVertex, TEdge> Graph { set; get; }
 
-    public GraphProcessor(IModelToGraphEdge<Transaction, TVertex, TEdge> modelToGraphEdge)
+    public GraphProcessor(IModelToGraphEdge<Transaction, TVertex, TEdge> modelToGraphEdge,
+        ISelectorBuilder selectorBuilder)
     {
         Graph = new Graph<TVertex, TEdge>();
         _modelToGraphEdge = modelToGraphEdge;
+        _selectorBuilder = selectorBuilder;
     }
 
-    public Graph<TVertex, TEdge> Graph { set; get; }
 
 
     public List<List<Edge<TVertex, TEdge>>> GetAllPaths(TVertex source, TVertex destination)
@@ -30,34 +35,10 @@ public class GraphProcessor<TVertex, TEdge> : IGraphProcessor<TVertex, TEdge> wh
 
         return allPaths;
     }
-
-    public void LenghtExpand(int maxLenght, Stack<TVertex> vertices, IDataRepository<Transaction> edgesRepository)
-    {
-        if (maxLenght == 0 || vertices.Count == 0) return;
-
-        var nextLenght = maxLenght - 1;
-        var currentVertex = vertices.Pop();
-        Console.WriteLine(currentVertex.ToString());
-
-        var edges = edgesRepository.Search(descriptor
-            => descriptor.Query(containerDescriptor
-                => containerDescriptor.Match(
-                    queryDescriptor =>
-                        queryDescriptor.Field("sourceAccount").Query(currentVertex.ToString())
-                )
-            )
-        );
-
-        edges.Items.ForEach(item =>
-        {
-            Console.WriteLine(item.SourceAccount + " -> " + item.DestinationAccount);
-            vertices.Push(_modelToGraphEdge.Convert(item).Destination);
-            Graph.AddEdge(_modelToGraphEdge.Convert(item));
-        });
-
-        LenghtExpand(nextLenght, vertices, edgesRepository);
-    }
-
+    
+    
+    
+    
     public decimal GetMaxFlow(TVertex source, TVertex destination)
     {
         var allPath = GetAllPaths(source, destination);

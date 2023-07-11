@@ -9,6 +9,7 @@ using TransactionVisualizer.Models.Transaction;
 using TransactionVisualizer.Services;
 using TransactionVisualizer.Utility.Builders.GraphBuilders.EdgeBuilders;
 using TransactionVisualizer.Utility.Builders.ResponseModelBuilder;
+using TransactionVisualizer.Utility.Builders.SelectorBuilder;
 using TransactionVisualizer.Utility.Converters;
 using TransactionVisualizer.Utility.Converters.RequestToFullModels;
 using TransactionVisualizer.Utility.Graph;
@@ -23,6 +24,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IEdgeBuilder<Account, Transaction>, EdgeBuilder<Account, Transaction>>();
 builder.Services.AddSingleton<IDataRepository<Account>, AccountRepository>();
+builder.Services.AddSingleton<IDataRepository<Transaction>, TransactionRepository>();
 builder.Services.AddSingleton<IGraphResponseModelBuilder, GraphResponseModelBuilder>();
 builder.Services
     .AddSingleton<IRequestToFullModel<GraphResponseModel<Account, Transaction>, Graph<Account, Transaction>>,
@@ -31,6 +33,10 @@ builder.Services.AddSingleton<IDataRepository<Transaction>, TransactionRepositor
 builder.Services.AddSingleton<IModelToGraphEdge<Transaction, Account, Transaction>, TransactionToEdge>();
 builder.Services.AddSingleton<IGraphProcessor<Account, Transaction>, GraphProcessor<Account, Transaction>>();
 builder.Services.AddSingleton<IGraphService, GraphService>();
+builder.Services.AddSingleton<ISelectorBuilder , SelectorBuilder>();
+builder.Services.AddSingleton<ISelectorKeyValueBuilder, SelectorKeyValueBuilder>();
+builder.Services.AddSingleton<IExpander<Account, Transaction>, Expander<Account, Transaction>>();
+
 
 
 // builder.Services.AddSingleton<IGraphGenerator<Account, Transaction>, GraphGenerator>();

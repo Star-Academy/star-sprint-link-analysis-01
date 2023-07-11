@@ -7,7 +7,7 @@ namespace TransactionVisualizer.DataRepository.ModelsRepository.TransactionRepos
 public class TransactionRepository : IDataRepository<Transaction>
 {
     private readonly IDataRepository<Transaction> _dataRepository =
-        new ElasticDataRepository<Transaction>("http://localhost:9200/", "transaction");
+        new ElasticDataRepository<Transaction>("http://localhost:9200/", "transaction2");
 
     public DataManipulationResponse InsertAll(List<Transaction> records)
     {

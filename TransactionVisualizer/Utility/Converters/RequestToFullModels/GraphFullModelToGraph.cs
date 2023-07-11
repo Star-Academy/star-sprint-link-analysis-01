@@ -12,11 +12,14 @@ public class
 {
     private readonly IDataRepository<Account> _repository;
     private readonly ISelectorBuilder _selectorBuilder;
+    private readonly ISelectorKeyValueBuilder _selectorKeyValueBuilder;
 
-    public GraphFullModelToGraph(IDataRepository<Account> repository, ISelectorBuilder selectorBuilder)
+    public GraphFullModelToGraph(IDataRepository<Account> repository, ISelectorBuilder selectorBuilder,
+        ISelectorKeyValueBuilder selectorKeyValueBuilder)
     {
         _repository = repository;
         _selectorBuilder = selectorBuilder;
+        _selectorKeyValueBuilder = selectorKeyValueBuilder;
     }
 
     public Graph<Account, Transaction> Convert(GraphResponseModel<Account, Transaction> request)
@@ -26,11 +29,18 @@ public class
 
         foreach (var edge in request.Edges)
         {
-            var source = _repository.Search(_selectorBuilder.BuildAccountSelector(edge.Source.ToString())).Items
+            var source = _repository
+                .Search(_selectorBuilder.BuildKeyValueSelector<Account>(
+                    _selectorKeyValueBuilder.BuildFindAccountById(edge.Source.ToString()))).Items
                 .First();
-            var destination = _repository.Search(_selectorBuilder.BuildAccountSelector(edge.Destination.ToString()))
-                .Items.First();
 
+
+            var destination = _repository
+                .Search(_selectorBuilder.BuildKeyValueSelector<Account>(
+                    _selectorKeyValueBuilder.BuildFindAccountById(edge.Destination.ToString()))).Items
+                .First();
+
+            
             graph.AddEdge(new Edge<Account, Transaction>
             {
                 Destination = destination, Source = source, Content = edge.Content,

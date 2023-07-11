@@ -15,6 +15,7 @@ public class GraphService : IGraphService
     private readonly IDataRepository<Transaction> _edgeRepository;
     private readonly IGraphProcessor<Account, Transaction> _graphProcessor;
     private readonly IModelToGraphEdge<Transaction, Account, Transaction> _modelToGraphEdge;
+    private readonly IExpander<Account, Transaction> _expander;
 
     private readonly IRequestToFullModel<GraphResponseModel<Account, Transaction>, Graph<Account, Transaction>>
         _requestToFull;
@@ -24,13 +25,13 @@ public class GraphService : IGraphService
         IGraphProcessor<Account, Transaction> graphProcessor,
         IDataRepository<Transaction> edgeRepository,
         IRequestToFullModel<GraphResponseModel<Account, Transaction>, Graph<Account, Transaction>> requestToFull,
-        IModelToGraphEdge<Transaction, Account, Transaction> modelToGraphEdge
-    )
+        IModelToGraphEdge<Transaction, Account, Transaction> modelToGraphEdge, IExpander<Account, Transaction> expander)
     {
         _graphProcessor = graphProcessor;
         _edgeRepository = edgeRepository;
         _requestToFull = requestToFull;
         _modelToGraphEdge = modelToGraphEdge;
+        _expander = expander;
     }
 
 
@@ -46,10 +47,7 @@ public class GraphService : IGraphService
 
     public Graph<Account, Transaction> Expand(Account account, int maxLenght)
     {
-        var stack = new Stack<Account>();
-        stack.Push(account);
-        _graphProcessor.LenghtExpand(maxLenght, stack, _edgeRepository);
-        return _graphProcessor.GetGraph();
+        return _expander.Expand(maxLenght, account, _graphProcessor.GetGraph());
     }
 
 

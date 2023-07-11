@@ -1,13 +1,12 @@
 using Nest;
 using TransactionVisualizer.Models.Account;
 using TransactionVisualizer.Models.Transaction;
+using TransactionVisualizer.Utility.Graph;
 
 namespace TransactionVisualizer.Utility.Builders.SelectorBuilder;
 
 public interface ISelectorBuilder
 {
-    public Func<SearchDescriptor<Account>, ISearchRequest> BuildAccountSelector(string accountId);
-
-    public Func<SearchDescriptor<Transaction>, ISearchRequest> BuildTransactionSelectorBaseOnSourceAccountId(
-        string sourceAccountId);
+    public Func<SearchDescriptor<TVertex>, ISearchRequest> BuildKeyValueSelector<TVertex>(SelectorKeyValue keyValue)
+        where TVertex : class;
 }
