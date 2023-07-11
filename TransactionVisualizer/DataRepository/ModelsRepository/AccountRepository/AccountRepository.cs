@@ -2,13 +2,22 @@ using Nest;
 using TransactionVisualizer.DataRepository.BaseDataRepository;
 using TransactionVisualizer.DataRepository.ElasticRepository;
 using TransactionVisualizer.Models.Account;
+using TransactionVisualizer.Utility.Builders.DataRepositoryBuilder;
 
 namespace TransactionVisualizer.DataRepository.ModelsRepository.AccountRepository;
 
 public class AccountRepository : IDataRepository<Account>
 {
-    private readonly IDataRepository<Account> _dataRepository = new ElasticDataRepository<Account>("http://localhost:9200/", "accounts9");
+    private readonly IDataRepository<Account> _dataRepository;
+    private readonly IElasticRepositoryBuilder _elasticRepositoryBuilder;
 
+
+    public AccountRepository( IElasticRepositoryBuilder elasticRepositoryBuilder)
+    {
+        _elasticRepositoryBuilder = elasticRepositoryBuilder;
+        _dataRepository = elasticRepositoryBuilder.BuildAccountRepository();
+
+    }
 
     public DataManipulationResponse InsertAll(List<Account> records)
     {

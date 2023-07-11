@@ -1,4 +1,5 @@
 using TransactionVisualizer.DataRepository;
+using TransactionVisualizer.DataRepository.ElasticRepository;
 using TransactionVisualizer.DataRepository.ModelsRepository.AccountRepository;
 using TransactionVisualizer.DataRepository.ModelsRepository.TransactionRepository;
 using TransactionVisualizer.Models.Account;
@@ -32,12 +33,13 @@ builder.Services
 builder.Services.AddSingleton<IDataRepository<Transaction>, TransactionRepository>();
 builder.Services.AddSingleton<IModelToGraphEdge<Transaction, Account, Transaction>, TransactionToEdge>();
 builder.Services.AddSingleton<IGraphService, GraphService>();
-builder.Services.AddSingleton<ISelectorBuilder , SelectorBuilder>();
+builder.Services.AddSingleton<ISelectorBuilder, SelectorBuilder>();
 builder.Services.AddSingleton<ISelectorKeyValueBuilder, SelectorKeyValueBuilder>();
 builder.Services.AddSingleton<IExpander<Account, Transaction>, Expander<Account, Transaction>>();
 builder.Services.AddSingleton<IMaxFlowCalculator<Account, Transaction>, MaxFlowCalculator<Account, Transaction>>();
 builder.Services.AddSingleton<IPathsFinder<Account, Transaction>, PathsFinder<Account, Transaction>>();
-
+builder.Services.AddSingleton<IDataGainResponseBuilder<Account>, DataGainResponseBuilder<Account>>();
+builder.Services.AddSingleton<IDataGainResponseBuilder<Transaction>, DataGainResponseBuilder<Transaction>>();
 
 
 // builder.Services.AddSingleton<IGraphGenerator<Account, Transaction>, GraphGenerator>();

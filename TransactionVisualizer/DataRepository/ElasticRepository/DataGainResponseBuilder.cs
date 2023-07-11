@@ -3,9 +3,9 @@ using TransactionVisualizer.DataRepository.BaseDataRepository;
 namespace TransactionVisualizer.DataRepository.ElasticRepository;
 
 // Jalase di
-public abstract class DataGainResponseBuilder<TResponse>
+public class DataGainResponseBuilder<TResponse> : IDataGainResponseBuilder<TResponse>
 {
-    public static DataGainResponse<TResponse> Build(bool errors, List<TResponse> items)
+    public DataGainResponse<TResponse> Build(bool errors, List<TResponse> items)
     {
         return new DataGainResponse<TResponse>
         {
