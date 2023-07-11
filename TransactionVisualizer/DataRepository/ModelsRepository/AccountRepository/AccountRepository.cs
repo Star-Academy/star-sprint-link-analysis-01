@@ -1,4 +1,5 @@
 using Nest;
+using TransactionVisualizer.DataRepository.BaseDataRepository;
 using TransactionVisualizer.DataRepository.ElasticRepository;
 using TransactionVisualizer.Models.Account;
 
@@ -6,8 +7,7 @@ namespace TransactionVisualizer.DataRepository.ModelsRepository.AccountRepositor
 
 public class AccountRepository : IDataRepository<Account>
 {
-    private readonly IDataRepository<Account> _dataRepository =
-        new ElasticDataRepository<Account>("http://localhost:9200/", "accounts9");
+    private readonly IDataRepository<Account> _dataRepository = new ElasticDataRepository<Account>("http://localhost:9200/", "accounts9");
 
 
     public DataManipulationResponse InsertAll(List<Account> records)
@@ -20,7 +20,7 @@ public class AccountRepository : IDataRepository<Account>
         return _dataRepository.Insert(record);
     }
 
-    DataGainResponse<Account> IDataRepository<Account>.Search(Func<SearchDescriptor<Account>, ISearchRequest> selector)
+    public DataGainResponse<Account> Search(Func<SearchDescriptor<Account>, ISearchRequest> selector)
     {
         return _dataRepository.Search(selector);
     }

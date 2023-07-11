@@ -1,4 +1,4 @@
-namespace TransactionVisualizer.DataRepository;
+namespace TransactionVisualizer.DataRepository.BaseDataRepository;
 
 public class DataRepositoryRecord<TResponse>
 {

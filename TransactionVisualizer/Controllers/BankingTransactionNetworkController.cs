@@ -8,25 +8,22 @@ using TransactionVisualizer.Models.ResponseModels.Builder;
 using TransactionVisualizer.Models.Transaction;
 using TransactionVisualizer.Services;
 using TransactionVisualizer.Utility.Converters;
-using TransactionVisualizer.Utility.Graph;
 using TransactionVisualizer.Utility.Parsers.FileParser;
 
-namespace TransactionVisualizer.Controller;
+namespace TransactionVisualizer.Controllers;
 
-[Route("graph/")]
-public class GraphController : Microsoft.AspNetCore.Mvc.Controller
+[Route("banking-transaction-network/")]
+public class BankingTransactionNetworkController : Controller
 {
-    private readonly IGraphProcessor<Account, Transaction> _graphProcessor;
     private readonly IGraphResponseModelBuilder _graphResponseModelBuilder;
     private readonly IGraphService _graphService;
 
-
-    public GraphController(
-        IGraphProcessor<Account, Transaction> graphProcessor,
+    public BankingTransactionNetworkController
+    (
         IGraphService graphService,
-        IGraphResponseModelBuilder graphResponseModelBuilder)
+        IGraphResponseModelBuilder graphResponseModelBuilder
+    )
     {
-        _graphProcessor = graphProcessor;
         _graphService = graphService;
         _graphResponseModelBuilder = graphResponseModelBuilder;
     }
@@ -36,27 +33,47 @@ public class GraphController : Microsoft.AspNetCore.Mvc.Controller
     public IActionResult Graph()
     {
         var graph = _graphService.InitialGraph(3000000037);
+
         return Ok(_graphResponseModelBuilder.BuildTransactionGraphResponseModel(graph.AdjacencyMatrix));
     }
 
 
     [HttpPost]
-    [Route("/Expand")]
-    public IActionResult Expand([FromBody] ExpandRequestModel<Account, Transaction> requestModel)
+    [Route("/expand")]
+    public IActionResult Expand
+    (
+        [FromBody] ExpandRequestModel<Account, Transaction> requestModel
+    )
     {
         _graphService.SetState(requestModel.CurrentState);
-        _graphService.Expand(requestModel.Vertex, requestModel.MaxLength);
-        return Ok(_graphResponseModelBuilder.BuildTransactionGraphResponseModel(_graphProcessor.GetGraph()
-            .AdjacencyMatrix));
+
+        return Ok
+        (
+            _graphResponseModelBuilder.BuildTransactionGraphResponseModel
+            (
+                _graphService.Expand(requestModel).AdjacencyMatrix
+            )
+        );
     }
 
     [HttpPost]
-    [Route("/Flow")]
-    public IActionResult GetMaxFlow([FromBody] MaxFlowRequestModel<Account, Transaction> requestModel)
+    [Route("/max-flow-calculator")]
+    public IActionResult GetMaxFlow
+    (
+        [FromBody] MaxFlowCalculatorRequestModel<Account, Transaction> calculatorRequestModel
+    )
     {
-        _graphService.SetState(requestModel.CurrentState);
-        var maxFlow = _graphService.MaxFlow(requestModel);
-        return Ok(new MaxFlowResponseModel { MaxFlow = maxFlow });
+        _graphService.SetState(calculatorRequestModel.CurrentState);
+
+        var maxFlow = _graphService.MaxFlowCalculator(calculatorRequestModel);
+
+        return Ok
+        (
+            new MaxFlowResponseModel
+            {
+                MaxFlow = maxFlow
+            }
+        );
     }
 
 

@@ -33,13 +33,19 @@ public class Expander<TVertex, TEdge> : IExpander<TVertex, TEdge> where TEdge : 
 
             var edges = _repository.Search(
                 _selectorBuilder.BuildKeyValueSelector<TEdge>(
-                    _selectorKeyValueBuilder.BuildFindTransactionBySourceAccount(currentVertex.ToString())));
+                    _selectorKeyValueBuilder.BuildFindTransactionBySourceAccount(
+                        currentVertex.ToString()
+                    )
+                )
+            );
 
-            edges.Items.ForEach(item =>
-            {
-                stack.Push(_modelToGraphEdge.Convert(item).Destination);
-                graph.AddEdge(_modelToGraphEdge.Convert(item));
-            });
+            edges.Items.ForEach(
+                item =>
+                {
+                    stack.Push(_modelToGraphEdge.Convert(item).Destination);
+                    graph.AddEdge(_modelToGraphEdge.Convert(item));
+                }
+            );
         }
 
         return graph;

@@ -31,11 +31,12 @@ builder.Services
         GraphFullModelToGraph>();
 builder.Services.AddSingleton<IDataRepository<Transaction>, TransactionRepository>();
 builder.Services.AddSingleton<IModelToGraphEdge<Transaction, Account, Transaction>, TransactionToEdge>();
-builder.Services.AddSingleton<IGraphProcessor<Account, Transaction>, GraphProcessor<Account, Transaction>>();
 builder.Services.AddSingleton<IGraphService, GraphService>();
 builder.Services.AddSingleton<ISelectorBuilder , SelectorBuilder>();
 builder.Services.AddSingleton<ISelectorKeyValueBuilder, SelectorKeyValueBuilder>();
 builder.Services.AddSingleton<IExpander<Account, Transaction>, Expander<Account, Transaction>>();
+builder.Services.AddSingleton<IMaxFlowCalculator<Account, Transaction>, MaxFlowCalculator<Account, Transaction>>();
+builder.Services.AddSingleton<IPathsFinder<Account, Transaction>, PathsFinder<Account, Transaction>>();
 
 
 

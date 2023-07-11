@@ -1,9 +1,11 @@
+using Nest;
 using TransactionVisualizer.DataRepository;
 using TransactionVisualizer.Models.Account;
 using TransactionVisualizer.Models.DataStructureModels.Graph;
 using TransactionVisualizer.Models.RequestModels;
 using TransactionVisualizer.Models.ResponseModels;
 using TransactionVisualizer.Models.Transaction;
+using TransactionVisualizer.Utility.Builders.SelectorBuilder;
 using TransactionVisualizer.Utility.Converters;
 using TransactionVisualizer.Utility.Converters.RequestToFullModels;
 using TransactionVisualizer.Utility.Graph;
@@ -12,59 +14,69 @@ namespace TransactionVisualizer.Services;
 
 public class GraphService : IGraphService
 {
+    private Graph<Account, Transaction> _graph;
     private readonly IDataRepository<Transaction> _edgeRepository;
-    private readonly IGraphProcessor<Account, Transaction> _graphProcessor;
     private readonly IModelToGraphEdge<Transaction, Account, Transaction> _modelToGraphEdge;
     private readonly IExpander<Account, Transaction> _expander;
+    private readonly IMaxFlowCalculator<Account, Transaction> _maxFlowCalculator;
+    private readonly ISelectorBuilder _selectorBuilder;
+    private readonly ISelectorKeyValueBuilder _selectorKeyValueBuilder;
 
     private readonly IRequestToFullModel<GraphResponseModel<Account, Transaction>, Graph<Account, Transaction>>
         _requestToFull;
 
-
-    public GraphService(
-        IGraphProcessor<Account, Transaction> graphProcessor,
+    public GraphService
+    (
         IDataRepository<Transaction> edgeRepository,
         IRequestToFullModel<GraphResponseModel<Account, Transaction>, Graph<Account, Transaction>> requestToFull,
-        IModelToGraphEdge<Transaction, Account, Transaction> modelToGraphEdge, IExpander<Account, Transaction> expander)
+        IModelToGraphEdge<Transaction, Account, Transaction> modelToGraphEdge, IExpander<Account, Transaction> expander,
+        IMaxFlowCalculator<Account, Transaction> maxFlowCalculator, ISelectorBuilder selectorBuilder,
+        ISelectorKeyValueBuilder selectorKeyValueBuilder)
     {
-        _graphProcessor = graphProcessor;
+        _graph = new Graph<Account, Transaction>();
         _edgeRepository = edgeRepository;
         _requestToFull = requestToFull;
         _modelToGraphEdge = modelToGraphEdge;
         _expander = expander;
+        _maxFlowCalculator = maxFlowCalculator;
+        _selectorBuilder = selectorBuilder;
+        _selectorKeyValueBuilder = selectorKeyValueBuilder;
     }
 
 
     public void SetState(GraphResponseModel<Account, Transaction> graph)
     {
-        _graphProcessor.SetGraph(_requestToFull.Convert(graph));
+        _graph = _requestToFull.Convert(graph);
     }
 
     public Graph<Account, Transaction> GetState()
     {
-        return _graphProcessor.GetGraph();
+        return _graph;
     }
 
-    public Graph<Account, Transaction> Expand(Account account, int maxLenght)
+    public Graph<Account, Transaction> Expand(ExpandRequestModel<Account, Transaction> expandRequestModel)
     {
-        return _expander.Expand(maxLenght, account, _graphProcessor.GetGraph());
+        return _expander.Expand(expandRequestModel.MaxLength, expandRequestModel.Vertex, _graph);
     }
 
 
-    public decimal MaxFlow(MaxFlowRequestModel<Account, Transaction> maxFlowRequestModel)
+    public decimal MaxFlowCalculator(MaxFlowCalculatorRequestModel<Account, Transaction> maxFlowCalculatorRequestModel)
     {
-        return _graphProcessor.GetMaxFlow(maxFlowRequestModel.Source, maxFlowRequestModel.Destenation);
+        return _maxFlowCalculator.Calculate
+        (
+            maxFlowCalculatorRequestModel.Source,
+            maxFlowCalculatorRequestModel.Destenation,
+            _graph
+        );
     }
 
     public Graph<Account, Transaction> InitialGraph(long accountId)
     {
-        var edges = _edgeRepository.Search(descriptor =>
-            descriptor.Query(q =>
-                q.Match(m =>
-                    m.Field(f =>
-                            f.SourceAccount)
-                        .Query(accountId.ToString()
-                        )
+        var edges = _edgeRepository.Search(_selectorBuilder.BuildKeyValueSelector<Transaction>
+            (
+                _selectorKeyValueBuilder.BuildFindTransactionBySourceAccount
+                (
+                    accountId.ToString()
                 )
             )
         );
@@ -73,8 +85,8 @@ public class GraphService : IGraphService
 
         edges.Items.ForEach(item => graph.AddEdge(_modelToGraphEdge.Convert(item)));
 
-        _graphProcessor.SetGraph(graph);
+        _graph = graph;
 
-        return _graphProcessor.GetGraph();
+        return _graph;
     }
 }

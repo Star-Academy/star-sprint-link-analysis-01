@@ -1,4 +1,5 @@
 using Nest;
+using TransactionVisualizer.DataRepository.BaseDataRepository;
 
 namespace TransactionVisualizer.DataRepository;
 

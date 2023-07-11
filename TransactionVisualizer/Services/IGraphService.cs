@@ -8,13 +8,13 @@ namespace TransactionVisualizer.Services;
 
 public interface IGraphService
 {
-    public void SetState(GraphResponseModel<Account, Transaction> graph);
-
     public Graph<Account, Transaction> GetState();
 
-    public Graph<Account, Transaction> Expand(Account accountId, int MaxLenght);
+    public void SetState(GraphResponseModel<Account, Transaction> graph);
+    
+    public Graph<Account, Transaction> Expand(ExpandRequestModel<Account, Transaction> expandRequestModel);
 
-    public decimal MaxFlow(MaxFlowRequestModel<Account, Transaction> maxFlowRequestModel);
+    public decimal MaxFlowCalculator(MaxFlowCalculatorRequestModel<Account, Transaction> maxFlowCalculatorRequestModel);
 
     public Graph<Account, Transaction> InitialGraph(long accountId);
 }
