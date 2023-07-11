@@ -1,8 +1,10 @@
 using FluentAssertions;
 using TransactionVisualizer.Exception;
+using TransactionVisualizer.Models.BusinessLogicModels.Transaction;
 using TransactionVisualizer.Models.BusinessModels.Transaction;
 using TransactionVisualizer.Models.Transaction;
 using TransactionVisualizer.Utility.Constants;
+using TransactionVisualizer.Utility.Constants.TransactionConstants;
 
 namespace TransactionVisualizerTest.ModelsTest.Transaction;
 
@@ -12,7 +14,7 @@ public class TransactionTypeExtensionsTest
     public void ParsTransactionType_WithValidTransactionType_ShouldReturnCorrectEnumValue()
     {
         // Arrange
-        const string transactionType = TransactionRelatedConstants.Satna;
+        const string transactionType = TransactionTypeConstants.Satna;
 
         // Act
         var result = transactionType.ParsTransactionType();

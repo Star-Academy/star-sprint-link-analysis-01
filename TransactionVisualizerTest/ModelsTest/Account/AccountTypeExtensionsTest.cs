@@ -1,7 +1,8 @@
 using FluentAssertions;
 using TransactionVisualizer.Exception;
-using TransactionVisualizer.Models.BusinessModels.Account;
+using TransactionVisualizer.Models.BusinessLogicModels.Account;
 using TransactionVisualizer.Utility.Constants;
+using TransactionVisualizer.Utility.Constants.AccountConstants;
 
 namespace TransactionVisualizerTest.ModelsTest.Account;
 
@@ -12,7 +13,7 @@ public class AccountTypeExtensionsTest
     public void ParsAccountType_WithValidAccountType_ShouldReturnCorrectEnumValue()
     {
         // Arrange
-        const string accountType = AccountRelatedConstants.Jari;
+        const string accountType = AccountTypeConstants.Jari;
 
         // Act
         var result = accountType.ParsAccountType();

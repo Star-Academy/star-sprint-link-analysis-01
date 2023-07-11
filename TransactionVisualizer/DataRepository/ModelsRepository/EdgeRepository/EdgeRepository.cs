@@ -2,7 +2,9 @@ using Nest;
 using TransactionVisualizer.DataRepository.ElasticRepository;
 using TransactionVisualizer.DataRepository.ModelsRepository;
 using TransactionVisualizer.Models.Account;
+using TransactionVisualizer.Models.BusinessLogicModels.Account;
 using TransactionVisualizer.Models.BusinessModels.Transaction;
+using TransactionVisualizer.Models.DataStructureModels.Graph;
 using TransactionVisualizer.Models.Graph;
 using TransactionVisualizer.Models.Transaction;
 

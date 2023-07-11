@@ -1,6 +1,6 @@
-using TransactionVisualizer.Models.Graph;
+using TransactionVisualizer.Models.DataStructureModels.Graph;
 
-namespace TransactionVisualizer.Utility.Builder;
+namespace TransactionVisualizer.Utility.Builders.GraphBuilders.EdgeBuilders;
 
 public interface IEdgeBuilder<TVertex, TEdge> where TVertex : class where TEdge : class
 {

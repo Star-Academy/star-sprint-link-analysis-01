@@ -1,24 +1,21 @@
 using TransactionVisualizer.DataRepository.ModelsRepository;
-using TransactionVisualizer.Models.Account;
 using TransactionVisualizer.Models.BusinessModels;
 using TransactionVisualizer.Models.BusinessModels.Transaction;
-using TransactionVisualizer.Models.Graph;
+using TransactionVisualizer.Models.DataStructureModels.Graph;
 using TransactionVisualizer.Models.Graph.Graph;
-using TransactionVisualizer.Utility.Builder;
 using TransactionVisualizer.Utility.Converters;
 
 namespace TransactionVisualizer.Utility.Graph;
 
-public class GraphProcessor<TVertex, TEdge> : IGraphProcessor<TVertex, TEdge>
-    where TVertex : BaseModel where TEdge : class
+public class GraphProcessor<TVertex, TEdge> : IGraphProcessor<TVertex, TEdge> where TVertex : BaseModel where TEdge : class
 {
     private IModelToGraphEdge<Transaction, TVertex, TEdge> _modelToGraphEdge;
 
-    public CustomGraph<TVertex, TEdge> _graph { set; get; }
+    public Graph<TVertex, TEdge> _graph { set; get; }
 
     public GraphProcessor(IModelToGraphEdge<Transaction, TVertex, TEdge> modelToGraphEdge)
     {
-        _graph = new CustomGraph<TVertex, TEdge>();
+        _graph = new Graph<TVertex, TEdge>();
         _modelToGraphEdge = modelToGraphEdge;
     }
 
@@ -76,6 +73,7 @@ public class GraphProcessor<TVertex, TEdge> : IGraphProcessor<TVertex, TEdge>
         int nextLenght = maxLenght - 1;
         TVertex currentVertex = vertices.Pop();
         Console.WriteLine(currentVertex.ToString());
+        
         var edges = edgesRepository.Search(descriptor
             => descriptor.Query(containerDescriptor
                 => containerDescriptor.Match(
@@ -87,7 +85,7 @@ public class GraphProcessor<TVertex, TEdge> : IGraphProcessor<TVertex, TEdge>
 
         edges.ForEach(item =>
         {
-            Console.WriteLine(item.SourceAccount + " -> " + item.DestiantionAccount);
+            Console.WriteLine(item.SourceAccount + " -> " + item.DestinationAccount);
             vertices.Push(_modelToGraphEdge.Convert(item).Destination);
             _graph.AddEdge(_modelToGraphEdge.Convert(item));
         });
@@ -104,7 +102,7 @@ public class GraphProcessor<TVertex, TEdge> : IGraphProcessor<TVertex, TEdge>
         {
             item.ForEach(path =>
             {
-                Console.Write(path.Source + " -> " + path.Destination + " : " + path.weight + "   ,  ");
+                Console.Write(path.Source + " -> " + path.Destination + " : " + path.Weight + "   ,  ");
             });
             Console.WriteLine();
         });
@@ -114,7 +112,7 @@ public class GraphProcessor<TVertex, TEdge> : IGraphProcessor<TVertex, TEdge>
             decimal min = decimal.MaxValue;
             foreach (var edge in path)
             {
-                min = Math.Min(edge.weight, min);
+                min = Math.Min(edge.Weight, min);
             }
 
             maxFlow += min;
@@ -123,12 +121,12 @@ public class GraphProcessor<TVertex, TEdge> : IGraphProcessor<TVertex, TEdge>
         return maxFlow;
     }
 
-    public void SetGraph(CustomGraph<TVertex, TEdge> graph)
+    public void SetGraph(Graph<TVertex, TEdge> graph)
     {
         _graph = graph;
     }
 
-    public CustomGraph<TVertex, TEdge> GetGraph()
+    public Graph<TVertex, TEdge> GetGraph()
     {
         return _graph;
     }

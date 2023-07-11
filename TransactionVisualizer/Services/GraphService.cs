@@ -4,7 +4,9 @@ using TransactionVisualizer.DataRepository.EdgeRepository;
 using TransactionVisualizer.DataRepository.ModelsRepository;
 using TransactionVisualizer.Models;
 using TransactionVisualizer.Models.Account;
+using TransactionVisualizer.Models.BusinessLogicModels.Account;
 using TransactionVisualizer.Models.BusinessModels.Transaction;
+using TransactionVisualizer.Models.DataStructureModels.Graph;
 using TransactionVisualizer.Models.Graph;
 using TransactionVisualizer.Models.Graph.Graph;
 using TransactionVisualizer.Models.ResponseModels;
@@ -20,14 +22,14 @@ public class GraphService : IGraphService
     private IGraphProcessor<Account, Transaction> _graphProcessor;
     private IModelRepository<Transaction> _edgeRepository;
     private IModelToGraphEdge<Transaction, Account, Transaction> _modelToGraphEdge;
+    private readonly IRequestToFullModel<GraphResponseModel<Account, Transaction>, Graph<Account, Transaction>> _requestToFull;
 
-    private readonly IRequestToFullModel<GraphResponseModel<Account, Transaction>, CustomGraph<Account, Transaction>>
-        _requestToFull;
-
-    public GraphService(IGraphProcessor<Account, Transaction> graphProcessor,
+    public GraphService(
+        IGraphProcessor<Account, Transaction> graphProcessor,
         IModelRepository<Transaction> edgeRepository,
-        IRequestToFullModel<GraphResponseModel<Account, Transaction>, CustomGraph<Account, Transaction>> requestToFull,
-        IModelToGraphEdge<Transaction, Account, Transaction> modelToGraphEdge)
+        IRequestToFullModel<GraphResponseModel<Account, Transaction>, Graph<Account, Transaction>> requestToFull,
+        IModelToGraphEdge<Transaction, Account, Transaction> modelToGraphEdge
+    )
     {
         _graphProcessor = graphProcessor;
         _edgeRepository = edgeRepository;
@@ -40,12 +42,12 @@ public class GraphService : IGraphService
         _graphProcessor.SetGraph(_requestToFull.Convert(graph));
     }
 
-    public CustomGraph<Account, Transaction> GetState()
+    public Graph<Account, Transaction> GetState()
     {
         return _graphProcessor.GetGraph();
     }
 
-    public CustomGraph<Account, Transaction> Expand(Account account, int maxLenght)
+    public Graph<Account, Transaction> Expand(Account account, int maxLenght)
     {
         Stack<Account> stack = new Stack<Account>();
         stack.Push(account);
@@ -59,7 +61,7 @@ public class GraphService : IGraphService
         return _graphProcessor.GetMaxFlow(maxFlowRequestModel.Source, maxFlowRequestModel.Destenation);
     }
 
-    public CustomGraph<Account, Transaction> InitialGraph(long accountId)
+    public Graph<Account, Transaction> InitialGraph(long accountId)
     {
         var edges = _edgeRepository.Search(descriptor =>
             descriptor.Query(q =>
@@ -72,7 +74,7 @@ public class GraphService : IGraphService
             )
         );
 
-        var graph = new CustomGraph<Account, Transaction>();
+        var graph = new Graph<Account, Transaction>();
         edges.ForEach(item => graph.AddEdge(_modelToGraphEdge.Convert(item)));
 
         _graphProcessor.SetGraph(graph);

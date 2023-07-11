@@ -1,3 +1,4 @@
+
 namespace TransactionVisualizer.Models.Account;
 
 public class FlatAccount

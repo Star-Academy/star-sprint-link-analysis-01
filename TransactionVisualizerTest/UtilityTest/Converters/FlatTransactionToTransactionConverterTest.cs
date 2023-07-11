@@ -1,4 +1,5 @@
 using FluentAssertions;
+using TransactionVisualizer.Models.BusinessLogicModels.Transaction;
 using TransactionVisualizer.Models.BusinessModels.Transaction;
 using TransactionVisualizer.Models.Transaction;
 using TransactionVisualizer.Utility.Converters;
@@ -28,9 +29,9 @@ public class FlatTransactionToTransactionConverterTest
 
         // Assert
         result.Should().NotBeNull();
-        result.ID.Should().Be(flatTransaction.TransactionID);
+        result.Id.Should().Be(flatTransaction.TransactionID);
         result.SourceAccount.Should().Be(flatTransaction.SourceAccount);
-        result.DestiantionAccount.Should().Be(flatTransaction.DestinationAccount);
+        result.DestinationAccount.Should().Be(flatTransaction.DestinationAccount);
         result.TransactionType.Should().Be(TransactionType.Paya);
         result.Amount.Should().Be(flatTransaction.Amount);
         result.Date.Should().Be(flatTransaction.Date);
@@ -63,9 +64,9 @@ public class FlatTransactionToTransactionConverterTest
 
         foreach (var (flatTransaction, transaction) in flatTransactions.Zip(result, (f, t) => (f, t)))
         {
-            transaction.ID.Should().Be(flatTransaction.TransactionID);
+            transaction.Id.Should().Be(flatTransaction.TransactionID);
             transaction.SourceAccount.Should().Be(flatTransaction.SourceAccount);
-            transaction.DestiantionAccount.Should().Be(flatTransaction.DestinationAccount);
+            transaction.DestinationAccount.Should().Be(flatTransaction.DestinationAccount);
             transaction.TransactionType.Should().Be(flatTransaction.Type.ParsTransactionType());
             transaction.Amount.Should().Be(flatTransaction.Amount);
             transaction.Date.Should().Be(flatTransaction.Date);

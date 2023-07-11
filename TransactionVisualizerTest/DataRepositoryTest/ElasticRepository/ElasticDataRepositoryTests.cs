@@ -1,6 +1,7 @@
 using FluentAssertions;
 using Nest;
 using TransactionVisualizer.DataRepository.ElasticRepository;
+using TransactionVisualizer.Models.BusinessLogicModels.Transaction;
 using TransactionVisualizer.Models.BusinessModels.Transaction;
 using TransactionVisualizer.Models.Transaction;
 
@@ -28,27 +29,27 @@ public class ElasticDataRepositoryTests
         {
             new Transaction
             {
-                ID = 10,
+                Id = 10,
                 SourceAccount = 1001,
-                DestiantionAccount = 2001,
+                DestinationAccount = 2001,
                 TransactionType = TransactionType.Paya,
                 Amount = 100.0m,
                 Date = DateTime.Now
             },
             new Transaction
             {
-                ID = 20,
+                Id = 20,
                 SourceAccount = 1002,
-                DestiantionAccount = 2002,
+                DestinationAccount = 2002,
                 TransactionType = TransactionType.Satna,
                 Amount = 50.0m,
                 Date = DateTime.Now.AddDays(-1)
             },
             new Transaction
             {
-                ID = 30,
+                Id = 30,
                 SourceAccount = 1003,
-                DestiantionAccount = 2003,
+                DestinationAccount = 2003,
                 TransactionType = TransactionType.KartBeKart,
                 Amount = 200.0m,
                 Date = DateTime.Now.AddDays(-2)
@@ -68,9 +69,9 @@ public class ElasticDataRepositoryTests
         // Arrange
         var record = new Transaction
         {
-            ID = 4,
+            Id = 4,
             SourceAccount = 1001,
-            DestiantionAccount = 2001,
+            DestinationAccount = 2001,
             TransactionType = TransactionType.Paya,
             Amount = 100.0m,
             Date = DateTime.Now

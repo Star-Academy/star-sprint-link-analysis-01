@@ -1,8 +1,10 @@
 using TransactionVisualizer.DataRepository.ModelsRepository;
 using TransactionVisualizer.Models.Account;
+using TransactionVisualizer.Models.BusinessLogicModels.Account;
 using TransactionVisualizer.Models.BusinessModels.Transaction;
+using TransactionVisualizer.Models.DataStructureModels.Graph;
 using TransactionVisualizer.Models.Graph;
-using TransactionVisualizer.Utility.Builder;
+using TransactionVisualizer.Utility.Builders.GraphBuilders.EdgeBuilders;
 
 namespace TransactionVisualizer.Utility.Converters;
 
@@ -29,7 +31,7 @@ public class TransactionToEdge : IModelToGraphEdge<Transaction, Account, Transac
         var toAccount = _repository
             .Search(descriptor => descriptor.Query(containerDescriptor =>
                 containerDescriptor.Match(match =>
-                    match.Field(f => f.Id).Query(transaction.DestiantionAccount.ToString())))).First();
+                    match.Field(f => f.Id).Query(transaction.DestinationAccount.ToString())))).First();
         
         
         return _builder.Build(new EdgeConfig<Account, Transaction>()

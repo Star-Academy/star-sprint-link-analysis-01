@@ -1,6 +1,6 @@
 using FluentAssertions;
 using TransactionVisualizer.Models.Account;
-using TransactionVisualizer.Models.BusinessModels.Account;
+using TransactionVisualizer.Models.BusinessLogicModels.Account;
 using TransactionVisualizer.Utility.Converters;
 
 namespace TransactionVisualizerTest.UtilityTest.Converters;
@@ -32,11 +32,11 @@ public class FlatAccountToAccountConverterTest
         // Assert
         result.Should().NotBeNull();
         result.Id.Should().Be(flatAccount.AccountID);
-        result.CardID.Should().Be(flatAccount.CardID);
+        result.CardId.Should().Be(flatAccount.CardID);
         result.Sheba.Should().Be(flatAccount.Sheba);
         result.AccountType.Should().Be(AccountType.Pasandaz);
         result.Owner.Should().NotBeNull();
-        result.Owner.ID.Should().Be(flatAccount.OwnerID);
+        result.Owner.Id.Should().Be(flatAccount.OwnerID);
         result.Owner.Name.Should().Be(flatAccount.OwnerName);
         result.Owner.FamilyName.Should().Be(flatAccount.OwnerFamilyName);
         result.Branch.Should().NotBeNull();
@@ -77,11 +77,11 @@ public class FlatAccountToAccountConverterTest
         foreach (var (flatAccount, account) in flatAccounts.Zip(result, (f, a) => (f, a)))
         {
             account.Id.Should().Be(flatAccount.AccountID);
-            account.CardID.Should().Be(flatAccount.CardID);
+            account.CardId.Should().Be(flatAccount.CardID);
             account.Sheba.Should().Be(flatAccount.Sheba);
             account.AccountType.Should().Be(flatAccount.AccountType.ParsAccountType());
             account.Owner.Should().NotBeNull();
-            account.Owner.ID.Should().Be(flatAccount.OwnerID);
+            account.Owner.Id.Should().Be(flatAccount.OwnerID);
             account.Owner.Name.Should().Be(flatAccount.OwnerName);
             account.Owner.FamilyName.Should().Be(flatAccount.OwnerFamilyName);
             account.Branch.Should().NotBeNull();
