@@ -1,6 +1,8 @@
+using TransactionVisualizer.Models.BusinessLogicModels.Transaction;
 using TransactionVisualizer.Models.BusinessModels.Transaction;
 using TransactionVisualizer.Models.Transaction;
 using TransactionVisualizer.Utility.Parsers.DateTimeParser;
+using TransactionVisualizer.Utility.Parsers.EnumParsers;
 
 namespace TransactionVisualizer.Utility.Converters;
 
@@ -13,7 +15,7 @@ public class FlatTransactionToTransactionConverter : IFlatToFullConverter<Transa
             ID = flat.TransactionID,
             SourceAccount = flat.SourceAccount,
             DestiantionAccount = flat.DestinationAccount,
-            TransactionType = flat.Type.ParsTransactionType(),
+            TransactionType = TransactionTypeParser.Pars(flat.Type),
             Amount = flat.Amount,
             Date = flat.Date
         };

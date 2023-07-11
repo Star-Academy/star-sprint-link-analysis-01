@@ -1,7 +1,8 @@
 using TransactionVisualizer.Models;
 using TransactionVisualizer.Models.Account;
+using TransactionVisualizer.Models.BusinessLogicModels.Account;
 using TransactionVisualizer.Models.BusinessModels;
-using TransactionVisualizer.Models.BusinessModels.Account;
+using TransactionVisualizer.Utility.Parsers.EnumParsers;
 
 namespace TransactionVisualizer.Utility.Converters;
 
@@ -12,9 +13,9 @@ public class FlatAccountToAccountConverter : IFlatToFullConverter<Account, FlatA
         return new Account
         {
             Id = flat.AccountID,
-            CardID = flat.CardID,
+            CardId = flat.CardID,
             Sheba = flat.Sheba,
-            AccountType = flat.AccountType.ParsAccountType(),
+            AccountType = AccountTypeParser.Pars(flat.AccountType),
             Branch = ConvertBranch(flat),
             Owner = ConvertOwner(flat)
         };
