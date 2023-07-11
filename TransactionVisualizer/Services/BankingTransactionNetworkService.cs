@@ -12,7 +12,7 @@ using TransactionVisualizer.Utility.Graph;
 
 namespace TransactionVisualizer.Services;
 
-public class GraphService : IGraphService
+public class BankingTransactionNetworkService : IBankingTransactionNetworkService
 {
     private Graph<Account, Transaction> _graph;
     private readonly IDataRepository<Transaction> _edgeRepository;
@@ -25,7 +25,7 @@ public class GraphService : IGraphService
     private readonly IRequestToFullModel<GraphResponseModel<Account, Transaction>, Graph<Account, Transaction>>
         _requestToFull;
 
-    public GraphService
+    public BankingTransactionNetworkService
     (
         IDataRepository<Transaction> edgeRepository,
         IRequestToFullModel<GraphResponseModel<Account, Transaction>, Graph<Account, Transaction>> requestToFull,

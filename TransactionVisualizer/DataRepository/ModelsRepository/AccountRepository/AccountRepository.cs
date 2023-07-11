@@ -9,12 +9,10 @@ namespace TransactionVisualizer.DataRepository.ModelsRepository.AccountRepositor
 public class AccountRepository : IDataRepository<Account>
 {
     private readonly IDataRepository<Account> _dataRepository;
-    private readonly IElasticRepositoryBuilder _elasticRepositoryBuilder;
 
 
     public AccountRepository( IElasticRepositoryBuilder elasticRepositoryBuilder)
     {
-        _elasticRepositoryBuilder = elasticRepositoryBuilder;
         _dataRepository = elasticRepositoryBuilder.BuildAccountRepository();
 
     }

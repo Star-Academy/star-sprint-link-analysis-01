@@ -22,6 +22,7 @@
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
         <PackageReference Include="NEST" Version="7.17.5" />
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.4" />
+        <PackageReference Include="NSubstitute" Version="5.0.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
         <PackageReference Include="xunit" Version="2.4.2" />
         <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
@@ -36,6 +37,12 @@
 
     <ItemGroup>
       <ProjectReference Include="..\TransactionVisualizer\TransactionVisualizer.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="DataRepositoryTest\" />
+      <Folder Include="ServicesTest\" />
+      <Folder Include="UtilityTest\" />
     </ItemGroup>
 
 </Project>

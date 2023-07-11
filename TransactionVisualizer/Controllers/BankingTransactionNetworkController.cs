@@ -16,15 +16,15 @@ namespace TransactionVisualizer.Controllers;
 public class BankingTransactionNetworkController : Controller
 {
     private readonly IGraphResponseModelBuilder _graphResponseModelBuilder;
-    private readonly IGraphService _graphService;
+    private readonly IBankingTransactionNetworkService _bankingTransactionNetworkService;
 
     public BankingTransactionNetworkController
     (
-        IGraphService graphService,
+        IBankingTransactionNetworkService bankingTransactionNetworkService,
         IGraphResponseModelBuilder graphResponseModelBuilder
     )
     {
-        _graphService = graphService;
+        _bankingTransactionNetworkService = bankingTransactionNetworkService;
         _graphResponseModelBuilder = graphResponseModelBuilder;
     }
 
@@ -32,7 +32,7 @@ public class BankingTransactionNetworkController : Controller
     [Route("")]
     public IActionResult Graph()
     {
-        var graph = _graphService.InitialGraph(3000000037);
+        var graph = _bankingTransactionNetworkService.InitialGraph(3000000037);
 
         return Ok(_graphResponseModelBuilder.BuildTransactionGraphResponseModel(graph.AdjacencyMatrix));
     }
@@ -45,13 +45,13 @@ public class BankingTransactionNetworkController : Controller
         [FromBody] ExpandRequestModel<Account, Transaction> requestModel
     )
     {
-        _graphService.SetState(requestModel.CurrentState);
+        _bankingTransactionNetworkService.SetState(requestModel.CurrentState);
 
         return Ok
         (
             _graphResponseModelBuilder.BuildTransactionGraphResponseModel
             (
-                _graphService.Expand(requestModel).AdjacencyMatrix
+                _bankingTransactionNetworkService.Expand(requestModel).AdjacencyMatrix
             )
         );
     }
@@ -63,9 +63,9 @@ public class BankingTransactionNetworkController : Controller
         [FromBody] MaxFlowCalculatorRequestModel<Account, Transaction> calculatorRequestModel
     )
     {
-        _graphService.SetState(calculatorRequestModel.CurrentState);
+        _bankingTransactionNetworkService.SetState(calculatorRequestModel.CurrentState);
 
-        var maxFlow = _graphService.MaxFlowCalculator(calculatorRequestModel);
+        var maxFlow = _bankingTransactionNetworkService.MaxFlowCalculator(calculatorRequestModel);
 
         return Ok
         (

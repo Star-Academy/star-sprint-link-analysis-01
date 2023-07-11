@@ -6,7 +6,7 @@ using TransactionVisualizer.Models.Transaction;
 
 namespace TransactionVisualizer.Services;
 
-public interface IGraphService
+public interface IBankingTransactionNetworkService
 {
     public Graph<Account, Transaction> GetState();
 

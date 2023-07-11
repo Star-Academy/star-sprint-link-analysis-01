@@ -32,7 +32,7 @@ builder.Services
         GraphFullModelToGraph>();
 builder.Services.AddSingleton<IDataRepository<Transaction>, TransactionRepository>();
 builder.Services.AddSingleton<IModelToGraphEdge<Transaction, Account, Transaction>, TransactionToEdge>();
-builder.Services.AddSingleton<IGraphService, GraphService>();
+builder.Services.AddSingleton<IBankingTransactionNetworkService, BankingTransactionNetworkService>();
 builder.Services.AddSingleton<ISelectorBuilder, SelectorBuilder>();
 builder.Services.AddSingleton<ISelectorKeyValueBuilder, SelectorKeyValueBuilder>();
 builder.Services.AddSingleton<IExpander<Account, Transaction>, Expander<Account, Transaction>>();

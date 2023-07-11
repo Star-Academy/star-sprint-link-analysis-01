@@ -9,14 +9,11 @@ namespace TransactionVisualizer.DataRepository.ModelsRepository.TransactionRepos
 public class TransactionRepository : IDataRepository<Transaction>
 {
     private readonly IDataRepository<Transaction> _dataRepository;
-    private readonly IElasticRepositoryBuilder _elasticRepositoryBuilder;
 
     public TransactionRepository(IElasticRepositoryBuilder elasticRepositoryBuilder)
     {
-        _elasticRepositoryBuilder = elasticRepositoryBuilder;
         _dataRepository = elasticRepositoryBuilder.BuildTransactionRepository();
     }
-
 
     public DataManipulationResponse InsertAll(List<Transaction> records)
     {
