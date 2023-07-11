@@ -1,6 +1,6 @@
-namespace TransactionVisualizer.Utility.Constants;
+namespace TransactionVisualizer.Utility.Constants.AccountConstants;
 
-public static class AccountRelatedConstants
+public class AccountTypeConstants
 {
     public const string Jari = "جاری";
     public const string Sepordeh = "سپرده";
