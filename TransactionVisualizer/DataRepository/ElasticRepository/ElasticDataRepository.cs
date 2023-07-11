@@ -1,5 +1,6 @@
 using Nest;
 using TransactionVisualizer.DataRepository.BaseDataRepository;
+using TransactionVisualizer.Utility.Builders.SelectorBuilder;
 using TransactionVisualizer.Utility.Validator;
 
 namespace TransactionVisualizer.DataRepository.ElasticRepository;
@@ -9,6 +10,7 @@ public class ElasticDataRepository<TResponse> : IDataRepository<TResponse> where
     private readonly ElasticClient _client;
     private readonly IDataGainResponseBuilder<TResponse> _dataGainResponseBuilder;
 
+
     // Jalase درست کردن کلاس برای ورودی کانستراکتور و اجرای فلونت ولیدیشن روی ان 
     public ElasticDataRepository(string url, string name, IDataGainResponseBuilder<TResponse> dataGainResponseBuilder)
     {
@@ -17,6 +19,7 @@ public class ElasticDataRepository<TResponse> : IDataRepository<TResponse> where
 
         Name = name;
         _dataGainResponseBuilder = dataGainResponseBuilder;
+
         _client = new ElasticClient(new ConnectionSettings(new Uri(url)).DefaultIndex(name));
     }
 
@@ -45,7 +48,7 @@ public class ElasticDataRepository<TResponse> : IDataRepository<TResponse> where
         return DataManipulationResponseBuilder.Build(!response.IsValid);
     }
 
-    
+
     public DataGainResponse<TResponse> Search(Func<SearchDescriptor<TResponse>, ISearchRequest> selector)
     {
         Validator.NullValidation(selector);
@@ -56,8 +59,8 @@ public class ElasticDataRepository<TResponse> : IDataRepository<TResponse> where
     }
 
     //TODO : Implement this method 
-    public bool Contain<TSelector>(TSelector selector)
+    public bool Contain(Func<SearchDescriptor<TResponse>, ISearchRequest> selector)
     {
-        throw new NotImplementedException();
+        return Search(selector).Items.Count > 0;
     }
 }

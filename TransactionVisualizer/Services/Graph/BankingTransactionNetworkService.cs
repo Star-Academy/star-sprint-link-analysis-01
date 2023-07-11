@@ -1,5 +1,5 @@
-using Nest;
 using TransactionVisualizer.DataRepository;
+using TransactionVisualizer.DataRepository.BaseDataRepository;
 using TransactionVisualizer.Models.Account;
 using TransactionVisualizer.Models.DataStructureModels.Graph;
 using TransactionVisualizer.Models.RequestModels;
@@ -10,7 +10,7 @@ using TransactionVisualizer.Utility.Converters;
 using TransactionVisualizer.Utility.Converters.RequestToFullModels;
 using TransactionVisualizer.Utility.Graph;
 
-namespace TransactionVisualizer.Services;
+namespace TransactionVisualizer.Services.Graph;
 
 public class BankingTransactionNetworkService : IBankingTransactionNetworkService
 {

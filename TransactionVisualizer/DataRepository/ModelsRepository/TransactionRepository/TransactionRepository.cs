@@ -30,7 +30,7 @@ public class TransactionRepository : IDataRepository<Transaction>
         return _dataRepository.Search(selector);
     }
 
-    public bool Contain<TSelector>(TSelector selector)
+    public bool Contain(Func<SearchDescriptor<Transaction>, ISearchRequest> selector)
     {
         return _dataRepository.Contain(selector);
     }

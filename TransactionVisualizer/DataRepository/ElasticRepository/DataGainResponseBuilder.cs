@@ -2,7 +2,7 @@ using TransactionVisualizer.DataRepository.BaseDataRepository;
 
 namespace TransactionVisualizer.DataRepository.ElasticRepository;
 
-// Jalase di
+// OwnerID di
 public class DataGainResponseBuilder<TResponse> : IDataGainResponseBuilder<TResponse>
 {
     public DataGainResponse<TResponse> Build(bool errors, List<TResponse> items)

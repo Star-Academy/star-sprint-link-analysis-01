@@ -1,4 +1,5 @@
 using TransactionVisualizer.DataRepository;
+using TransactionVisualizer.DataRepository.BaseDataRepository;
 using TransactionVisualizer.Models.DataStructureModels.Graph;
 using TransactionVisualizer.Utility.Builders.SelectorBuilder;
 using TransactionVisualizer.Utility.Converters;
@@ -28,6 +29,7 @@ public class Expander<TVertex, TEdge> : IExpander<TVertex, TEdge> where TEdge : 
         stack.Push(vertex);
         while (index >= 0 && stack.Count > 0)
         {
+            index--;
             var currentVertex = stack.Pop();
             Console.WriteLine(currentVertex.ToString());
 

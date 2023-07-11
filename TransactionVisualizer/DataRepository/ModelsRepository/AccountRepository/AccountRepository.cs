@@ -14,7 +14,6 @@ public class AccountRepository : IDataRepository<Account>
     public AccountRepository( IElasticRepositoryBuilder elasticRepositoryBuilder)
     {
         _dataRepository = elasticRepositoryBuilder.BuildAccountRepository();
-
     }
 
     public DataManipulationResponse InsertAll(List<Account> records)
@@ -32,7 +31,7 @@ public class AccountRepository : IDataRepository<Account>
         return _dataRepository.Search(selector);
     }
 
-    public bool Contain<TSelector>(TSelector selector)
+    public bool Contain(Func<SearchDescriptor<Account>, ISearchRequest> selector)
     {
         return _dataRepository.Contain(selector);
     }

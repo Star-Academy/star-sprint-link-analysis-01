@@ -1,4 +1,5 @@
 using TransactionVisualizer.DataRepository;
+using TransactionVisualizer.DataRepository.BaseDataRepository;
 using TransactionVisualizer.DataRepository.ElasticRepository;
 using TransactionVisualizer.DataRepository.ModelsRepository.AccountRepository;
 using TransactionVisualizer.DataRepository.ModelsRepository.TransactionRepository;
@@ -8,12 +9,16 @@ using TransactionVisualizer.Models.ResponseModels;
 using TransactionVisualizer.Models.ResponseModels.Builder;
 using TransactionVisualizer.Models.Transaction;
 using TransactionVisualizer.Services;
+using TransactionVisualizer.Services.Data;
+using TransactionVisualizer.Services.Graph;
+using TransactionVisualizer.Utility.Builders.DataRepositoryBuilder;
 using TransactionVisualizer.Utility.Builders.GraphBuilders.EdgeBuilders;
 using TransactionVisualizer.Utility.Builders.ResponseModelBuilder;
 using TransactionVisualizer.Utility.Builders.SelectorBuilder;
 using TransactionVisualizer.Utility.Converters;
 using TransactionVisualizer.Utility.Converters.RequestToFullModels;
 using TransactionVisualizer.Utility.Graph;
+using TransactionVisualizer.Utility.Parsers.FileParser;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,8 +45,13 @@ builder.Services.AddSingleton<IMaxFlowCalculator<Account, Transaction>, MaxFlowC
 builder.Services.AddSingleton<IPathsFinder<Account, Transaction>, PathsFinder<Account, Transaction>>();
 builder.Services.AddSingleton<IDataGainResponseBuilder<Account>, DataGainResponseBuilder<Account>>();
 builder.Services.AddSingleton<IDataGainResponseBuilder<Transaction>, DataGainResponseBuilder<Transaction>>();
-
-
+builder.Services.AddSingleton<IDataService, DataService>();
+builder.Services.AddSingleton<IElasticRepositoryBuilder, ElasticRepositoryBuilder>();
+builder.Services.AddSingleton<IFlatToFullConverter<Account, FlatAccount>, FlatAccountToAccountConverter>();
+builder.Services
+    .AddSingleton<IFlatToFullConverter<Transaction, FlatTransaction>, FlatTransactionToTransactionConverter>();
+builder.Services.AddSingleton<IFileParser<FlatAccount>, CsvFileParser<FlatAccount>>();
+builder.Services.AddSingleton<IFileParser<FlatTransaction>, CsvFileParser<FlatTransaction>>();
 // builder.Services.AddSingleton<IGraphGenerator<Account, Transaction>, GraphGenerator>();
 
 var app = builder.Build();

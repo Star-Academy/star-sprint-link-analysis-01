@@ -4,7 +4,7 @@ using TransactionVisualizer.Models.RequestModels;
 using TransactionVisualizer.Models.ResponseModels;
 using TransactionVisualizer.Models.Transaction;
 
-namespace TransactionVisualizer.Services;
+namespace TransactionVisualizer.Services.Graph;
 
 public interface IBankingTransactionNetworkService
 {
