@@ -4,10 +4,14 @@ using TransactionVisualizer.Utility.Constants.TransactionConstants;
 
 namespace TransactionVisualizer.Utility.Parsers.EnumParsers;
 
+using Validator;
+
 public static class TransactionTypeParser
 {
     public static TransactionType Pars(string transactionType)
     {
+        Validator.NullValidation(transactionType);
+        
         // TODO: Using class TransactionConstants instead of directly using class TransactionTypeConstants 
 
         return transactionType switch

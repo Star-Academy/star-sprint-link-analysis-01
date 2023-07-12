@@ -5,11 +5,15 @@ using TransactionVisualizer.Models.Transaction;
 
 namespace TransactionVisualizer.Utility.Builders.ResponseModelBuilder;
 
+using Validator;
+
 public class GraphResponseModelBuilder : IGraphResponseModelBuilder
 {
     public GraphResponseModel<Account, Transaction> BuildTransactionGraphResponseModel(
         Dictionary<Account, List<Edge<Account, Transaction>>> graph)
     {
+        Validator.NullValidation(graph);
+        
         var vertices = new List<Account>();
         var edges = new List<EdgeResponseModel<Transaction>>();
 

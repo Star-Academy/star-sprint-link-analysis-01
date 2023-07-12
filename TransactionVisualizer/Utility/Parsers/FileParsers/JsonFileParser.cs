@@ -2,10 +2,14 @@ using Newtonsoft.Json;
 
 namespace TransactionVisualizer.Utility.Parsers.FileParsers;
 
+using Validator;
+
 public class JsonFileParser<T> : IFileParser<T>
 {
     public List<T>? Pars(string path)
     {
+        Validator.NullValidation(path);
+
         var json = File.ReadAllText(path);
 
         // TODO: If type object of excepted different with actual type of json file return List

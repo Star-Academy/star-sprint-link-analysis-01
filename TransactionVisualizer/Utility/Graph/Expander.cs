@@ -5,6 +5,8 @@ using TransactionVisualizer.Utility.Converters;
 
 namespace TransactionVisualizer.Utility.Graph;
 
+using Validator;
+
 public class Expander<TVertex, TEdge> : IExpander<TVertex, TEdge> where TEdge : class where TVertex : class
 {
     private readonly IModelToGraphEdge<TEdge, TVertex, TEdge> _modelToGraphEdge;
@@ -15,6 +17,14 @@ public class Expander<TVertex, TEdge> : IExpander<TVertex, TEdge> where TEdge : 
     public Expander(IDataRepository<TEdge> repository, ISelectorBuilder selectorBuilder,
         IModelToGraphEdge<TEdge, TVertex, TEdge> modelToGraphEdge, ISelectorKeyValueBuilder selectorKeyValueBuilder)
     {
+        Validator.NullValidationGroup
+        (
+            repository,
+            selectorBuilder,
+            modelToGraphEdge,
+            selectorKeyValueBuilder
+        );
+
         _repository = repository;
         _selectorBuilder = selectorBuilder;
         _modelToGraphEdge = modelToGraphEdge;
@@ -23,6 +33,8 @@ public class Expander<TVertex, TEdge> : IExpander<TVertex, TEdge> where TEdge : 
 
     public Graph<TVertex, TEdge> Expand(int maxLenght, TVertex vertex, Graph<TVertex, TEdge> graph)
     {
+        Validator.NullValidationGroup(maxLenght, vertex, graph);
+        
         var index = maxLenght;
         var stack = new Stack<TVertex>();
         stack.Push(vertex);

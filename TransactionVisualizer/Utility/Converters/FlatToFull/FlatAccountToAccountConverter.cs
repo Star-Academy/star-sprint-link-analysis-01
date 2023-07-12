@@ -5,10 +5,14 @@ using TransactionVisualizer.Utility.Parsers.EnumParsers;
 
 namespace TransactionVisualizer.Utility.Converters.FlatToFull;
 
+using Validator;
+
 public class FlatAccountToAccountConverter : IFlatToFullConverter<Account, FlatAccount>
 {
     public Account Convert(FlatAccount flat)
     {
+        Validator.NullValidation(flat);
+        
         return new Account
         {
             Id = flat.AccountID,
@@ -22,11 +26,15 @@ public class FlatAccountToAccountConverter : IFlatToFullConverter<Account, FlatA
 
     public List<Account> ConvertAll(IEnumerable<FlatAccount> flats)
     {
+        Validator.ListValidation(flats.ToList());
+        
         return flats.Select(Convert).ToList();
     }
 
     private static Owner ConvertOwner(FlatAccount flat)
     {
+        Validator.NullValidation(flat);
+        
         return new Owner
         {
             Id = flat.OwnerID,
@@ -37,6 +45,8 @@ public class FlatAccountToAccountConverter : IFlatToFullConverter<Account, FlatA
 
     private static Branch ConvertBranch(FlatAccount flat)
     {
+        Validator.NullValidation(flat);
+        
         return new Branch
         {
             Name = flat.BranchName,

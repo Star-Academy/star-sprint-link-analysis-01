@@ -5,6 +5,7 @@ using TransactionVisualizer.Models.ResponseModels;
 using TransactionVisualizer.Models.Transaction;
 using TransactionVisualizer.Services.Graph;
 using TransactionVisualizer.Utility.Builders.ResponseModelBuilder;
+using TransactionVisualizer.Utility.Validator;
 
 namespace TransactionVisualizer.Controllers;
 
@@ -14,12 +15,10 @@ public class BankingTransactionNetworkController : Controller
     private readonly IBankingTransactionNetworkService _bankingTransactionNetworkService;
     private readonly IGraphResponseModelBuilder _graphResponseModelBuilder;
 
-    public BankingTransactionNetworkController
-    (
-        IBankingTransactionNetworkService bankingTransactionNetworkService,
-        IGraphResponseModelBuilder graphResponseModelBuilder
-    )
+    public BankingTransactionNetworkController(IBankingTransactionNetworkService bankingTransactionNetworkService, IGraphResponseModelBuilder graphResponseModelBuilder)
     {
+        Validator.NullValidationGroup(bankingTransactionNetworkService, graphResponseModelBuilder);
+        
         _bankingTransactionNetworkService = bankingTransactionNetworkService;
         _graphResponseModelBuilder = graphResponseModelBuilder;
     }
@@ -36,11 +35,10 @@ public class BankingTransactionNetworkController : Controller
 
     [HttpPost]
     [Route("/expand")]
-    public IActionResult Expand
-    (
-        [FromBody] ExpandRequestModel<Account, Transaction> requestModel
-    )
+    public IActionResult Expand([FromBody] ExpandRequestModel<Account, Transaction> requestModel)
     {
+        Validator.NullValidation(requestModel);
+        
         _bankingTransactionNetworkService.SetState(requestModel.CurrentState);
 
         return Ok
@@ -54,11 +52,10 @@ public class BankingTransactionNetworkController : Controller
 
     [HttpPost]
     [Route("/max-flow-calculator")]
-    public IActionResult GetMaxFlow
-    (
-        [FromBody] MaxFlowCalculatorRequestModel<Account, Transaction> calculatorRequestModel
-    )
+    public IActionResult GetMaxFlow([FromBody] MaxFlowCalculatorRequestModel<Account, Transaction> calculatorRequestModel)
     {
+        Validator.NullValidation(calculatorRequestModel);
+        
         _bankingTransactionNetworkService.SetState(calculatorRequestModel.CurrentState);
 
         var maxFlow = _bankingTransactionNetworkService.MaxFlowCalculator(calculatorRequestModel);

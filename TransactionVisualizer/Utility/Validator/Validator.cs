@@ -9,6 +9,14 @@ public static class Validator
         if (data == null) throw new ArgumentNullException(nameof(data));
     }
 
+    public static void NullValidationGroup(params object?[] data)
+    {
+        foreach (var obj in data)
+        {
+            NullValidation(obj);
+        }
+    }
+    
     public static void ListValidation<T>(List<T>? list)
     {
         ListValidation(list, nameof(list));

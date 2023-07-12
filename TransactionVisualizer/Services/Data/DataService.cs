@@ -5,6 +5,7 @@ using TransactionVisualizer.Utility.Builders.DataRepositoryBuilder;
 using TransactionVisualizer.Utility.Builders.SelectorBuilder;
 using TransactionVisualizer.Utility.Converters.FlatToFull;
 using TransactionVisualizer.Utility.Parsers.FileParsers;
+using TransactionVisualizer.Utility.Validator;
 
 namespace TransactionVisualizer.Services.Data;
 
@@ -25,6 +26,17 @@ public class DataService : IDataService
         IFileParser<FlatAccount> accountParser, IElasticRepositoryBuilder elasticRepositoryBuilder,
         ISelectorKeyValueBuilder selectorKeyValueBuilder, ISelectorBuilder selectorBuilder)
     {
+        Validator.NullValidationGroup
+        (
+            transactionConverter,
+            accountConverter,
+            transactionParser,
+            accountParser,
+            selectorKeyValueBuilder,
+            selectorBuilder,
+            elasticRepositoryBuilder
+        );
+        
         _transactionConverter = transactionConverter;
         _accountConverter = accountConverter;
         _transactionParser = transactionParser;

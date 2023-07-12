@@ -4,10 +4,14 @@ using TransactionVisualizer.Utility.Constants.AccountConstants;
 
 namespace TransactionVisualizer.Utility.Parsers.EnumParsers;
 
+using Validator;
+
 public static class AccountTypeParser
 {
     public static AccountType Pars(string accountType)
     {
+        Validator.NullValidation(accountType);
+        
         // TODO: Using class AccountConstants instead of directly using class AccountTypeConstants 
 
         return accountType switch

@@ -7,6 +7,8 @@ using TransactionVisualizer.Utility.Builders.SelectorBuilder;
 
 namespace TransactionVisualizer.Utility.Converters;
 
+using Validator;
+
 public class TransactionToEdge : IModelToGraphEdge<Transaction, Account, Transaction>
 {
     private readonly IEdgeBuilder<Account, Transaction> _builder;
@@ -17,6 +19,14 @@ public class TransactionToEdge : IModelToGraphEdge<Transaction, Account, Transac
     public TransactionToEdge(IEdgeBuilder<Account, Transaction> builder, IDataRepository<Account> repository,
         ISelectorBuilder selectorBuilder, ISelectorKeyValueBuilder selectorKeyValueBuilder)
     {
+        Validator.NullValidationGroup
+        (
+            builder,
+            repository,
+            selectorBuilder,
+            selectorKeyValueBuilder
+        );
+
         _builder = builder;
         _repository = repository;
         _selectorBuilder = selectorBuilder;
@@ -25,6 +35,8 @@ public class TransactionToEdge : IModelToGraphEdge<Transaction, Account, Transac
 
     public Edge<Account, Transaction> Convert(Transaction transaction)
     {
+        Validator.NullValidation(transaction);
+        
         var fromAccountSelector =
             _selectorBuilder.BuildKeyValueSelector<Account>(
                 _selectorKeyValueBuilder.BuildFindAccountById(transaction.SourceAccount.ToString()));

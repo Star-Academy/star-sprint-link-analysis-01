@@ -8,6 +8,7 @@ using TransactionVisualizer.Utility.Builders.SelectorBuilder;
 using TransactionVisualizer.Utility.Converters;
 using TransactionVisualizer.Utility.Converters.RequestToFullModels;
 using TransactionVisualizer.Utility.Graph;
+using TransactionVisualizer.Utility.Validator;
 
 namespace TransactionVisualizer.Services.Graph;
 
@@ -33,6 +34,17 @@ public class BankingTransactionNetworkService : IBankingTransactionNetworkServic
         IMaxFlowCalculator<Account, Transaction> maxFlowCalculator, ISelectorBuilder selectorBuilder,
         ISelectorKeyValueBuilder selectorKeyValueBuilder)
     {
+        Validator.NullValidationGroup
+        (
+           edgeRepository,
+           requestToFull,
+           modelToGraphEdge,
+           expander,
+           maxFlowCalculator,
+           selectorBuilder,
+           selectorKeyValueBuilder
+        );
+        
         _graph = new Graph<Account, Transaction>();
         _edgeRepository = edgeRepository;
         _requestToFull = requestToFull;

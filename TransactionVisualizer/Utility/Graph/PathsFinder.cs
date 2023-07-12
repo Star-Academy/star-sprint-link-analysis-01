@@ -2,10 +2,14 @@ using TransactionVisualizer.Models.DataStructureModels.Graph;
 
 namespace TransactionVisualizer.Utility.Graph;
 
+using Validator;
+
 public class PathsFinder<TVertex, TEdge> : IPathsFinder<TVertex, TEdge> where TEdge : class where TVertex : class
 {
     public List<List<Edge<TVertex, TEdge>>> Find(TVertex source, TVertex destination, Graph<TVertex, TEdge> graph)
     {
+        Validator.NullValidationGroup(source, destination, graph);
+        
         var paths = new List<List<Edge<TVertex, TEdge>>>();
 
         var queue = new Queue<List<Edge<TVertex, TEdge>>>();
@@ -24,6 +28,8 @@ public class PathsFinder<TVertex, TEdge> : IPathsFinder<TVertex, TEdge> where TE
         ICollection<List<Edge<TVertex, TEdge>>> paths
     )
     {
+        Validator.NullValidationGroup(source, destination, graph, queue, paths);
+        
         while (queue.Count > 0)
         {
             var currentPath = queue.Dequeue();
