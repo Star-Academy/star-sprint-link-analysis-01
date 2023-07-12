@@ -13,9 +13,9 @@ public class FileParsersTest
         const string filePath =
             "E:\\RiderProjects\\Clone\\CodeStarPr\\TransactionVisualizerTest\\UtilityTest\\Parsers\\FileParsers\\MainData.csv";
         const FileType fileType = FileType.Csv;
-
+        StreamReader reader = new StreamReader(filePath);
         // Act
-        var result = fileParsers.Parse<MainDataForTest>(filePath, fileType);
+        var result = fileParsers.Parse<MainDataForTest>(reader, fileType);
 
         // Assert
         result.Should().NotBeNull();
@@ -30,9 +30,10 @@ public class FileParsersTest
         const string filePath =
             "E:\\RiderProjects\\Clone\\CodeStarPr\\TransactionVisualizerTest\\UtilityTest\\Parsers\\FileParsers\\MainData.json";
         const FileType fileType = FileType.Json;
+        StreamReader reader = new StreamReader(filePath);
 
         // Act
-        var result = fileParsers.Parse<MainDataForTest>(filePath, fileType);
+        var result = fileParsers.Parse<MainDataForTest>(reader, fileType);
 
         // Assert
         result.Should().NotBeNull();

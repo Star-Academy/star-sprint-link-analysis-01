@@ -5,13 +5,13 @@ namespace TransactionVisualizer.Utility.Parsers.FileParsers;
 
 public class FileParsers
 {
-    public List<T>? Parse<T>(string path, FileType type)
+    public List<T>? Parse<T>(StreamReader reader, FileType type)
     {
         return type switch
         {
-            FileType.Csv => new CsvFileParser<T>().Pars(path),
-            FileType.Json => new JsonFileParser<T>().Pars(path),
-            _ => throw new EnumParsException(path, nameof(TransactionType))
+            FileType.Csv => new CsvFileParser<T>().Pars(reader),
+            FileType.Json => new JsonFileParser<T>().Pars(reader),
+            _ => throw new EnumParsException(reader.ReadLine(), nameof(TransactionType))
         };
     }
 }

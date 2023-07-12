@@ -8,8 +8,11 @@ public class CsvFileParserTest
 {
     //TODO : Setup and mock Elastic data repo
 
-    private const string Path = "E:\\RiderProjects\\Clone\\CodeStarPr\\TransactionVisualizerTest\\UtilityTest\\Parsers\\FileParsers\\MainData.csv";
-    
+    private const string Path =
+        "E:\\RiderProjects\\Clone\\CodeStarPr\\TransactionVisualizerTest\\UtilityTest\\Parsers\\FileParsers\\MainData.csv";
+
+    StreamReader reader = new StreamReader(Path);
+
     [Fact]
     public void Pars_ValidCsvFile_ReturnsParsedRecords()
     {
@@ -24,7 +27,7 @@ public class CsvFileParserTest
         var parser = new CsvFileParser<MainDataForTest>();
 
         // Act
-        var parsedData = parser.Pars(Path);
+        var parsedData = parser.Pars(reader);
 
         // Assert
         parsedData.Should().BeEquivalentTo(expectedData);
@@ -37,22 +40,10 @@ public class CsvFileParserTest
         var parser = new CsvFileParser<MinorDataForTest>();
 
         // Act
-        Action act = () => parser.Pars(Path);
+        Action act = () => parser.Pars(reader);
 
         // Assert
         act.Should().Throw<CsvHelperException>();
     }
-    
-    [Fact]
-    public void Pars_InvalidCsvFilePath_ThrowsFileNotFoundException()
-    {
-        // Arrange
-        var parser = new CsvFileParser<MinorDataForTest>();
 
-        // Act
-        Action act = () => parser.Pars("Path");
-
-        // Assert
-        act.Should().Throw<FileNotFoundException>();
-    }
 }

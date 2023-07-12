@@ -38,7 +38,8 @@ public class DataService : IDataService
 
     public DataManipulationResponse AddAccounts(string filePath)
     {
-        var accounts = _accountParser.Pars(filePath);
+        var reader = new StreamReader(filePath);
+        var accounts = _accountParser.Pars(reader);
         var fullAccounts = _accountConverter.ConvertAll(accounts);
         var response = _accountRepository.InsertAll(fullAccounts);
         return new DataManipulationResponse()
@@ -49,7 +50,8 @@ public class DataService : IDataService
 
     public DataManipulationResponse AddTransactions(string filePath)
     {
-        var transactions = _transactionParser.Pars(filePath);
+        var reader = new StreamReader(filePath);
+        var transactions = _transactionParser.Pars(reader);
         transactions = transactions.Where(IsAccountIdFound).ToList();
         var fullTransactions = _transactionConverter.ConvertAll(transactions);
         var response = _transactionRepository.InsertAll(fullTransactions);
