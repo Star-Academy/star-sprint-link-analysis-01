@@ -1,5 +1,6 @@
 using TransactionVisualizer.DataRepository.BaseDataRepository;
 using TransactionVisualizer.Models.DataStructureModels.Graph;
+using TransactionVisualizer.Utility.Builders.DataRepositoryBuilder;
 using TransactionVisualizer.Utility.Builders.SelectorBuilder;
 using TransactionVisualizer.Utility.Converters;
 
@@ -12,10 +13,12 @@ public class Expander<TVertex, TEdge> : IExpander<TVertex, TEdge> where TEdge : 
     private readonly ISelectorBuilder _selectorBuilder;
     private readonly ISelectorKeyValueBuilder _selectorKeyValueBuilder;
 
-    public Expander(IDataRepository<TEdge> repository, ISelectorBuilder selectorBuilder,
-        IModelToGraphEdge<TEdge, TVertex, TEdge> modelToGraphEdge, ISelectorKeyValueBuilder selectorKeyValueBuilder)
+    public Expander(ISelectorBuilder selectorBuilder,
+        IModelToGraphEdge<TEdge, TVertex, TEdge> modelToGraphEdge, ISelectorKeyValueBuilder selectorKeyValueBuilder,
+        IElasticDataRepositoryBuilder<TEdge> repositoryBuilder
+    )
     {
-        _repository = repository;
+        _repository = repositoryBuilder.Build();
         _selectorBuilder = selectorBuilder;
         _modelToGraphEdge = modelToGraphEdge;
         _selectorKeyValueBuilder = selectorKeyValueBuilder;

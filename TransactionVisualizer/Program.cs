@@ -1,7 +1,5 @@
 using TransactionVisualizer.DataRepository.BaseDataRepository;
 using TransactionVisualizer.DataRepository.ElasticRepository;
-using TransactionVisualizer.DataRepository.ModelsRepository.AccountRepository;
-using TransactionVisualizer.DataRepository.ModelsRepository.TransactionRepository;
 using TransactionVisualizer.Models.Account;
 using TransactionVisualizer.Models.DataStructureModels.Graph;
 using TransactionVisualizer.Models.ResponseModels;
@@ -27,13 +25,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IEdgeBuilder<Account, Transaction>, EdgeBuilder<Account, Transaction>>();
-builder.Services.AddSingleton<IDataRepository<Account>, AccountRepository>();
-builder.Services.AddSingleton<IDataRepository<Transaction>, TransactionRepository>();
 builder.Services.AddSingleton<IGraphResponseModelBuilder, GraphResponseModelBuilder>();
 builder.Services
     .AddSingleton<IRequestToFullModel<GraphResponseModel<Account, Transaction>, Graph<Account, Transaction>>,
         GraphFullModelToGraph>();
-builder.Services.AddSingleton<IDataRepository<Transaction>, TransactionRepository>();
 builder.Services.AddSingleton<IModelToGraphEdge<Transaction, Account, Transaction>, TransactionToEdge>();
 builder.Services.AddSingleton<IBankingTransactionNetworkService, BankingTransactionNetworkService>();
 builder.Services.AddSingleton<ISelectorBuilder, SelectorBuilder>();
@@ -44,7 +39,10 @@ builder.Services.AddSingleton<IPathsFinder<Account, Transaction>, PathsFinder<Ac
 builder.Services.AddSingleton<IDataGainResponseBuilder<Account>, DataGainResponseBuilder<Account>>();
 builder.Services.AddSingleton<IDataGainResponseBuilder<Transaction>, DataGainResponseBuilder<Transaction>>();
 builder.Services.AddSingleton<IDataService, DataService>();
-builder.Services.AddSingleton<IElasticRepositoryBuilder, ElasticRepositoryBuilder>();
+
+builder.Services.AddSingleton<IElasticDataRepositoryBuilder<Account>, AccountRepositoryBuilder>();
+builder.Services.AddSingleton<IElasticDataRepositoryBuilder<Transaction>, TransactionRepositoryBuilder>();
+
 builder.Services.AddSingleton<IFlatToFullConverter<Account, FlatAccount>, FlatAccountToAccountConverter>();
 builder.Services
     .AddSingleton<IFlatToFullConverter<Transaction, FlatTransaction>, FlatTransactionToTransactionConverter>();

@@ -22,8 +22,9 @@ public class DataService : IDataService
 
     public DataService(IFlatToFullConverter<Transaction, FlatTransaction> transactionConverter,
         IFlatToFullConverter<Account, FlatAccount> accountConverter, IFileParser<FlatTransaction> transactionParser,
-        IFileParser<FlatAccount> accountParser, IElasticRepositoryBuilder elasticRepositoryBuilder,
-        ISelectorKeyValueBuilder selectorKeyValueBuilder, ISelectorBuilder selectorBuilder)
+        IFileParser<FlatAccount> accountParser, ISelectorKeyValueBuilder selectorKeyValueBuilder,
+        ISelectorBuilder selectorBuilder, IElasticDataRepositoryBuilder<Account> accountRepositoryBuilder,
+        IElasticDataRepositoryBuilder<Transaction> transactionRepositoryBuilder)
     {
         _transactionConverter = transactionConverter;
         _accountConverter = accountConverter;
@@ -31,8 +32,8 @@ public class DataService : IDataService
         _accountParser = accountParser;
         _selectorKeyValueBuilder = selectorKeyValueBuilder;
         _selectorBuilder = selectorBuilder;
-        _accountRepository = elasticRepositoryBuilder.BuildAccountRepository();
-        _transactionRepository = elasticRepositoryBuilder.BuildTransactionRepository();
+        _accountRepository = accountRepositoryBuilder.Build();
+        _transactionRepository = transactionRepositoryBuilder.Build();
     }
 
     public bool AddAccounts(string filePath)

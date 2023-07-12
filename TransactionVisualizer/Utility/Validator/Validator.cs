@@ -23,6 +23,6 @@ public static class Validator
 
      public static bool TypeValidator(Type target , Type destination)
      {
-         return target != destination;
+         return target == destination;
      }
 }

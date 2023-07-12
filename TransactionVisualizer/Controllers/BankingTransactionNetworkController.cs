@@ -28,8 +28,7 @@ public class BankingTransactionNetworkController : Controller
     [Route("")]
     public IActionResult Graph()
     {
-        var graph = _bankingTransactionNetworkService.InitialGraph(3000000037);
-
+        var graph = _bankingTransactionNetworkService.InitialGraph(6000000198);
         return Ok(_graphResponseModelBuilder.BuildTransactionGraphResponseModel(graph.AdjacencyMatrix));
     }
 

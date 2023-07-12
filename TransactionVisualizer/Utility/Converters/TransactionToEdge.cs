@@ -2,6 +2,7 @@ using TransactionVisualizer.DataRepository.BaseDataRepository;
 using TransactionVisualizer.Models.Account;
 using TransactionVisualizer.Models.DataStructureModels.Graph;
 using TransactionVisualizer.Models.Transaction;
+using TransactionVisualizer.Utility.Builders.DataRepositoryBuilder;
 using TransactionVisualizer.Utility.Builders.GraphBuilders.EdgeBuilders;
 using TransactionVisualizer.Utility.Builders.SelectorBuilder;
 
@@ -14,11 +15,12 @@ public class TransactionToEdge : IModelToGraphEdge<Transaction, Account, Transac
     private readonly ISelectorBuilder _selectorBuilder;
     private readonly ISelectorKeyValueBuilder _selectorKeyValueBuilder;
 
-    public TransactionToEdge(IEdgeBuilder<Account, Transaction> builder, IDataRepository<Account> repository,
+    public TransactionToEdge(IEdgeBuilder<Account, Transaction> builder,
+        IElasticDataRepositoryBuilder<Account> repositoryBuilder,
         ISelectorBuilder selectorBuilder, ISelectorKeyValueBuilder selectorKeyValueBuilder)
     {
         _builder = builder;
-        _repository = repository;
+        _repository = repositoryBuilder.Build();
         _selectorBuilder = selectorBuilder;
         _selectorKeyValueBuilder = selectorKeyValueBuilder;
     }

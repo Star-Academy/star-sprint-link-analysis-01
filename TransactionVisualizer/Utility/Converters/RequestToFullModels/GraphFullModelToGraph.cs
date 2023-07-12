@@ -3,6 +3,7 @@ using TransactionVisualizer.Models.Account;
 using TransactionVisualizer.Models.DataStructureModels.Graph;
 using TransactionVisualizer.Models.ResponseModels;
 using TransactionVisualizer.Models.Transaction;
+using TransactionVisualizer.Utility.Builders.DataRepositoryBuilder;
 using TransactionVisualizer.Utility.Builders.SelectorBuilder;
 
 namespace TransactionVisualizer.Utility.Converters.RequestToFullModels;
@@ -14,10 +15,11 @@ public class
     private readonly ISelectorBuilder _selectorBuilder;
     private readonly ISelectorKeyValueBuilder _selectorKeyValueBuilder;
 
-    public GraphFullModelToGraph(IDataRepository<Account> repository, ISelectorBuilder selectorBuilder,
+    public GraphFullModelToGraph(IElasticDataRepositoryBuilder<Account> repositoryBuilder,
+        ISelectorBuilder selectorBuilder,
         ISelectorKeyValueBuilder selectorKeyValueBuilder)
     {
-        _repository = repository;
+        _repository = repositoryBuilder.Build();
         _selectorBuilder = selectorBuilder;
         _selectorKeyValueBuilder = selectorKeyValueBuilder;
     }

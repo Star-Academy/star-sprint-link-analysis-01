@@ -9,6 +9,7 @@ using TransactionVisualizer.Models.ResponseModels;
 using TransactionVisualizer.Models.Transaction;
 using TransactionVisualizer.Services;
 using TransactionVisualizer.Services.Graph;
+using TransactionVisualizer.Utility.Builders.DataRepositoryBuilder;
 using TransactionVisualizer.Utility.Builders.SelectorBuilder;
 using TransactionVisualizer.Utility.Converters;
 using TransactionVisualizer.Utility.Converters.RequestToFullModels;
@@ -18,7 +19,7 @@ namespace TransactionVisualizerTest.ServicesTest;
 
 public class BankingTransactionNetworkServiceTests
 {
-    private readonly IDataRepository<Transaction> _edgeRepository;
+    private readonly IElasticDataRepositoryBuilder<Transaction> _edgeRepositoryBuilder;
 
     private readonly IRequestToFullModel<GraphResponseModel<Account, Transaction>, Graph<Account, Transaction>>
         _requestToFull;
@@ -33,7 +34,7 @@ public class BankingTransactionNetworkServiceTests
 
     public BankingTransactionNetworkServiceTests()
     {
-        _edgeRepository = Substitute.For<IDataRepository<Transaction>>();
+        _edgeRepositoryBuilder = Substitute.For<TransactionRepositoryBuilder>();
         _requestToFull = Substitute
             .For<IRequestToFullModel<GraphResponseModel<Account, Transaction>, Graph<Account, Transaction>>>();
         _modelToGraphEdge = Substitute.For<IModelToGraphEdge<Transaction, Account, Transaction>>();
@@ -43,7 +44,7 @@ public class BankingTransactionNetworkServiceTests
         _selectorKeyValueBuilder = Substitute.For<ISelectorKeyValueBuilder>();
 
         _networkService = new BankingTransactionNetworkService(
-            _edgeRepository,
+            _edgeRepositoryBuilder,
             _requestToFull,
             _modelToGraphEdge,
             _expander,
@@ -121,7 +122,7 @@ public class BankingTransactionNetworkServiceTests
         };
 
 
-        _edgeRepository.Search(Arg.Any<Func<SearchDescriptor<Transaction>, ISearchRequest>>())
+        .Search(Arg.Any<Func<SearchDescriptor<Transaction>, ISearchRequest>>())
             .Returns(new DataGainResponse<Transaction>()
             {
                 Items = new List<Transaction>()

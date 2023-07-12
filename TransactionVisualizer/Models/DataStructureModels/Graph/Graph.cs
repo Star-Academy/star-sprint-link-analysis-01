@@ -25,6 +25,7 @@ public class Graph<TVertex, TEdge> where TVertex : class where TEdge : class
         {
             AdjacencyMatrix.Add(edge.Source, new List<Edge<TVertex, TEdge>>());
             AdjacencyMatrix[edge.Source].Add(edge);
+            
         }
     }
 

@@ -4,6 +4,7 @@ using TransactionVisualizer.Models.DataStructureModels.Graph;
 using TransactionVisualizer.Models.RequestModels;
 using TransactionVisualizer.Models.ResponseModels;
 using TransactionVisualizer.Models.Transaction;
+using TransactionVisualizer.Utility.Builders.DataRepositoryBuilder;
 using TransactionVisualizer.Utility.Builders.SelectorBuilder;
 using TransactionVisualizer.Utility.Converters;
 using TransactionVisualizer.Utility.Converters.RequestToFullModels;
@@ -13,7 +14,7 @@ namespace TransactionVisualizer.Services.Graph;
 
 public class BankingTransactionNetworkService : IBankingTransactionNetworkService
 {
-    private readonly IDataRepository<Transaction> _edgeRepository;
+    private readonly IDataRepository<Transaction> _transactionRepository;
     private readonly IExpander<Account, Transaction> _expander;
     private readonly IMaxFlowCalculator<Account, Transaction> _maxFlowCalculator;
     private readonly IModelToGraphEdge<Transaction, Account, Transaction> _modelToGraphEdge;
@@ -27,14 +28,14 @@ public class BankingTransactionNetworkService : IBankingTransactionNetworkServic
 
     public BankingTransactionNetworkService
     (
-        IDataRepository<Transaction> edgeRepository,
+        IElasticDataRepositoryBuilder<Transaction> transactionRepositoryBuilder,
         IRequestToFullModel<GraphResponseModel<Account, Transaction>, Graph<Account, Transaction>> requestToFull,
         IModelToGraphEdge<Transaction, Account, Transaction> modelToGraphEdge, IExpander<Account, Transaction> expander,
         IMaxFlowCalculator<Account, Transaction> maxFlowCalculator, ISelectorBuilder selectorBuilder,
         ISelectorKeyValueBuilder selectorKeyValueBuilder)
     {
         _graph = new Graph<Account, Transaction>();
-        _edgeRepository = edgeRepository;
+        _transactionRepository = transactionRepositoryBuilder.Build();
         _requestToFull = requestToFull;
         _modelToGraphEdge = modelToGraphEdge;
         _expander = expander;
@@ -72,7 +73,7 @@ public class BankingTransactionNetworkService : IBankingTransactionNetworkServic
 
     public Graph<Account, Transaction> InitialGraph(long accountId)
     {
-        var edges = _edgeRepository.Search(_selectorBuilder.BuildKeyValueSelector<Transaction>
+        var edges = _transactionRepository.Search(_selectorBuilder.BuildKeyValueSelector<Transaction>
             (
                 _selectorKeyValueBuilder.BuildFindTransactionBySourceAccount
                 (
