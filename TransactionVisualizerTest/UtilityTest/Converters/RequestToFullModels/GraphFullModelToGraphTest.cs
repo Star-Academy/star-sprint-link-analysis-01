@@ -6,6 +6,7 @@ using TransactionVisualizer.DataRepository.BaseDataRepository;
 using TransactionVisualizer.Models.Account;
 using TransactionVisualizer.Models.ResponseModels;
 using TransactionVisualizer.Models.Transaction;
+using TransactionVisualizer.Utility.Builders.DataRepositoryBuilder;
 using TransactionVisualizer.Utility.Builders.SelectorBuilder;
 using TransactionVisualizer.Utility.Converters.RequestToFullModels;
 using TransactionVisualizer.Utility.Graph;
@@ -24,8 +25,10 @@ public class GraphFullModelToGraphTests
         var account1 = new Account { Id = accountId1 };
         var account2 = new Account { Id = accountId2 };
 
-        var edge1 = new EdgeResponseModel<Transaction> { Source = accountId1, Destination = accountId2, Content = new Transaction() };
-        var edge2 = new EdgeResponseModel<Transaction> { Source = accountId2, Destination = accountId1, Content = new Transaction() };
+        var edge1 = new EdgeResponseModel<Transaction>
+            { Source = accountId1, Destination = accountId2, Content = new Transaction() };
+        var edge2 = new EdgeResponseModel<Transaction>
+            { Source = accountId2, Destination = accountId1, Content = new Transaction() };
 
         var graphResponseModel = new GraphResponseModel<Account, Transaction>
         {
@@ -58,8 +61,13 @@ public class GraphFullModelToGraphTests
                 Value = accountId2.ToString()
             });
 
+        
+        var repositoryBuilder = Substitute.For<IElasticDataRepositoryBuilder<Account>>();
+        repositoryBuilder.Build().Returns(repository);
+
+
         var converter = new GraphFullModelToGraph(
-            repository,
+            repositoryBuilder,
             selectorBuilder,
             selectorKeyValueBuilder
         );
