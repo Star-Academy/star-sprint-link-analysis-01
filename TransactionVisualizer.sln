@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionVisualizer", "TransactionVisualizer\TransactionVisualizer.csproj", "{E1132A3B-EF19-4D40-9BCE-46B484B2B19C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionVisualizerTest", "TransactionVisualizerTest\TransactionVisualizerTest.csproj", "{A01C114B-6606-4385-9712-B7CBE88D92BB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E1132A3B-EF19-4D40-9BCE-46B484B2B19C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1132A3B-EF19-4D40-9BCE-46B484B2B19C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1132A3B-EF19-4D40-9BCE-46B484B2B19C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1132A3B-EF19-4D40-9BCE-46B484B2B19C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A01C114B-6606-4385-9712-B7CBE88D92BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A01C114B-6606-4385-9712-B7CBE88D92BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A01C114B-6606-4385-9712-B7CBE88D92BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A01C114B-6606-4385-9712-B7CBE88D92BB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
