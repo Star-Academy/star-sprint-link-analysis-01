@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Validator = TransactionVisualizer.Utility.Validator.Validator;
 
 namespace TransactionVisualizer.Models.Transaction;
 
@@ -15,9 +16,12 @@ public class Transaction
 
     public override bool Equals(object? obj)
     {
-        var transaction = obj as Transaction;
-
-        return transaction != null && transaction.Id == Id;
+        if (Validator.TypeValidator(GetType(), obj.GetType()))
+        {
+            var transaction = obj as Transaction;
+            return transaction != null && transaction.Id == Id;
+        }
+        return false;
     }
 
     public override int GetHashCode()

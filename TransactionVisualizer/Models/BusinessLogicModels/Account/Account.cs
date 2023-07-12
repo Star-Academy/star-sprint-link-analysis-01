@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Validator = TransactionVisualizer.Utility.Validator.Validator;
 
 namespace TransactionVisualizer.Models.Account;
 
@@ -13,9 +14,13 @@ public class Account
 
     public override bool Equals(object? obj)
     {
-        var account = obj as Account;
+        if (Validator.TypeValidator(GetType(), obj.GetType()))
+        {
+            var account = obj as Account;
+            return account != null && account.Id == Id;
+        }
 
-        return account != null && account.Id == Id;
+        return false;
     }
 
     public override int GetHashCode()

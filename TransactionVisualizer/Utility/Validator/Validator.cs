@@ -20,4 +20,9 @@ public static class Validator
 
         if (list.Count == 0) throw new EmptyListException(name);
     }
+
+     public static bool TypeValidator(Type target , Type destination)
+     {
+         return target != destination;
+     }
 }

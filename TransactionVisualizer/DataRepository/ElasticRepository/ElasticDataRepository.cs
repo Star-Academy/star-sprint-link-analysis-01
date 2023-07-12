@@ -50,8 +50,7 @@ public class ElasticDataRepository<TResponse> : IDataRepository<TResponse> where
 
         return _dataGainResponseBuilder.Build(!response.IsValid, response.Documents.ToList());
     }
-
-    //TODO : Implement this method 
+    
     public bool Contain(Func<SearchDescriptor<TResponse>, ISearchRequest> selector)
     {
         return Search(selector).Items.Count > 0;

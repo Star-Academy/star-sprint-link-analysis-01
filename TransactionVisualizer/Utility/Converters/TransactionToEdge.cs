@@ -34,8 +34,6 @@ public class TransactionToEdge : IModelToGraphEdge<Transaction, Account, Transac
         var toAccountSelector =
             _selectorBuilder.BuildKeyValueSelector<Account>(
                 _selectorKeyValueBuilder.BuildFindAccountById(transaction.DestinationAccount.ToString()));
-        Console.WriteLine(toAccountSelector.ToString());
-        Console.WriteLine(transaction.DestinationAccount);
         var toAccount = _repository.Search(toAccountSelector).Items.First();
 
         return _builder.Build(new EdgeConfig<Account, Transaction>
