@@ -11,7 +11,7 @@ using Validator;
 public class TransactionRepositoryBuilder : IElasticDataRepositoryBuilder<Transaction>
 {
     private readonly IDataGainResponseBuilder<Transaction> _dataGainResponseBuilder;
-    private const string IndexName = "transaction11";
+    private const string IndexName = "transaction12";
 
     public TransactionRepositoryBuilder(IDataGainResponseBuilder<Transaction> dataGainResponseBuilder)
     {

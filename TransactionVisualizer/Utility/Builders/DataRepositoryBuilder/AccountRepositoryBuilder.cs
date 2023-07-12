@@ -10,7 +10,7 @@ using Validator;
 public class AccountRepositoryBuilder : IElasticDataRepositoryBuilder<Account>
 {
     private readonly IDataGainResponseBuilder<Account> _dataGainResponseBuilder;
-    private const string IndexName = "account11";
+    private const string IndexName = "account12";
 
     public AccountRepositoryBuilder(IDataGainResponseBuilder<Account> dataGainResponseBuilder)
     {

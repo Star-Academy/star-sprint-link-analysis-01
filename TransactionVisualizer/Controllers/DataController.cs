@@ -26,11 +26,6 @@ public class DataController : Controller
     [Route("transactions")]
     public IActionResult Transaction([FromBody] IndexDataRequestModel dataRequestModel)
     {
-        var accountPath =
-            "/Users/mahdimazaheri/Downloads/testData1/AccountaDB.csv";
-        var transactionPath =
-            "/Users/mahdimazaheri/Downloads/testData1/TransactionsDB (1).csv";
-
         var res = _dataService.AddTransactions(dataRequestModel.Path);
         return Ok(res);
     }
