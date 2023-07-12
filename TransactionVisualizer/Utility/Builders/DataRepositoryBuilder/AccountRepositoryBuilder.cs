@@ -8,7 +8,7 @@ namespace TransactionVisualizer.Utility.Builders.DataRepositoryBuilder;
 public class AccountRepositoryBuilder : IElasticDataRepositoryBuilder<Account>
 {
     private readonly IDataGainResponseBuilder<Account> _dataGainResponseBuilder;
-    private const string IndexName = "account10";
+    private const string IndexName = "account11";
 
     public AccountRepositoryBuilder(IDataGainResponseBuilder<Account> dataGainResponseBuilder)
     {

@@ -36,21 +36,27 @@ public class DataService : IDataService
         _transactionRepository = transactionRepositoryBuilder.Build();
     }
 
-    public bool AddAccounts(string filePath)
+    public DataManipulationResponse AddAccounts(string filePath)
     {
         var accounts = _accountParser.Pars(filePath);
         var fullAccounts = _accountConverter.ConvertAll(accounts);
         var response = _accountRepository.InsertAll(fullAccounts);
-        return !response.Error;
+        return new DataManipulationResponse()
+        {
+            Error = response.Error
+        };
     }
 
-    public bool AddTransactions(string filePath)
+    public DataManipulationResponse AddTransactions(string filePath)
     {
         var transactions = _transactionParser.Pars(filePath);
         transactions = transactions.Where(IsAccountIdFound).ToList();
         var fullTransactions = _transactionConverter.ConvertAll(transactions);
         var response = _transactionRepository.InsertAll(fullTransactions);
-        return !response.Error;
+        return new DataManipulationResponse()
+        {
+            Error = response.Error
+        };
     }
 
     private bool IsAccountIdFound(FlatTransaction item)

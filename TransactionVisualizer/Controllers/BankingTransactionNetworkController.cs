@@ -24,11 +24,11 @@ public class BankingTransactionNetworkController : Controller
         _graphResponseModelBuilder = graphResponseModelBuilder;
     }
 
-    [HttpGet]
+    [HttpPost]
     [Route("")]
-    public IActionResult Graph()
+    public IActionResult Graph([FromBody] GraphInitialRequestModel requestModel)
     {
-        var graph = _bankingTransactionNetworkService.InitialGraph(6000000198);
+        var graph = _bankingTransactionNetworkService.InitialGraph(requestModel.AccountId);
         return Ok(_graphResponseModelBuilder.BuildTransactionGraphResponseModel(graph.AdjacencyMatrix));
     }
 

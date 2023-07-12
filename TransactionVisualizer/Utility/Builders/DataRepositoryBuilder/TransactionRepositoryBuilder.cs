@@ -9,7 +9,7 @@ namespace TransactionVisualizer.Utility.Builders.DataRepositoryBuilder;
 public class TransactionRepositoryBuilder : IElasticDataRepositoryBuilder<Transaction>
 {
     private readonly IDataGainResponseBuilder<Transaction> _dataGainResponseBuilder;
-    private const string IndexName = "transaction10";
+    private const string IndexName = "transaction11";
 
     public TransactionRepositoryBuilder(IDataGainResponseBuilder<Transaction> dataGainResponseBuilder)
     {

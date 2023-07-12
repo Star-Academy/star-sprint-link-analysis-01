@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using TransactionVisualizer.Models.RequestModels;
 using TransactionVisualizer.Services.Data;
 
 namespace TransactionVisualizer.Controllers;
@@ -13,15 +14,24 @@ public class DataController : Controller
         _dataService = dataService;
     }
 
-    [HttpGet]
-    public IActionResult Index()
+    [HttpPost]
+    [Route("accounts")]
+    public IActionResult Accounts([FromBody] IndexDataRequestModel dataRequestModel)
+    {
+        var res = _dataService.AddAccounts(dataRequestModel.Path);
+        return Ok(res);
+    }
+
+    [HttpPost]
+    [Route("transactions")]
+    public IActionResult Transaction([FromBody] IndexDataRequestModel dataRequestModel)
     {
         var accountPath =
             "/Users/mahdimazaheri/Downloads/testData1/AccountaDB.csv";
         var transactionPath =
             "/Users/mahdimazaheri/Downloads/testData1/TransactionsDB (1).csv";
 
-        var res = _dataService.AddAccounts(accountPath) && _dataService.AddTransactions(transactionPath);
-        return res ? Ok("Done") : BadRequest("Error");
+        var res = _dataService.AddTransactions(dataRequestModel.Path);
+        return Ok(res);
     }
 }
