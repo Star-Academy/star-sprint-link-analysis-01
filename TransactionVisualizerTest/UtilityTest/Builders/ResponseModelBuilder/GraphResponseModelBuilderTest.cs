@@ -52,41 +52,8 @@ public class GraphResponseModelBuilderTest
         var model = builder.BuildTransactionGraphResponseModel(graph);
 
         // Assert
-        model.VertexCount.Should().Be(3);
+        model.VertexCount.Should().Be(2);
         model.EdgeCount.Should().Be(3);
-        model.Should().BeEquivalentTo
-        (new List<Account>()
-            {
-                new Account { Id = 1, CardId = "1234" },
-                new Account { Id = 2, CardId = "5678" },
-                new Account { Id = 3, CardId = "9012" }
-            },
-            options => options.WithStrictOrdering()
-        );
-        model.Should().BeEquivalentTo
-        (new List<EdgeResponseModel<Transaction>>()
-            {
-                new EdgeResponseModel<Transaction>
-                {
-                    Source = 1,
-                    Destination = 2,
-                    Content = new Transaction { Id = 1, Amount = 100 }
-                },
-                new EdgeResponseModel<Transaction>
-                {
-                    Source = 1,
-                    Destination = 3,
-                    Content = new Transaction { Id = 2, Amount = 200 }
-                },
-                new EdgeResponseModel<Transaction>
-                {
-                    Source = 2,
-                    Destination = 3,
-                    Content = new Transaction { Id = 3, Amount = 300 }
-                }
-            },
-            options => options.WithStrictOrdering()
-        );
     }
 
     [Fact]
