@@ -14,7 +14,11 @@ public class SelectorBuilderTests
     {
         // Arrange
         var builder = new SelectorBuilder();
-        var keyValue = new SelectorKeyValue("id", "123");
+        var keyValue = new SelectorKeyValue
+        {
+            Key = "id",
+            Value = "123"
+        };
 
         // Act
         Func<SearchDescriptor<Account>, ISearchRequest> selector = builder.BuildKeyValueSelector<Account>(keyValue);

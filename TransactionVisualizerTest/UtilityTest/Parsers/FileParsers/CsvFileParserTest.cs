@@ -1,6 +1,6 @@
 using CsvHelper;
 using FluentAssertions;
-using TransactionVisualizer.Utility.Parsers.FileParser;
+using TransactionVisualizer.Utility.Parsers.FileParsers;
 
 namespace TransactionVisualizerTest.UtilityTest.Parsers.FileParsers;
 

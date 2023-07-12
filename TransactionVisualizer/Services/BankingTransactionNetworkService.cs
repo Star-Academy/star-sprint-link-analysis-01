@@ -1,5 +1,4 @@
-using Nest;
-using TransactionVisualizer.DataRepository;
+using TransactionVisualizer.DataRepository.BaseDataRepository;
 using TransactionVisualizer.Models.Account;
 using TransactionVisualizer.Models.DataStructureModels.Graph;
 using TransactionVisualizer.Models.RequestModels;

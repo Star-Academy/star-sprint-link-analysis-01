@@ -1,14 +1,7 @@
-namespace TransactionVisualizer.Utility.Graph;
+namespace TransactionVisualizer.Utility.Builders.SelectorBuilder;
 
 public class SelectorKeyValue
 {
-    public string Key { get; set; }
-    public string Value { get; set; }
-    
-    public SelectorKeyValue(string key, string value)
-    {
-        this.Key = key;
-        this.Value = value;
-    }
-
+    public string Key { get; init; }
+    public string Value { get; init; }
 }

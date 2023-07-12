@@ -9,18 +9,14 @@ public class ElasticDataRepository<TResponse> : IDataRepository<TResponse> where
     private readonly ElasticClient _client;
     private readonly IDataGainResponseBuilder<TResponse> _dataGainResponseBuilder;
 
-    // Jalase درست کردن کلاس برای ورودی کانستراکتور و اجرای فلونت ولیدیشن روی ان 
     public ElasticDataRepository(string url, string name, IDataGainResponseBuilder<TResponse> dataGainResponseBuilder)
     {
         Validator.NullValidation(url);
         Validator.NullValidation(name);
 
-        Name = name;
         _dataGainResponseBuilder = dataGainResponseBuilder;
         _client = new ElasticClient(new ConnectionSettings(new Uri(url)).DefaultIndex(name));
     }
-
-    public string Name { get; }
 
     public DataManipulationResponse InsertAll(List<TResponse> records)
     {
@@ -53,11 +49,5 @@ public class ElasticDataRepository<TResponse> : IDataRepository<TResponse> where
         var response = _client.Search<TResponse>(selector.Invoke(new SearchDescriptor<TResponse>()));
 
         return _dataGainResponseBuilder.Build(!response.IsValid, response.Documents.ToList());
-    }
-
-    //TODO : Implement this method 
-    public bool Contain<TSelector>(TSelector selector)
-    {
-        throw new NotImplementedException();
     }
 }

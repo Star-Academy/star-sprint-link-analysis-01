@@ -1,5 +1,5 @@
 using FluentAssertions;
-using TransactionVisualizer.Utility.Parsers.DateTimeParser;
+using TransactionVisualizer.Utility.Parsers.DateTimeParsers;
 
 namespace TransactionVisualizerTest.UtilityTest.Parsers.DateTimeParsers;
 

@@ -1,6 +1,5 @@
 using Nest;
 using TransactionVisualizer.DataRepository.BaseDataRepository;
-using TransactionVisualizer.DataRepository.ElasticRepository;
 using TransactionVisualizer.Models.Account;
 using TransactionVisualizer.Utility.Builders.DataRepositoryBuilder;
 
@@ -30,10 +29,5 @@ public class AccountRepository : IDataRepository<Account>
     public DataGainResponse<Account> Search(Func<SearchDescriptor<Account>, ISearchRequest> selector)
     {
         return _dataRepository.Search(selector);
-    }
-
-    public bool Contain<TSelector>(TSelector selector)
-    {
-        return _dataRepository.Contain(selector);
     }
 }

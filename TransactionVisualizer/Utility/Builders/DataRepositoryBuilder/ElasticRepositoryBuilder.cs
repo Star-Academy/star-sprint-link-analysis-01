@@ -1,4 +1,4 @@
-using TransactionVisualizer.DataRepository;
+using TransactionVisualizer.DataRepository.BaseDataRepository;
 using TransactionVisualizer.DataRepository.ElasticRepository;
 using TransactionVisualizer.Models.Account;
 using TransactionVisualizer.Models.Transaction;
@@ -10,7 +10,7 @@ public class ElasticRepositoryBuilder : IElasticRepositoryBuilder
     private readonly IDataGainResponseBuilder<Account> _accountDataGainResponseBuilder;
     private readonly IDataGainResponseBuilder<Transaction> _transactionDataGainResponseBuilder;
 
-    public static string ElasticUrl { get; } = "http://localhost:9200/";
+    private static string ElasticUrl { get; } = "http://localhost:9200/";
 
     public ElasticRepositoryBuilder(IDataGainResponseBuilder<Account> accountDataGainResponseBuilder,
         IDataGainResponseBuilder<Transaction> transactionDataGainResponseBuilder)

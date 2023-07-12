@@ -1,7 +1,4 @@
 using Nest;
-using TransactionVisualizer.Models.Account;
-using TransactionVisualizer.Models.Transaction;
-using TransactionVisualizer.Utility.Graph;
 
 namespace TransactionVisualizer.Utility.Builders.SelectorBuilder;
 

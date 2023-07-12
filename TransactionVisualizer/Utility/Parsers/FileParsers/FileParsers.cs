@@ -1,7 +1,7 @@
 using TransactionVisualizer.Exception;
 using TransactionVisualizer.Models.Transaction;
 
-namespace TransactionVisualizer.Utility.Parsers.FileParser;
+namespace TransactionVisualizer.Utility.Parsers.FileParsers;
 
 public class FileParsers
 {

@@ -45,10 +45,18 @@ public class GraphFullModelToGraphTests
         var selectorKeyValueBuilder = Substitute.For<ISelectorKeyValueBuilder>();
         selectorKeyValueBuilder
             .BuildFindAccountById(accountId1.ToString())
-            .Returns(new SelectorKeyValue("id", accountId1.ToString()));
+            .Returns(new SelectorKeyValue
+            {
+                Key = "id",
+                Value = accountId1.ToString()
+            });
         selectorKeyValueBuilder
             .BuildFindAccountById(accountId2.ToString())
-            .Returns(new SelectorKeyValue("id", accountId2.ToString()));
+            .Returns(new SelectorKeyValue
+            {
+                Key = "id",
+                Value = accountId2.ToString()
+            });
 
         var converter = new GraphFullModelToGraph(
             repository,

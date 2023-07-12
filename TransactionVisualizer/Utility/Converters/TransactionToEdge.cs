@@ -1,10 +1,9 @@
-using TransactionVisualizer.DataRepository;
+using TransactionVisualizer.DataRepository.BaseDataRepository;
 using TransactionVisualizer.Models.Account;
 using TransactionVisualizer.Models.DataStructureModels.Graph;
 using TransactionVisualizer.Models.Transaction;
 using TransactionVisualizer.Utility.Builders.GraphBuilders.EdgeBuilders;
 using TransactionVisualizer.Utility.Builders.SelectorBuilder;
-using TransactionVisualizer.Utility.Graph;
 
 namespace TransactionVisualizer.Utility.Converters;
 
