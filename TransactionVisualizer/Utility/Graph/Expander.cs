@@ -1,4 +1,3 @@
-using TransactionVisualizer.DataRepository;
 using TransactionVisualizer.DataRepository.BaseDataRepository;
 using TransactionVisualizer.Models.DataStructureModels.Graph;
 using TransactionVisualizer.Utility.Builders.SelectorBuilder;
@@ -8,9 +7,9 @@ namespace TransactionVisualizer.Utility.Graph;
 
 public class Expander<TVertex, TEdge> : IExpander<TVertex, TEdge> where TEdge : class where TVertex : class
 {
+    private readonly IModelToGraphEdge<TEdge, TVertex, TEdge> _modelToGraphEdge;
     private readonly IDataRepository<TEdge> _repository;
     private readonly ISelectorBuilder _selectorBuilder;
-    private readonly IModelToGraphEdge<TEdge, TVertex, TEdge> _modelToGraphEdge;
     private readonly ISelectorKeyValueBuilder _selectorKeyValueBuilder;
 
     public Expander(IDataRepository<TEdge> repository, ISelectorBuilder selectorBuilder,

@@ -1,4 +1,4 @@
-namespace TransactionVisualizer.Utility.Parsers.FileParser;
+namespace TransactionVisualizer.Utility.Parsers.FileParsers;
 
 public enum FileType
 {

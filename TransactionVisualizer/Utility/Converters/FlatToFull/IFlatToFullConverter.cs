@@ -1,4 +1,4 @@
-namespace TransactionVisualizer.Utility.Converters;
+namespace TransactionVisualizer.Utility.Converters.FlatToFull;
 
 public interface IFlatToFullConverter<T, in TFlat> where T : class where TFlat : class
 {

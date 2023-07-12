@@ -1,8 +1,7 @@
 using FluentAssertions;
+using TransactionVisualizer.Utility.Parsers.FileParsers;
 
 namespace TransactionVisualizerTest.UtilityTest.Parsers.FileParsers;
-
-using TransactionVisualizer.Utility.Parsers.FileParser;
 
 public class FileParsersTest
 {
@@ -10,7 +9,7 @@ public class FileParsersTest
     public void Parse_WithCsvFile_ReturnsParsedData()
     {
         // Arrange
-        var fileParsers = new FileParsers();
+        var fileParsers = new TransactionVisualizer.Utility.Parsers.FileParsers.FileParsers();
         const string filePath =
             "E:\\RiderProjects\\Clone\\CodeStarPr\\TransactionVisualizerTest\\UtilityTest\\Parsers\\FileParsers\\MainData.csv";
         const FileType fileType = FileType.Csv;
@@ -27,7 +26,7 @@ public class FileParsersTest
     public void Parse_WithJsonFile_ReturnsParsedData()
     {
         // Arrange
-        var fileParsers = new FileParsers();
+        var fileParsers = new TransactionVisualizer.Utility.Parsers.FileParsers.FileParsers();
         const string filePath =
             "E:\\RiderProjects\\Clone\\CodeStarPr\\TransactionVisualizerTest\\UtilityTest\\Parsers\\FileParsers\\MainData.json";
         const FileType fileType = FileType.Json;

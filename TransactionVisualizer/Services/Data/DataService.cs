@@ -1,24 +1,23 @@
-using TransactionVisualizer.DataRepository;
 using TransactionVisualizer.DataRepository.BaseDataRepository;
 using TransactionVisualizer.Models.Account;
 using TransactionVisualizer.Models.Transaction;
 using TransactionVisualizer.Utility.Builders.DataRepositoryBuilder;
 using TransactionVisualizer.Utility.Builders.SelectorBuilder;
-using TransactionVisualizer.Utility.Converters;
-using TransactionVisualizer.Utility.Parsers.FileParser;
+using TransactionVisualizer.Utility.Converters.FlatToFull;
+using TransactionVisualizer.Utility.Parsers.FileParsers;
 
 namespace TransactionVisualizer.Services.Data;
 
 public class DataService : IDataService
 {
     private readonly IFlatToFullConverter<Account, FlatAccount> _accountConverter;
-    private readonly IFlatToFullConverter<Transaction, FlatTransaction> _transactionConverter;
     private readonly IFileParser<FlatAccount> _accountParser;
-    private readonly IFileParser<FlatTransaction> _transactionParser;
     private readonly IDataRepository<Account> _accountRepository;
-    private readonly IDataRepository<Transaction> _transactionRepository;
     private readonly ISelectorBuilder _selectorBuilder;
     private readonly ISelectorKeyValueBuilder _selectorKeyValueBuilder;
+    private readonly IFlatToFullConverter<Transaction, FlatTransaction> _transactionConverter;
+    private readonly IFileParser<FlatTransaction> _transactionParser;
+    private readonly IDataRepository<Transaction> _transactionRepository;
 
 
     public DataService(IFlatToFullConverter<Transaction, FlatTransaction> transactionConverter,
@@ -61,14 +60,14 @@ public class DataService : IDataService
                 )
             )
         );
-        
+
         var isDestinationFound = _accountRepository.Contain(
             _selectorBuilder.BuildKeyValueSelector<Account>(
                 _selectorKeyValueBuilder.BuildFindAccountById(item.DestinationAccount.ToString()
                 )
             )
         );
-        
+
         return isSourceFound && isDestinationFound;
     }
 }

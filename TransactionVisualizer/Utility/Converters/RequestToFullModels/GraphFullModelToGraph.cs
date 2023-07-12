@@ -1,4 +1,3 @@
-using TransactionVisualizer.DataRepository;
 using TransactionVisualizer.DataRepository.BaseDataRepository;
 using TransactionVisualizer.Models.Account;
 using TransactionVisualizer.Models.DataStructureModels.Graph;
@@ -41,7 +40,7 @@ public class
                     _selectorKeyValueBuilder.BuildFindAccountById(edge.Destination.ToString()))).Items
                 .First();
 
-            
+
             graph.AddEdge(new Edge<Account, Transaction>
             {
                 Destination = destination, Source = source, Content = edge.Content,

@@ -11,7 +11,7 @@ public interface IBankingTransactionNetworkService
     public Graph<Account, Transaction> GetState();
 
     public void SetState(GraphResponseModel<Account, Transaction> graph);
-    
+
     public Graph<Account, Transaction> Expand(ExpandRequestModel<Account, Transaction> expandRequestModel);
 
     public decimal MaxFlowCalculator(MaxFlowCalculatorRequestModel<Account, Transaction> maxFlowCalculatorRequestModel);

@@ -11,7 +11,6 @@ public class Transaction
 
     public decimal Amount { get; init; }
 
-    // public DateTime Date { set; get; }
     public string Date { get; init; }
 
     public override bool Equals(object? obj)

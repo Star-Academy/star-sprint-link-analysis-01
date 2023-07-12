@@ -29,15 +29,9 @@ public class PathsFinder<TVertex, TEdge> : IPathsFinder<TVertex, TEdge> where TE
             var currentPath = queue.Dequeue();
             var currentVertex = currentPath.Count > 0 ? currentPath.Last().Destination : source;
 
-            if (currentVertex.Equals(destination))
-            {
-                paths.Add(new List<Edge<TVertex, TEdge>>(currentPath));
-            }
+            if (currentVertex.Equals(destination)) paths.Add(new List<Edge<TVertex, TEdge>>(currentPath));
 
-            if (!graph.AdjacencyMatrix.TryGetValue(currentVertex, out var edges))
-            {
-                continue;
-            }
+            if (!graph.AdjacencyMatrix.TryGetValue(currentVertex, out var edges)) continue;
 
             foreach (var newPath in from edge in edges
                      let nextVertex = edge.Destination
@@ -47,9 +41,7 @@ public class PathsFinder<TVertex, TEdge> : IPathsFinder<TVertex, TEdge> where TE
                          edge
                      }
                     )
-            {
                 queue.Enqueue(newPath);
-            }
         }
     }
 }

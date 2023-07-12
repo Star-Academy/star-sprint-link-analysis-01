@@ -1,25 +1,18 @@
 using Microsoft.AspNetCore.Mvc;
-using TransactionVisualizer.DataRepository.ModelsRepository.AccountRepository;
-using TransactionVisualizer.DataRepository.ModelsRepository.TransactionRepository;
 using TransactionVisualizer.Models.Account;
 using TransactionVisualizer.Models.RequestModels;
 using TransactionVisualizer.Models.ResponseModels;
-using TransactionVisualizer.Models.ResponseModels.Builder;
 using TransactionVisualizer.Models.Transaction;
-using TransactionVisualizer.Services;
-using TransactionVisualizer.Services.Data;
 using TransactionVisualizer.Services.Graph;
-using TransactionVisualizer.Utility.Builders.DataRepositoryBuilder;
-using TransactionVisualizer.Utility.Converters;
-using TransactionVisualizer.Utility.Parsers.FileParser;
+using TransactionVisualizer.Utility.Builders.ResponseModelBuilder;
 
 namespace TransactionVisualizer.Controllers;
 
 [Route("banking-transaction-network/")]
 public class BankingTransactionNetworkController : Controller
 {
-    private readonly IGraphResponseModelBuilder _graphResponseModelBuilder;
     private readonly IBankingTransactionNetworkService _bankingTransactionNetworkService;
+    private readonly IGraphResponseModelBuilder _graphResponseModelBuilder;
 
     public BankingTransactionNetworkController
     (
@@ -78,6 +71,4 @@ public class BankingTransactionNetworkController : Controller
             }
         );
     }
-
-
 }

@@ -1,7 +1,6 @@
 using TransactionVisualizer.Models.Account;
 using TransactionVisualizer.Models.DataStructureModels.Graph;
 using TransactionVisualizer.Models.ResponseModels;
-using TransactionVisualizer.Models.ResponseModels.Builder;
 using TransactionVisualizer.Models.Transaction;
 
 namespace TransactionVisualizer.Utility.Builders.ResponseModelBuilder;

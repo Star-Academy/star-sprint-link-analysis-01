@@ -1,4 +1,3 @@
-using TransactionVisualizer.DataRepository;
 using TransactionVisualizer.DataRepository.BaseDataRepository;
 using TransactionVisualizer.DataRepository.ElasticRepository;
 using TransactionVisualizer.DataRepository.ModelsRepository.AccountRepository;
@@ -6,9 +5,7 @@ using TransactionVisualizer.DataRepository.ModelsRepository.TransactionRepositor
 using TransactionVisualizer.Models.Account;
 using TransactionVisualizer.Models.DataStructureModels.Graph;
 using TransactionVisualizer.Models.ResponseModels;
-using TransactionVisualizer.Models.ResponseModels.Builder;
 using TransactionVisualizer.Models.Transaction;
-using TransactionVisualizer.Services;
 using TransactionVisualizer.Services.Data;
 using TransactionVisualizer.Services.Graph;
 using TransactionVisualizer.Utility.Builders.DataRepositoryBuilder;
@@ -16,9 +13,10 @@ using TransactionVisualizer.Utility.Builders.GraphBuilders.EdgeBuilders;
 using TransactionVisualizer.Utility.Builders.ResponseModelBuilder;
 using TransactionVisualizer.Utility.Builders.SelectorBuilder;
 using TransactionVisualizer.Utility.Converters;
+using TransactionVisualizer.Utility.Converters.FlatToFull;
 using TransactionVisualizer.Utility.Converters.RequestToFullModels;
 using TransactionVisualizer.Utility.Graph;
-using TransactionVisualizer.Utility.Parsers.FileParser;
+using TransactionVisualizer.Utility.Parsers.FileParsers;
 
 var builder = WebApplication.CreateBuilder(args);
 

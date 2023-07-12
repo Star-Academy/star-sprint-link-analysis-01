@@ -1,6 +1,5 @@
 using FluentAssertions;
 using NSubstitute;
-using TransactionVisualizer.DataRepository;
 using TransactionVisualizer.DataRepository.BaseDataRepository;
 using TransactionVisualizer.Models.Account;
 using TransactionVisualizer.Models.DataStructureModels.Graph;
@@ -8,6 +7,7 @@ using TransactionVisualizer.Models.RequestModels;
 using TransactionVisualizer.Models.ResponseModels;
 using TransactionVisualizer.Models.Transaction;
 using TransactionVisualizer.Services;
+using TransactionVisualizer.Services.Graph;
 using TransactionVisualizer.Utility.Builders.SelectorBuilder;
 using TransactionVisualizer.Utility.Converters;
 using TransactionVisualizer.Utility.Converters.RequestToFullModels;
@@ -67,18 +67,20 @@ public class BankingTransactionNetworkServiceTests
     public void GetState_ShouldReturnGraph()
     {
         // Arrange
-        var graph = new Graph<Account, Transaction>();
-        _networkService.SetState(new GraphResponseModel<Account, Transaction>());
+        var graph = new GraphResponseModel<Account, Transaction>();
+        var convertedGraph = new Graph<Account, Transaction>();
+        _requestToFull.Convert(graph).Returns(convertedGraph);
+        _networkService.SetState(graph);
 
         // Act
         var result = _networkService.GetState();
 
         // Assert
-        result.Should().BeSameAs(graph);
+        result.Should().BeSameAs(convertedGraph);
     }
 
     [Fact]
-    public void Expand_ShouldCallExpanderAndReturnExpandedGraph()
+    public void Expand_ShouldCallExpander_WhenReturnExpandedGraph()
     {
         // Arrange
         var expandRequest = new ExpandRequestModel<Account, Transaction>();

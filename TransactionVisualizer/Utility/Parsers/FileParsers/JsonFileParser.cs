@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace TransactionVisualizer.Utility.Parsers.FileParser;
+namespace TransactionVisualizer.Utility.Parsers.FileParsers;
 
 public class JsonFileParser<T> : IFileParser<T>
 {

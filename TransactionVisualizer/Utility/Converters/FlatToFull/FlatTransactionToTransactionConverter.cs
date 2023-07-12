@@ -1,7 +1,7 @@
 using TransactionVisualizer.Models.Transaction;
 using TransactionVisualizer.Utility.Parsers.EnumParsers;
 
-namespace TransactionVisualizer.Utility.Converters;
+namespace TransactionVisualizer.Utility.Converters.FlatToFull;
 
 public class FlatTransactionToTransactionConverter : IFlatToFullConverter<Transaction, FlatTransaction>
 {

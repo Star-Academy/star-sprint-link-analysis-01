@@ -1,6 +1,5 @@
 using Nest;
 using TransactionVisualizer.DataRepository.BaseDataRepository;
-using TransactionVisualizer.DataRepository.ElasticRepository;
 using TransactionVisualizer.Models.Account;
 using TransactionVisualizer.Utility.Builders.DataRepositoryBuilder;
 
@@ -11,7 +10,7 @@ public class AccountRepository : IDataRepository<Account>
     private readonly IDataRepository<Account> _dataRepository;
 
 
-    public AccountRepository( IElasticRepositoryBuilder elasticRepositoryBuilder)
+    public AccountRepository(IElasticRepositoryBuilder elasticRepositoryBuilder)
     {
         _dataRepository = elasticRepositoryBuilder.BuildAccountRepository();
     }

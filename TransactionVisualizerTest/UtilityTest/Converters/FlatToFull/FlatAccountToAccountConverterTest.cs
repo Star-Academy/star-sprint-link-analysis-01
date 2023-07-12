@@ -1,6 +1,7 @@
 using FluentAssertions;
 using TransactionVisualizer.Models.Account;
 using TransactionVisualizer.Utility.Converters;
+using TransactionVisualizer.Utility.Converters.FlatToFull;
 using TransactionVisualizer.Utility.Parsers.EnumParsers;
 
 namespace TransactionVisualizerTest.UtilityTest.Converters.FlatToFull;

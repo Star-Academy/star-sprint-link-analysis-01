@@ -1,4 +1,3 @@
-using TransactionVisualizer.DataRepository;
 using TransactionVisualizer.DataRepository.BaseDataRepository;
 using TransactionVisualizer.Models.Account;
 using TransactionVisualizer.Models.DataStructureModels.Graph;
@@ -14,16 +13,17 @@ namespace TransactionVisualizer.Services.Graph;
 
 public class BankingTransactionNetworkService : IBankingTransactionNetworkService
 {
-    private Graph<Account, Transaction> _graph;
     private readonly IDataRepository<Transaction> _edgeRepository;
-    private readonly IModelToGraphEdge<Transaction, Account, Transaction> _modelToGraphEdge;
     private readonly IExpander<Account, Transaction> _expander;
     private readonly IMaxFlowCalculator<Account, Transaction> _maxFlowCalculator;
-    private readonly ISelectorBuilder _selectorBuilder;
-    private readonly ISelectorKeyValueBuilder _selectorKeyValueBuilder;
+    private readonly IModelToGraphEdge<Transaction, Account, Transaction> _modelToGraphEdge;
 
     private readonly IRequestToFullModel<GraphResponseModel<Account, Transaction>, Graph<Account, Transaction>>
         _requestToFull;
+
+    private readonly ISelectorBuilder _selectorBuilder;
+    private readonly ISelectorKeyValueBuilder _selectorKeyValueBuilder;
+    private Graph<Account, Transaction> _graph;
 
     public BankingTransactionNetworkService
     (

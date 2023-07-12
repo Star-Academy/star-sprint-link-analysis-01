@@ -1,11 +1,9 @@
-using TransactionVisualizer.DataRepository;
 using TransactionVisualizer.DataRepository.BaseDataRepository;
 using TransactionVisualizer.Models.Account;
 using TransactionVisualizer.Models.DataStructureModels.Graph;
 using TransactionVisualizer.Models.Transaction;
 using TransactionVisualizer.Utility.Builders.GraphBuilders.EdgeBuilders;
 using TransactionVisualizer.Utility.Builders.SelectorBuilder;
-using TransactionVisualizer.Utility.Graph;
 
 namespace TransactionVisualizer.Utility.Converters;
 
@@ -30,7 +28,7 @@ public class TransactionToEdge : IModelToGraphEdge<Transaction, Account, Transac
         var fromAccountSelector =
             _selectorBuilder.BuildKeyValueSelector<Account>(
                 _selectorKeyValueBuilder.BuildFindAccountById(transaction.SourceAccount.ToString()));
-        
+
         var fromAccount = _repository.Search(fromAccountSelector).Items.First();
 
         var toAccountSelector =

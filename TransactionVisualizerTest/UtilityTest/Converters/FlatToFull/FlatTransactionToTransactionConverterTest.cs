@@ -1,7 +1,7 @@
 using FluentAssertions;
 using TransactionVisualizer.Models.Transaction;
 using TransactionVisualizer.Utility.Converters;
-using TransactionVisualizer.Utility.Parsers.DateTimeParser;
+using TransactionVisualizer.Utility.Converters.FlatToFull;
 using TransactionVisualizer.Utility.Parsers.EnumParsers;
 
 namespace TransactionVisualizerTest.UtilityTest.Converters.FlatToFull;

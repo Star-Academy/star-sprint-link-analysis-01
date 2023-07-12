@@ -1,6 +1,5 @@
 using Nest;
 using TransactionVisualizer.DataRepository.BaseDataRepository;
-using TransactionVisualizer.Utility.Builders.SelectorBuilder;
 using TransactionVisualizer.Utility.Validator;
 
 namespace TransactionVisualizer.DataRepository.ElasticRepository;
@@ -10,20 +9,14 @@ public class ElasticDataRepository<TResponse> : IDataRepository<TResponse> where
     private readonly ElasticClient _client;
     private readonly IDataGainResponseBuilder<TResponse> _dataGainResponseBuilder;
 
-
-    // Jalase درست کردن کلاس برای ورودی کانستراکتور و اجرای فلونت ولیدیشن روی ان 
     public ElasticDataRepository(string url, string name, IDataGainResponseBuilder<TResponse> dataGainResponseBuilder)
     {
         Validator.NullValidation(url);
         Validator.NullValidation(name);
 
-        Name = name;
         _dataGainResponseBuilder = dataGainResponseBuilder;
-
         _client = new ElasticClient(new ConnectionSettings(new Uri(url)).DefaultIndex(name));
     }
-
-    public string Name { get; }
 
     public DataManipulationResponse InsertAll(List<TResponse> records)
     {
