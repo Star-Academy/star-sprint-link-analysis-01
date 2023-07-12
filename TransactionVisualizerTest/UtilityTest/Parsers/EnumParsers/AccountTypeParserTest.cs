@@ -8,43 +8,17 @@ namespace TransactionVisualizerTest.UtilityTest.Parsers.EnumParsers;
 
 public class AccountTypeParserTests
 {
-    [Fact]
-    public void Parse_ShouldReturnJari_WhenInputIsJari()
+    [Theory]
+    [InlineData(AccountTypeConstants.Jari, AccountType.Jari)]
+    [InlineData(AccountTypeConstants.Sepordeh, AccountType.Sepordeh)]
+    [InlineData(AccountTypeConstants.Pasandaz, AccountType.Pasandaz)]
+    public void Parse_ShouldReturnValidType_WhenValidInput(string input, AccountType accountTypeExpected)
     {
-        // Arrange
-        var input = AccountTypeConstants.Jari;
-
         // Act
         var result = AccountTypeParser.Pars(input);
 
         // Assert
-        result.Should().Be(AccountType.Jari);
-    }
-
-    [Fact]
-    public void Parse_ShouldReturnSepordeh_WhenInputIsSepordeh()
-    {
-        // Arrange
-        var input = AccountTypeConstants.Sepordeh;
-
-        // Act
-        var result = AccountTypeParser.Pars(input);
-
-        // Assert
-        result.Should().Be(AccountType.Sepordeh);
-    }
-
-    [Fact]
-    public void Parse_ShouldReturnPasandaz_WhenInputIsPasandaz()
-    {
-        // Arrange
-        var input = AccountTypeConstants.Pasandaz;
-
-        // Act
-        var result = AccountTypeParser.Pars(input);
-
-        // Assert
-        result.Should().Be(AccountType.Pasandaz);
+        result.Should().Be(accountTypeExpected);
     }
 
     [Fact]

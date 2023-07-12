@@ -8,45 +8,19 @@ namespace TransactionVisualizerTest.UtilityTest.Parsers.EnumParsers;
 
 public class TransactionTypeParserTests
 {
-    [Fact]
-    public void Parse_ShouldReturnSatna_WhenInputIsSatna()
+    [Theory]
+    [InlineData(TransactionTypeConstants.Satna, TransactionType.Satna)]
+    [InlineData(TransactionTypeConstants.Paya, TransactionType.Paya)]
+    [InlineData(TransactionTypeConstants.KartBeKart, TransactionType.KartBeKart)]
+    public void Parse_ShouldReturnValidType_WhenValidInput(string input, TransactionType transactionTypeExpected)
     {
-        // Arrange
-        var input = TransactionTypeConstants.Satna;
-
         // Act
         var result = TransactionTypeParser.Pars(input);
 
         // Assert
-        result.Should().Be(TransactionType.Satna);
+        result.Should().Be(transactionTypeExpected);
     }
-
-    [Fact]
-    public void Parse_ShouldReturnPaya_WhenInputIsPaya()
-    {
-        // Arrange
-        var input = TransactionTypeConstants.Paya;
-
-        // Act
-        var result = TransactionTypeParser.Pars(input);
-
-        // Assert
-        result.Should().Be(TransactionType.Paya);
-    }
-
-    [Fact]
-    public void Parse_ShouldReturnKartBeKart_WhenInputIsKartBeKart()
-    {
-        // Arrange
-        var input = TransactionTypeConstants.KartBeKart;
-
-        // Act
-        var result = TransactionTypeParser.Pars(input);
-
-        // Assert
-        result.Should().Be(TransactionType.KartBeKart);
-    }
-
+    
     [Fact]
     public void Parse_ShouldThrowEnumParsException_WhenInputIsInvalid()
     {
