@@ -5,6 +5,7 @@ using TransactionVisualizer.Models.RequestModels;
 using TransactionVisualizer.Models.ResponseModels;
 using TransactionVisualizer.Models.Transaction;
 using TransactionVisualizer.Utility.Builders.DataRepositoryBuilder;
+using TransactionVisualizer.Utility.Builders.ResponseModelBuilder;
 using TransactionVisualizer.Utility.Builders.SelectorBuilder;
 using TransactionVisualizer.Utility.Converters;
 using TransactionVisualizer.Utility.Converters.RequestToFullModels;
@@ -14,6 +15,8 @@ namespace TransactionVisualizer.Services.Graph;
 
 public class BankingTransactionNetworkService : IBankingTransactionNetworkService
 {
+    private readonly IGraphResponseModelBuilder _graphResponseModelBuilder;
+
     private readonly IDataRepository<Transaction> _transactionRepository;
     private readonly IExpander<Account, Transaction> _expander;
     private readonly IMaxFlowCalculator<Account, Transaction> _maxFlowCalculator;
@@ -32,7 +35,7 @@ public class BankingTransactionNetworkService : IBankingTransactionNetworkServic
         IRequestToFullModel<GraphResponseModel<Account, Transaction>, Graph<Account, Transaction>> requestToFull,
         IModelToGraphEdge<Transaction, Account, Transaction> modelToGraphEdge, IExpander<Account, Transaction> expander,
         IMaxFlowCalculator<Account, Transaction> maxFlowCalculator, ISelectorBuilder selectorBuilder,
-        ISelectorKeyValueBuilder selectorKeyValueBuilder)
+        ISelectorKeyValueBuilder selectorKeyValueBuilder, IGraphResponseModelBuilder graphResponseModelBuilder)
     {
         _graph = new Graph<Account, Transaction>();
         _transactionRepository = transactionRepositoryBuilder.Build();
@@ -42,12 +45,14 @@ public class BankingTransactionNetworkService : IBankingTransactionNetworkServic
         _maxFlowCalculator = maxFlowCalculator;
         _selectorBuilder = selectorBuilder;
         _selectorKeyValueBuilder = selectorKeyValueBuilder;
+        _graphResponseModelBuilder = graphResponseModelBuilder;
     }
 
 
-    public void SetState(GraphResponseModel<Account, Transaction> graph)
+    public GraphResponseModel<Account, Transaction> SetState(GraphResponseModel<Account, Transaction> graph)
     {
         _graph = _requestToFull.Convert(graph);
+        return _graphResponseModelBuilder.BuildTransactionGraphResponseModel(_graph.AdjacencyMatrix);
     }
 
     public Graph<Account, Transaction> GetState()

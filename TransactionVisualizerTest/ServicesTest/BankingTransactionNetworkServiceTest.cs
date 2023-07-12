@@ -10,6 +10,7 @@ using TransactionVisualizer.Models.Transaction;
 using TransactionVisualizer.Services;
 using TransactionVisualizer.Services.Graph;
 using TransactionVisualizer.Utility.Builders.DataRepositoryBuilder;
+using TransactionVisualizer.Utility.Builders.ResponseModelBuilder;
 using TransactionVisualizer.Utility.Builders.SelectorBuilder;
 using TransactionVisualizer.Utility.Converters;
 using TransactionVisualizer.Utility.Converters.RequestToFullModels;
@@ -20,6 +21,7 @@ namespace TransactionVisualizerTest.ServicesTest;
 public class BankingTransactionNetworkServiceTests
 {
     private readonly IElasticDataRepositoryBuilder<Transaction> _edgeRepositoryBuilder;
+    private readonly IDataRepository<Transaction> _dataRepository;
 
     private readonly IRequestToFullModel<GraphResponseModel<Account, Transaction>, Graph<Account, Transaction>>
         _requestToFull;
@@ -34,7 +36,7 @@ public class BankingTransactionNetworkServiceTests
 
     public BankingTransactionNetworkServiceTests()
     {
-        _edgeRepositoryBuilder = Substitute.For<TransactionRepositoryBuilder>();
+        _edgeRepositoryBuilder = Substitute.For<IElasticDataRepositoryBuilder<Transaction>>();
         _requestToFull = Substitute
             .For<IRequestToFullModel<GraphResponseModel<Account, Transaction>, Graph<Account, Transaction>>>();
         _modelToGraphEdge = Substitute.For<IModelToGraphEdge<Transaction, Account, Transaction>>();
@@ -43,6 +45,9 @@ public class BankingTransactionNetworkServiceTests
         _selectorBuilder = Substitute.For<ISelectorBuilder>();
         _selectorKeyValueBuilder = Substitute.For<ISelectorKeyValueBuilder>();
 
+        _dataRepository = Substitute.For<IDataRepository<Transaction>>();
+        _edgeRepositoryBuilder.Build().Returns(_dataRepository);
+
         _networkService = new BankingTransactionNetworkService(
             _edgeRepositoryBuilder,
             _requestToFull,
@@ -50,7 +55,8 @@ public class BankingTransactionNetworkServiceTests
             _expander,
             _maxFlowCalculator,
             _selectorBuilder,
-            _selectorKeyValueBuilder
+            _selectorKeyValueBuilder,
+            new GraphResponseModelBuilder()
         );
     }
 
@@ -120,14 +126,12 @@ public class BankingTransactionNetworkServiceTests
             MaxLength = maxLength,
             Vertex = account2
         };
-
-
-        .Search(Arg.Any<Func<SearchDescriptor<Transaction>, ISearchRequest>>())
+        _dataRepository.Search(Arg.Any<Func<SearchDescriptor<Transaction>, ISearchRequest>>())
             .Returns(new DataGainResponse<Transaction>()
             {
                 Items = new List<Transaction>()
                 {
-                    new Transaction()
+                    new Transaction
                     {
                         SourceAccount = 2,
                         DestinationAccount = 3
@@ -182,7 +186,7 @@ public class BankingTransactionNetworkServiceTests
         var graph = new Graph<Account, Transaction>();
         var edgeRepositoryResponse = new DataGainResponse<Transaction>
             { Items = new List<Transaction>(transactionList) };
-        _edgeRepository.Search(Arg.Any<System.Func<Nest.SearchDescriptor<Transaction>, Nest.ISearchRequest>>())
+        _dataRepository.Search(Arg.Any<System.Func<Nest.SearchDescriptor<Transaction>, Nest.ISearchRequest>>())
             .Returns(edgeRepositoryResponse);
         _modelToGraphEdge.Convert(transaction).Returns(new Edge<Account, Transaction>());
 
@@ -192,7 +196,7 @@ public class BankingTransactionNetworkServiceTests
         // Assert
         result.Should().BeSameAs(graph);
         _modelToGraphEdge.Received(1).Convert(transaction);
-        _edgeRepository.Received(1)
+        _dataRepository.Received(1)
             .Search(Arg.Any<System.Func<Nest.SearchDescriptor<Transaction>, Nest.ISearchRequest>>());
     }
 }
