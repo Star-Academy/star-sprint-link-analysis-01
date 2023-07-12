@@ -11,6 +11,12 @@ public class Graph<TVertex, TEdge> where TVertex : class where TEdge : class
 
     public void AddEdge(Edge<TVertex, TEdge> edge)
     {
+        TryAddEdge(edge);
+        TryAddDestinationVertex(edge);
+    }
+
+    private void TryAddEdge(Edge<TVertex, TEdge> edge)
+    {
         if (AdjacencyMatrix.TryGetValue(edge.Source, out var value))
         {
             if (!value.Contains(edge)) value.Add(edge);
@@ -20,7 +26,10 @@ public class Graph<TVertex, TEdge> where TVertex : class where TEdge : class
             AdjacencyMatrix.Add(edge.Source, new List<Edge<TVertex, TEdge>>());
             AdjacencyMatrix[edge.Source].Add(edge);
         }
+    }
 
+    private void TryAddDestinationVertex(Edge<TVertex, TEdge> edge)
+    {
         if (!AdjacencyMatrix.ContainsKey(edge.Destination))
             AdjacencyMatrix.Add(edge.Destination, new List<Edge<TVertex, TEdge>>());
     }
