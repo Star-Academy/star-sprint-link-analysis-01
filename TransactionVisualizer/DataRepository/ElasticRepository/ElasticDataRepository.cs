@@ -11,8 +11,7 @@ public class ElasticDataRepository<TResponse> : IDataRepository<TResponse> where
 
     public ElasticDataRepository(string url, string name, IDataGainResponseBuilder<TResponse> dataGainResponseBuilder)
     {
-        Validator.NullValidation(url);
-        Validator.NullValidation(name);
+        Validator.NullValidationGroup(url, name);
 
         _dataGainResponseBuilder = dataGainResponseBuilder;
         _client = new ElasticClient(new ConnectionSettings(new Uri(url)).DefaultIndex(name));
@@ -53,6 +52,8 @@ public class ElasticDataRepository<TResponse> : IDataRepository<TResponse> where
     
     public bool Contain(Func<SearchDescriptor<TResponse>, ISearchRequest> selector)
     {
+        Validator.NullValidation(selector);
+        
         return Search(selector).Items.Count > 0;
     }
 }

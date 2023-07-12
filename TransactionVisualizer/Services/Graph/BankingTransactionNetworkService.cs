@@ -10,6 +10,7 @@ using TransactionVisualizer.Utility.Builders.SelectorBuilder;
 using TransactionVisualizer.Utility.Converters;
 using TransactionVisualizer.Utility.Converters.RequestToFullModels;
 using TransactionVisualizer.Utility.Graph;
+using TransactionVisualizer.Utility.Validator;
 
 namespace TransactionVisualizer.Services.Graph;
 
@@ -37,6 +38,7 @@ public class BankingTransactionNetworkService : IBankingTransactionNetworkServic
         IMaxFlowCalculator<Account, Transaction> maxFlowCalculator, ISelectorBuilder selectorBuilder,
         ISelectorKeyValueBuilder selectorKeyValueBuilder, IGraphResponseModelBuilder graphResponseModelBuilder)
     {
+        Validator.NullValidationGroup(transactionRepositoryBuilder, requestToFull,modelToGraphEdge, expander, maxFlowCalculator, selectorBuilder, selectorKeyValueBuilder, graphResponseModelBuilder);
         _graph = new Graph<Account, Transaction>();
         _transactionRepository = transactionRepositoryBuilder.Build();
         _requestToFull = requestToFull;
@@ -51,6 +53,8 @@ public class BankingTransactionNetworkService : IBankingTransactionNetworkServic
 
     public GraphResponseModel<Account, Transaction> SetState(GraphResponseModel<Account, Transaction> graph)
     {
+        Validator.NullValidationGroup(graph);
+        
         _graph = _requestToFull.Convert(graph);
         return _graphResponseModelBuilder.BuildTransactionGraphResponseModel(_graph.AdjacencyMatrix);
     }
@@ -62,12 +66,16 @@ public class BankingTransactionNetworkService : IBankingTransactionNetworkServic
 
     public Graph<Account, Transaction> Expand(ExpandRequestModel<Account, Transaction> expandRequestModel)
     {
+        Validator.NullValidationGroup(expandRequestModel);
+        
         return _expander.Expand(expandRequestModel.MaxLength, expandRequestModel.Vertex, _graph);
     }
 
 
     public decimal MaxFlowCalculator(MaxFlowCalculatorRequestModel<Account, Transaction> maxFlowCalculatorRequestModel)
     {
+        Validator.NullValidationGroup(maxFlowCalculatorRequestModel);
+        
         return _maxFlowCalculator.Calculate
         (
             maxFlowCalculatorRequestModel.Source,
@@ -78,6 +86,8 @@ public class BankingTransactionNetworkService : IBankingTransactionNetworkServic
 
     public Graph<Account, Transaction> InitialGraph(long accountId)
     {
+        Validator.NullValidationGroup(accountId);
+        
         var edges = _transactionRepository.Search(_selectorBuilder.BuildKeyValueSelector<Transaction>
             (
                 _selectorKeyValueBuilder.BuildFindTransactionBySourceAccount

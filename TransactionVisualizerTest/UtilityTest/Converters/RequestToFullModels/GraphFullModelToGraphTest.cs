@@ -62,8 +62,7 @@ public class GraphFullModelToGraphTests
             });
 
         
-        var repositoryBuilder = Substitute.For<IElasticDataRepositoryBuilder<Account>>();
-        repositoryBuilder.Build().Returns(repository);
+        var repositoryBuilder = Substitute.For<IElasticDataRepositoryBuilder<Account>>(); repositoryBuilder.Build().Returns(repository);
 
 
         var converter = new GraphFullModelToGraph(

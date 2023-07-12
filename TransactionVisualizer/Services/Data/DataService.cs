@@ -5,6 +5,7 @@ using TransactionVisualizer.Utility.Builders.DataRepositoryBuilder;
 using TransactionVisualizer.Utility.Builders.SelectorBuilder;
 using TransactionVisualizer.Utility.Converters.FlatToFull;
 using TransactionVisualizer.Utility.Parsers.FileParsers;
+using TransactionVisualizer.Utility.Validator;
 
 namespace TransactionVisualizer.Services.Data;
 
@@ -26,6 +27,8 @@ public class DataService : IDataService
         ISelectorBuilder selectorBuilder, IElasticDataRepositoryBuilder<Account> accountRepositoryBuilder,
         IElasticDataRepositoryBuilder<Transaction> transactionRepositoryBuilder)
     {
+        Validator.NullValidationGroup(transactionConverter, accountConverter, transactionConverter, transactionParser, accountParser, selectorKeyValueBuilder, selectorBuilder,accountRepositoryBuilder, transactionRepositoryBuilder);
+        
         _transactionConverter = transactionConverter;
         _accountConverter = accountConverter;
         _transactionParser = transactionParser;
@@ -38,6 +41,8 @@ public class DataService : IDataService
 
     public DataManipulationResponse AddAccounts(string filePath)
     {
+        Validator.NullValidation(filePath);
+        
         var reader = new StreamReader(filePath);
         var accounts = _accountParser.Pars(reader);
         var fullAccounts = _accountConverter.ConvertAll(accounts);
@@ -50,6 +55,8 @@ public class DataService : IDataService
 
     public DataManipulationResponse AddTransactions(string filePath)
     {
+        Validator.NullValidation(filePath);
+        
         var reader = new StreamReader(filePath);
         var transactions = _transactionParser.Pars(reader);
         transactions = transactions.Where(IsAccountIdFound).ToList();
@@ -63,6 +70,8 @@ public class DataService : IDataService
 
     private bool IsAccountIdFound(FlatTransaction item)
     {
+        Validator.NullValidation(item);
+        
         var isSourceFound = _accountRepository.Contain(
             _selectorBuilder.BuildKeyValueSelector<Account>(
                 _selectorKeyValueBuilder.BuildFindAccountById(item.SourceAccount.ToString()

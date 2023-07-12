@@ -1,3 +1,5 @@
+using TransactionVisualizer.Utility.Validator;
+
 namespace TransactionVisualizer.Models.DataStructureModels.Graph;
 
 public class Graph<TVertex, TEdge> where TVertex : class where TEdge : class
@@ -11,6 +13,8 @@ public class Graph<TVertex, TEdge> where TVertex : class where TEdge : class
 
     public void AddEdge(Edge<TVertex, TEdge> edge)
     {
+        Validator.NullValidation(edge);
+        
         TryAddEdge(edge);
         TryAddDestinationVertex(edge);
     }

@@ -8,6 +8,9 @@ using TransactionVisualizer.Utility.Builders.SelectorBuilder;
 
 namespace TransactionVisualizer.Utility.Converters.RequestToFullModels;
 
+using Validator;
+
+
 public class
     GraphFullModelToGraph : IRequestToFullModel<GraphResponseModel<Account, Transaction>, Graph<Account, Transaction>>
 {
@@ -19,6 +22,8 @@ public class
         ISelectorBuilder selectorBuilder,
         ISelectorKeyValueBuilder selectorKeyValueBuilder)
     {
+        Validator.NullValidationGroup(repositoryBuilder, selectorBuilder, selectorKeyValueBuilder);
+        
         _repository = repositoryBuilder.Build();
         _selectorBuilder = selectorBuilder;
         _selectorKeyValueBuilder = selectorKeyValueBuilder;
@@ -26,6 +31,8 @@ public class
 
     public Graph<Account, Transaction> Convert(GraphResponseModel<Account, Transaction> request)
     {
+        Validator.NullValidationGroup(request);
+        
         var graph = new Graph<Account, Transaction>();
 
 

@@ -5,6 +5,8 @@ using TransactionVisualizer.Models.Transaction;
 using static TransactionVisualizer.Utility.Constants.RepositoryConstants.ElasticConstants;
 
 namespace TransactionVisualizer.Utility.Builders.DataRepositoryBuilder;
+using Validator;
+
 
 public class TransactionRepositoryBuilder : IElasticDataRepositoryBuilder<Transaction>
 {
@@ -13,6 +15,8 @@ public class TransactionRepositoryBuilder : IElasticDataRepositoryBuilder<Transa
 
     public TransactionRepositoryBuilder(IDataGainResponseBuilder<Transaction> dataGainResponseBuilder)
     {
+        Validator.NullValidation(dataGainResponseBuilder);
+        
         _dataGainResponseBuilder = dataGainResponseBuilder;
     }
 
