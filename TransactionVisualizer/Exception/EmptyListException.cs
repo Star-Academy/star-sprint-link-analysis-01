@@ -1,8 +1,10 @@
 namespace TransactionVisualizer.Exception;
 
-public class EmptyListException : System.Exception
+using System;
+
+public class EmptyListException : Exception
 {
-    public EmptyListException(string? className) : base("List of " + className + " is Empty")
+    public EmptyListException(string? className) : base($"List of {className} is Empty.")
     {
     }
 }

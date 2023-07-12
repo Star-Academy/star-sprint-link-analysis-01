@@ -1,7 +1,8 @@
 namespace TransactionVisualizer.Utility.Converters;
 
-public interface IFlatToFullConverter<T , U>
+public interface IFlatToFullConverter<T, in TFlat> where T : class where TFlat : class
 {
-    List<T> ConvertAll(List<U> flatList);
-    T Convert(U flat);
+    public T Convert(TFlat flat);
+
+    public List<T> ConvertAll(IEnumerable<TFlat> flats);
 }
